@@ -32,11 +32,18 @@ const group = {
             chosen = false
         }
     },
-    chosenMovie = "",
+    chosenMovie = ""
 }
 
 const movie = {
-
+    title = "",
+    year = "",
+    genre = [],
+    director = "",
+    imdbRating = "",
+    rtRating = "",
+    plot = "",
+    poster = "" // image link
 }
 
-fetch("http://www.omdbapi.com/?i=tt3896198&apikey=6753c87c").then((success) => { success.json() } );
+// fetch("http://www.omdbapi.com/?i=tt3896198&apikey=6753c87c").then((success) => { success.json() } );
