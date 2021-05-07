@@ -55,3 +55,4 @@ function firebaseAuthUI() {
 }
 
 export { firebaseConfig, firebaseAuthUI };
+// module.exports = firebaseAuthUI;
