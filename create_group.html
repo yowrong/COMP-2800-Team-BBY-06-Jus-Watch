@@ -19,43 +19,37 @@
     <!-- The following is HTML for layout -->
     <!-------------------------------------->
     <div class="container">
-        <div class="create-group-button d-flex justify-content-center">
-            <a href="./create_group.html"><button type="button" class="btn btn-primary btn-lg">Click to Create Group</button></a>
+        <div>
+            <h1>Create Your Group</h1>
         </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Group Name</label>
+            <input id="groupName" class="form-control" id="exampleFormControlInput1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Group Description</label>
+            <textarea class="form-control" id="groupDescription" rows="3"></textarea>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Only the Group Host can nominate movies
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Every member can nominate movies
+            </label>
+          </div>
+          <div class="buttons">
+              <a href="./group_main.html">
+              <button type="button" class="btn btn-primary btn-lg">Back</button>
+            </a>
+              <button type="button" class="btn btn-primary btn-lg">Create</button>
+            </div>
+    </div>
 
-        <div class="group-list">
-            <h3>My Groups</h3>
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <img src="..." alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">Group Name</h5>
-                      <p class="card-text">Group Description</p>
-                      <button type="button" class="btn btn-primary btn-lg">Enter Group</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <img src="..." alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">Group Name</h5>
-                      <p class="card-text">Group Description</p>
-                      <button type="button" class="btn btn-primary btn-lg">Enter Group</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </div>
-    
-</div>
     <!----------------------------------------------->
     <!-- JS: Boostrap, Firebase, API related    -->
     <!----------------------------------------------->
@@ -68,10 +62,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+    <script type="module" src="./js/firebase-api.js"></script>
 
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
+
+    <script src="create_group.js"></script>
 
 </body>
 
