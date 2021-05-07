@@ -46,4 +46,5 @@ const movie = {
     poster = "" // image link
 }
 
+// OMDB API Key: 6753c87c
 // fetch("http://www.omdbapi.com/?i=tt3896198&apikey=6753c87c").then((success) => { success.json() } );
