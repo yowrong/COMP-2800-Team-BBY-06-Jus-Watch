@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Home</title>
+    <title>Jus Watch - My Groups</title>
     <meta name="comp2800 boilerplate code" content="my bcit project">
     <meta name="author" content="Team 6">
 
@@ -23,26 +23,13 @@
             <a href="./create_group.html"><button type="button" class="btn btn-primary btn-lg">Click to Create Group</button></a>
         </div>
 
-        <div class="group-list">
+        <div class="my-groups">
             <h3>My Groups</h3>
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <img src="..." alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">Group Name</h5>
-                      <p class="card-text">Group Description</p>
-                      <button type="button" class="btn btn-primary btn-lg">Enter Group</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div id="group-list">
               <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
-                    <img src="..." alt="...">
+                    <!-- <img src="..." alt="..."> -->
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -53,6 +40,7 @@
                   </div>
                 </div>
               </div>
+            </div>
         </div>
     
 </div>
@@ -68,11 +56,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
 
+    <script type="module" src="./js/firebase-api.js"></script>
+    <script type="module" src="group_main.js"></script>
 </body>
 
 </html>
