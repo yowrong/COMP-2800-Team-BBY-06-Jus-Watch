@@ -9,7 +9,10 @@ export function createUser() {
                 usersRef.doc(user.uid).set({
                     name: user.displayName,
                     email: user.email,
-                    uid: user.uid
+                    uid: user.uid,
+                    groupDescription: "",
+                    groupId: "",
+                    groupName: ""
                 });
             }
         });
