@@ -89,4 +89,5 @@ function renderGroups(id, name, desc, groupSection) {
         </div>
       </div>`;
     groupSection.innerHTML = groupCard;
+    }
 }
