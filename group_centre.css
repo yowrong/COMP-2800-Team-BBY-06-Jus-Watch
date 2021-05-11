@@ -1,5 +1,18 @@
 .movieCenter {
     margin: 0 auto;
-    background-color: beige;
+    background-color: rgb(175, 162, 162);
     width: 80%;
+    border-radius: 1em;
+}
+
+.card-group {
+    padding: 5%;
+}
+
+body {
+    background-color: rgb(59, 58, 58);
+}
+
+.movieCenterTitle {
+    text-align: center;
 }
