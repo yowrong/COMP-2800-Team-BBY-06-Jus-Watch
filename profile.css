@@ -1,3 +1,19 @@
+body {
+  background-color: #e08383;
+  padding: 20px;
+  font-family: Arial;
+}
+.profile-head h5{
+  color: #333;
+  font-size: 3em;
+}
+
+/* the email  */
+.profile-head h6{
+  color: #d699ee;
+  font-size: 1.25em;
+}
+
 .profile-img{
   margin-top: 3%;
   text-align: center;
@@ -14,7 +30,7 @@
   width: 40%;
   border: none;
   border-radius: 0;
-  font-size: 1em;
+  font-size: 0.9em;
   background: #212529b8;
   color: rgb(255, 255, 255);
 }
@@ -48,6 +64,6 @@
     color: #c46a7d;
   }
   
-  .profile-setting ul{
+  #profile-setting ul{
     list-style: none;
   }

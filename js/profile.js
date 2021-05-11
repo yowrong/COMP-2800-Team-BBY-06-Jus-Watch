@@ -17,7 +17,7 @@ function getUser(){
     })
 }
 function readFullName() {
-    db.collection("users").doc("kma6w6uPsaMdFPmi4C6gCicJD6w2")
+    db.collection("users").doc("Bjak8WiHFRY52ScuYiVfgcDPmps1")
     .onSnapshot(function(snap) {
         console.log(snap.data()); //print the document fields of the user
         console.log(snap.data().full_name);
@@ -28,7 +28,7 @@ function readFullName() {
 readFullName();
 
 function readEMail() {
-    db.collection("users").doc("")
+    db.collection("users").doc("Bjak8WiHFRY52ScuYiVfgcDPmps1")
     .onSnapshot(function(snap) {
         console.log(snap.data()); //print the document fields of the user
         console.log(snap.data().email);
