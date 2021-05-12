@@ -71,7 +71,7 @@ function renderMovies(title, desc, year, id, pic, movies) {
 
 }
 
-// submits votes to Firestore nominated movie collection for group
+// submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count
 function getVotes(id) {
     submit.addEventListener("click", function() {
         let voteList = [];
@@ -84,7 +84,7 @@ function getVotes(id) {
 
         // Firestore query based on movieId, increments number of votes by one
         voteList.forEach(function(vote) {
-            let movie = groupRef.doc(id).collection("nominatedMovies").doc("movie2");       // ******** Need to change to movieID
+            let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);       // ******** Need to change to movieID
             
             // doc("movie2") -> movie documents must be named by imdbID
 
@@ -94,6 +94,10 @@ function getVotes(id) {
 
             });
         });
+        groupRef.doc(id).update({
+            totalVotes: firebase.firestore.FieldValue.increment(1) 
+        })
+
 }
 
 getVotes(groupID);
