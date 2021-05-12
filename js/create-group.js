@@ -11,7 +11,7 @@ const modalName = document.getElementById("modal-groupName");
 createBtn.addEventListener("click", function(e) {
     // console.log("clicked create");
     let groupId = createGroup(groupName, groupDesc)
-    
+
     console.log("New group id", groupId);
     modalName.innerText = groupName.value + " has been created!";
 })
@@ -19,7 +19,6 @@ createBtn.addEventListener("click", function(e) {
 modalBtn.addEventListener("click", function(e) {
     e.preventDefault();
     window.location.href = "./group_main.html";
-
 })
 
-// 
+
