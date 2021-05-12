@@ -15,6 +15,7 @@ const nominateBtn = document.getElementById('nominateBtn');
 const chatBtn = document.getElementById('chatBtn');
 const movies = document.getElementById('movieList');
 
+// gets group Info from URL and queries Firestore
 function getGroup(groupID, inviteMsg) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
@@ -31,7 +32,34 @@ function getGroup(groupID, inviteMsg) {
   
 getGroup(groupID, inviteMsg);
 
-export function displayGroup(id, name, desc) {
+function getNumOfMembers() {
+
+    groupRef.doc(groupID).collection("groupMembers").get()
+    .then(function(doc) {
+        let numOfMembers = doc.size;
+        console.log("num of members: " + numOfMembers);
+        checkVotes(numOfMembers);
+    });
+
+}
+getNumOfMembers();
+
+function checkVotes(members) {
+    groupRef.doc(groupID).get()
+    .then(function(doc) {
+        if (doc.data().numOfVotes == members) {
+            console.log("equal votes");
+            console.log(doc.data().numOfVotes);
+            console.log("IF num of members: " + members);
+
+        } else {
+            console.log("not enough votes");
+        }
+    })
+}
+
+
+function displayGroup(id, name, desc) {
     groupName.innerText = name;
     groupDesc.innerText = desc;
 }
@@ -53,6 +81,7 @@ function shareLink(groupID) {
     })
 }
 
+// displays nominated movies from group's collection
 function displayMovies(id, movies) {
     groupRef.doc(id).collection("nominatedMovies").get()
     .then((doc) => { 
@@ -107,6 +136,5 @@ function renderMovies(title, desc, year, id, pic, movies) {
     }
     movieCard += "</div>";
     movies.innerHTML = movieCard;
-
 }
 
