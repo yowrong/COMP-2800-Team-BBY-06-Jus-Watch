@@ -37,7 +37,6 @@ export function createGroup(name, desc) {
     .catch((error) => {
         console.log(error);
     });
-    
 }
 
 // gets group information from user logged-in, and displays
@@ -59,11 +58,8 @@ export function displayGroups(groupSection) {
             }
             renderGroups(groupId, groupName, groupDesc, groupSection)
         }
-        
-        
         console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
     })
-
 }
 
 // renders a "Group" card for each group the user is in
