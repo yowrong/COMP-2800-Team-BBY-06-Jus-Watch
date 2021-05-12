@@ -16,3 +16,8 @@ body {
 .movieCenterTitle {
     text-align: center;
 }
+
+.winningMovie {
+    margin: 0 auto;
+    max-width: 40%;
+}

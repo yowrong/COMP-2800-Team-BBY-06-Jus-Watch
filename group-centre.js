@@ -13,7 +13,8 @@ const groupDesc = document.getElementById('group-description');
 const voteBtn = document.getElementById('voteBtn');
 const nominateBtn = document.getElementById('nominateBtn');
 const chatBtn = document.getElementById('chatBtn');
-const movies = document.getElementById('movieList');
+const movieSection = document.getElementById('movieList');
+const movieCenterTitle = document.getElementById('movieCenterTitle');
 
 // gets group Info from URL and queries Firestore
 function getGroup(groupID, inviteMsg) {
@@ -25,15 +26,15 @@ function getGroup(groupID, inviteMsg) {
   
       displayGroup(id, name, desc);
       shareLink(id);
-      displayMovies(id, movies);
+      displayMovies(id, movieSection);
   
     })
   }
   
 getGroup(groupID, inviteMsg);
 
+// queries groupMembers subcollection to get number of members in group
 function getNumOfMembers() {
-
     groupRef.doc(groupID).collection("groupMembers").get()
     .then(function(doc) {
         let numOfMembers = doc.size;
@@ -44,21 +45,59 @@ function getNumOfMembers() {
 }
 getNumOfMembers();
 
+// checks to see if everyone in group has voted, if yes, shows "Movie of the Week"
 function checkVotes(members) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
-        if (doc.data().numOfVotes == members) {
+        if (doc.data().totalVotes == members) {
             console.log("equal votes");
-            console.log(doc.data().numOfVotes);
+            console.log(doc.data().totalVotes);
             console.log("IF num of members: " + members);
 
-        } else {
-            console.log("not enough votes");
-        }
+            getWinningMovie(groupID);
+
+        } 
     })
 }
 
+// gets movie with most votes in nominatedMovies collection
+function getWinningMovie(id) {
+    groupRef.doc(id).collection("nominatedMovies")
+    .orderBy("numOfVotes", "desc").limit(1)
+    .get()
+    .then(function(snap) {
+        snap.forEach(function(movie) {
+            let title = movie.data().movieTitle;
+            let desc = movie.data().movieDescription;
+            let year = movie.data().movieYear;
+            let pic = movie.data().moviePoster;
 
+            renderWinningMovie(title, desc, year, id, pic, movieSection)
+        })
+    })
+}
+
+// changes "nominated movies" section to "movie of the week", generates the winning movie
+function renderWinningMovie(title, desc, year, id, pic, movies) {
+    let movieCard = "";
+
+        movieCard += `<div class="card winningMovie">
+        <img src="${pic}" class="card-img-top" alt="${title}">
+        <div class="card-body">
+          <h5 class="card-title">${title}</h5>
+          <p class="card-text">${desc}</p>
+        </div>
+        <div class="card-footer">
+      <small class="text-muted">${year}</small>
+    </div>
+      </div>`;
+    
+    movies.innerHTML = movieCard;
+    movieCenterTitle.innerText = "Movie of the Week"
+}
+
+
+// displays Group name and description
 function displayGroup(id, name, desc) {
     groupName.innerText = name;
     groupDesc.innerText = desc;
