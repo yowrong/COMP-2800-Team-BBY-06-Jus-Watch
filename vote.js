@@ -1,3 +1,10 @@
+
+// retrieves group ID from URL
+let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?");                                  // Projects 1800 lecture slides
+let groupID = query[1];
+
+
 const db = firebase.firestore();
 const usersRef = db.collection("users");
 const groupRef = db.collection("groups");
@@ -5,10 +12,11 @@ const groupRef = db.collection("groups");
 
 const movies = document.getElementById("movieList");
 const submit = document.getElementById("submit");
+const returnBtn = document.getElementById("returnBtn");
 
 // gets group's nominated movie collection and displays
-function displayMovies(movies) {
-    groupRef.doc("group1").collection("nominatedMovies").get()
+function displayMovies(movies, id) {
+    groupRef.doc(id).collection("nominatedMovies").get()
     .then((doc) => { 
         let movieId = [];
         let movieName = [];
@@ -33,13 +41,14 @@ function displayMovies(movies) {
     
             renderMovies(movieName, movieDesc, movieYear, movieId, moviePic, movies);
         }
-
         
     })
     .catch((err) => {
         throw err;
     })
 }
+
+displayMovies(movies, groupID);
 
 // creates card for each movie in collection
 function renderMovies(title, desc, year, id, pic, movies) {
@@ -62,11 +71,8 @@ function renderMovies(title, desc, year, id, pic, movies) {
 
 }
 
-displayMovies(movies);
-
-
 // submits votes to Firestore nominated movie collection for group
-function getVotes() {
+function getVotes(id) {
     submit.addEventListener("click", function() {
         let voteList = [];
         let votes = document.querySelectorAll(".btn-check:checked");        // StackOverflow: https://stackoverflow.com/questions/11599666/get-the-value-of-checked-checkbox
@@ -76,10 +82,9 @@ function getVotes() {
             voteList.push(vote.id)
         });
 
-
         // Firestore query based on movieId, increments number of votes by one
         voteList.forEach(function(vote) {
-            let movie = groupRef.doc("group1").collection("nominatedMovies").doc("movie2");     
+            let movie = groupRef.doc(id).collection("nominatedMovies").doc("movie2");       // ******** Need to change to movieID
             
             // doc("movie2") -> movie documents must be named by imdbID
 
@@ -91,5 +96,10 @@ function getVotes() {
         });
 }
 
-getVotes();
+getVotes(groupID);
+
+returnBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    window.location.href = `/group_centre.html?${groupID}`;
+})
 

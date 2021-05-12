@@ -51,8 +51,33 @@
     <div class="container">
         <div id="movieList">          
         </div>
-        <div id="submit"><input class="btn btn-primary" type="submit" value="Submit Vote"></div>
+        <div id="submit"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Submit Vote
+          </button></div>
+          <div id="returnBtn">
+            <button type="button" class="btn btn-primary">
+                Return to Group Center
+              </button>
+          </div>
     </div>
+
+          <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Voting</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Thanks for Voting!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
     <!-- JS: Boostrap, Firebase, API related    -->
