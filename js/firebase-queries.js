@@ -11,7 +11,9 @@ export function createUser() {
                     name: user.displayName,
                     email: user.email,
                     uid: user.uid,
-                    groups: []
+                    groupDescription: [],
+                    groupId: [],
+                    groupName: []
                 });
             }
         });
