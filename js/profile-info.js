@@ -6,7 +6,7 @@ function getUser() {
                 .doc(user.uid)
                 .get()
                 .then(function (doc) {
-                    var n = doc.data().full_name;
+                    var n = doc.data().name;
                     console.log(n);
                     $("#username").text(n);
                 })
@@ -30,6 +30,7 @@ $(addBtn).click(function (event) {
             db.collection('users').doc(user.uid).update({
                 FirstName: fn.value,
                 LastName: ln.value,
+                name:fn.value + ' ' + ln.value,
                 age: age.value,
                 contactEmail: contactEmail.value,
                 address: address.value,
