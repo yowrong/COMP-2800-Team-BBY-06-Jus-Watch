@@ -31,7 +31,7 @@ function getGroup(groupID, inviteMsg) {
   
 getGroup(groupID, inviteMsg);
 
-function displayGroup(id, name, desc) {
+export function displayGroup(id, name, desc) {
     groupName.innerText = name;
     groupDesc.innerText = desc;
 }
