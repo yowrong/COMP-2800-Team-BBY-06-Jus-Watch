@@ -21,11 +21,11 @@ function getUser() {
 
 function readFullName() {
     db.collection("users").doc(user.uid)
-    .onSnapshot(function(doc) {
-        console.log(doc.data()); //print the document fields of the user
-        console.log(doc.data().name);
+    .onSnapshot(function(snap) {
+        console.log(snap.data()); //print the document fields of the user
+        console.log(snap.data().name);
         //document.getElementById("fullName").innerText = snap.data().name;
-        document.getElementById("fullName").innerText = doc(user.name);
+        document.getElementById("fullName").innerText = snap.data().name;
     })
 }
  
