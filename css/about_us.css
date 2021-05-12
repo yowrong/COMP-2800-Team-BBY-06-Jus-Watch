@@ -1,0 +1,24 @@
+body {
+    font-family: Verdana;
+    background-color: rgba(128, 3, 3, 0.585);
+    color: white;
+}
+
+figcaption {
+    text-align: center;
+    font-weight: bold;
+}
+
+.avatar {
+    width: 100%;
+}
+
+.avatars {
+    display: inline-block;
+    width: 23%;
+}
+
+.title {
+    text-align: center;
+    padding: 1em;
+}
