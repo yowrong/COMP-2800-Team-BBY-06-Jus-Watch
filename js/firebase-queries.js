@@ -1,4 +1,5 @@
 import { renderGroups } from "./js/group-main.js";
+import { renderMovies } from "./js/vote.js";
 
 const db = firebase.firestore();
 const usersRef = db.collection("users");
@@ -172,4 +173,66 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
           inviteSection.innerHTML = "<h3>Please Log in first!</h3>"
         }
       });
+}
+
+// gets group's nominated movie collection and displays
+export function displayMovies(movies, id) {
+    groupRef.doc(id).collection("nominatedMovies").get()
+    .then((doc) => { 
+        let movieId = [];
+        let movieName = [];
+        let movieDesc = [];
+        let movieYear = [];
+        let moviePic = [];
+
+        // if no nominated movies
+        if (doc.size == 0) {
+            movies.innerHTML = "Nominate some movies to vote on!"
+
+        } else {
+            doc.forEach((movie) => {
+                // console.log("movie: " + movie.data().movieTitle);
+                movieId.push(movie.data().imdbID)
+                movieName.push(movie.data().movieTitle)
+                movieDesc.push(movie.data().movieDescription)
+                movieYear.push(movie.data().movieYear)
+                moviePic.push(movie.data().moviePoster)
+    
+            })
+    
+            renderMovies(movieName, movieDesc, movieYear, movieId, moviePic, movies);
+        }
+        
+    })
+    .catch((err) => {
+        throw err;
+    })
+}
+
+// submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count
+export function getVotes(id, submit) {
+    submit.addEventListener("click", function() {
+        let voteList = [];
+        let votes = document.querySelectorAll(".btn-check:checked");        // StackOverflow: https://stackoverflow.com/questions/11599666/get-the-value-of-checked-checkbox
+    
+        // gets id's of all checked movies
+        votes.forEach(function(vote) {
+            voteList.push(vote.id)
+        });
+
+        // Firestore query based on movieId, increments number of votes by one
+        voteList.forEach(function(vote) {
+            let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);       // ******** Need to change to movieID
+            
+            // doc("movie2") -> movie documents must be named by imdbID
+
+            movie.update({
+                numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
+            });
+
+            });
+        });
+        groupRef.doc(id).update({
+            totalVotes: firebase.firestore.FieldValue.increment(1) 
+        })
 }
