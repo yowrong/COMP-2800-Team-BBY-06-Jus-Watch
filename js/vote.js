@@ -97,7 +97,6 @@ function getVotes(id) {
         groupRef.doc(id).update({
             totalVotes: firebase.firestore.FieldValue.increment(1) 
         })
-
 }
 
 getVotes(groupID);
