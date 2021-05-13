@@ -1,0 +1,102 @@
+body {
+    background-color: white;
+    margin-bottom: 40px;
+}
+
+.content {
+    padding-top: 117px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.content2 {
+    padding-top: 90px;
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}
+
+.content3 {
+    padding-top: 80px;
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}
+
+
+
+.title {
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 10px;
+    padding-bottom: 5px;
+    color: white;
+}
+
+.icon {
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: white !important;
+}
+
+.card-img-top {
+    max-width: 150px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.login {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.left-icon {
+    grid-column: 1/2;
+    margin: 0 auto;
+}
+
+.right-icon {
+    grid-column: 3/4;
+}
+
+.icon2 {
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.icon3 {
+    width: 35px;
+    height: 35px;
+}
+
+.bi2 {
+    color: white !important;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    margin-bottom: 30px;
+    color: #fff;
+    background-color: #aa3434;
+    border-color: #000000;
+}
+.row {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .content {
+        padding-top: 127px;
+        padding-bottom: 50px;
+        width: 100%;
+        margin: 0 auto;
+    }
+  }
