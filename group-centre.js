@@ -25,6 +25,7 @@ function wait(ms) {
     }
 }
 
+//Show group member list
 var groupNo = [];
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
