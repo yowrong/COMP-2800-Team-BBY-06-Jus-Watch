@@ -21,3 +21,9 @@ body {
     margin: 0 auto;
     max-width: 40%;
 }
+.container{
+    padding: 3%;
+    margin: 3% auto 3% auto;
+    border-radius: 0.5rem;
+    background: #ffffff;
+}
