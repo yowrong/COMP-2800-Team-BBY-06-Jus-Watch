@@ -22,14 +22,14 @@ export function renderGroups(id, name, desc, groupSection) {
                                     <h5 class="card-title">${name[i]}</h5>
                                     <p class="card-text">${desc[i]}</p>
                                     <a href="./index.html?${id[i]}">
-                                    <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
+                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>`;
-    groupSection.innerHTML = groupCard;
     }
+    groupSection.innerHTML = groupCard;
 }
 
 displayGroups(groupList);
