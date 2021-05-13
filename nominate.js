@@ -1,6 +1,13 @@
+// const db = firebase.firestore();
+const groupRef = db.collection("groups");
+
+let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?");                                  // Projects 1800 lecture slides
+let groupID = query[1];
+
 const searchResultsDiv = document.getElementById('searchResults');
 
-function readOMDB(search) {
+function searchOMDB(search) {
     // adapted from https://stackoverflow.com/questions/33237200/fetch-response-json-gives-responsedata-undefined
 
     fetch(`http://www.omdbapi.com/?s=${search}&apikey=6753c87c`)
@@ -22,9 +29,6 @@ function readOMDB(search) {
             years.push(movie.Year)
             posters.push(movie.Poster)
             ids.push(movie.imdbID)
-
-            console.log(movie.Title);
-            console.log(movie.Year);
         })
 
         renderSearchResults(titles, years, posters, ids, "group1", searchResultsDiv);               // need to update to 
@@ -51,21 +55,70 @@ function renderSearchResults(title, year, poster, movieId, groupId, searchResult
               <h5 class="card-title">${title[i]}</h5>
               <p class="card-text">${year[i]}</p>
               <p class="card-text">
-              <a href="">
-              <button type="button" class="btn btn-primary btn-lg nominateBtn" id="${movieId}">Nominate</button>
-              </a></p>
+              <a href="group_centre.html?${groupId}">
+              <button type="button" class="btn btn-primary btn-lg nominateBtn" id="${movieId[i]}">Nominate</button>
+            </a>
+              </p>
             </div>
           </div>
         </div>
       </div>`
+
     }
     searchResultsDiv.innerHTML = card;
 }
 
-$('.nominateBtn').on('click', function(evt) {
-    evt.preventDefault();
-    let thisid = evt.target.id;
-    console.log(thisid);
+/* accesses nominated movie's info from OMDB and writes to group's nominatedMovie collection */
+function accessMovie(movieId) {
+    let movieTitle = "";
+    let movieDesc = "";
+    let moviePic = "";
+    let movieYear = "";
+    let movieImdbId = movieId;
+    
+    fetch(`http://www.omdbapi.com/?i=${movieId}&apikey=6753c87c`)
+    .then((response) => {
+       return response.json() 
+    })
+    .then((responseData) => { 
+        movieTitle = responseData.Title;
+        movieYear = responseData.Year;
+        movieDesc = responseData.Plot;
+        moviePic = responseData.Poster;
+
+        writeMovie(movieImdbId, movieTitle, movieYear, movieDesc, moviePic)
+    })
+  .catch(function(err) {
+      console.log(err);
+  })
+
+}
+
+
+/* writes movie to Firestore nominatedMovies collection */
+function writeMovie(id, title, year, desc, pic) {
+    groupRef.doc("group1").collection("nominatedMovies").doc(id).set({
+        chosen: false,
+        imdbID: id,
+        movieDescription: desc,
+        moviePoster: pic,
+        movieTitle: title,
+        movieYear: year,
+        numOfVotes: 0
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+}
+
+
+$(searchResultsDiv).on("click", ".nominateBtn", function(e) {
+    e.preventDefault();
+    console.log(e.target.id);
+    let movieId = e.target.id;
+
+    accessMovie(movieId);
+
 })
     
 
@@ -204,7 +257,7 @@ function saveSearchFromUser() {
         // window.location.href = "moviedescription.html"
 
         localStorage.setItem("item", item);
-        readOMDB(item);
+        searchOMDB(item);
 
     });
 }
