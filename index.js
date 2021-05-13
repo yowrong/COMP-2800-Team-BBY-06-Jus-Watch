@@ -1,3 +1,5 @@
+const searchResultsDiv = document.getElementById('searchResults');
+
 function readOMDB(search) {
     // adapted from https://stackoverflow.com/questions/33237200/fetch-response-json-gives-responsedata-undefined
 
@@ -5,15 +7,67 @@ function readOMDB(search) {
     .then((response) => {
        return response.json() 
     })
+    // returns array of search results
     .then((responseData) => { 
-        console.log(responseData.Title);
-        console.log(responseData.Year);
-        console.log(responseData.Ratings[0].Value);
+
+        let searchResults = responseData.Search;
+        let titles = [];
+        let years = [];
+        let posters = [];
+        let ids = [];
+
+        // loop through search results and grab movie info
+        searchResults.forEach(function(movie) {
+            titles.push(movie.Title)
+            years.push(movie.Year)
+            posters.push(movie.Poster)
+            ids.push(movie.imdbID)
+
+            console.log(movie.Title);
+            console.log(movie.Year);
+        })
+
+        renderSearchResults(titles, years, posters, ids, "group1", searchResultsDiv);               // need to update to 
+                                                                                                    // include groupID
+        
     })
   .catch(function(err) {
       console.log(err);
   })
 }
+
+// renders Cards of movies in search results in modal for nomination
+function renderSearchResults(title, year, poster, movieId, groupId, searchResultsDiv) {
+    let card = "";
+
+    for (let i = 0; i < movieId.length; i++) {
+        card += `<div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="${poster[i]}" alt="${title[i]}" style="max-width: 100%">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">${title[i]}</h5>
+              <p class="card-text">${year[i]}</p>
+              <p class="card-text">
+              <a href="">
+              <button type="button" class="btn btn-primary btn-lg nominateBtn" id="${movieId}">Nominate</button>
+              </a></p>
+            </div>
+          </div>
+        </div>
+      </div>`
+    }
+    searchResultsDiv.innerHTML = card;
+}
+
+$('.nominateBtn').on('click', function(evt) {
+    evt.preventDefault();
+    let thisid = evt.target.id;
+    console.log(thisid);
+})
+    
 
 /* The basis for this function was provided by w3schools */
 /* Handles the typeahead autocomplete search function */
