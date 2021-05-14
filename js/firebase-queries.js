@@ -182,6 +182,7 @@ export function displayMoviesForVote(id, movieSection) {
     })
 }
 
+// Display nominated movies to vote on.
 function renderMoviesForVote(title, desc, year, id, pic, movies) {
     let movieCard = `<div class="card-group">`;
 
