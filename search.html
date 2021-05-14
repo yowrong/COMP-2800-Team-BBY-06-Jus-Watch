@@ -3,20 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Jus'Watch</title>
+    <title>Search</title>
     <meta name="author" content="BBY-06">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS, firebase-auth-ui -->
+    <!-- Bootstrap for Mobile-first, and JQuery -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-    <!-- Custom styles -->
-    <link href="/css/profile.css" rel="stylesheet">
+
+
+    <!-- Optional styles and scripts of your own -->
+    <link rel="stylesheet" href="/css/search.css">
+
+    <!--Favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+    <link rel="manifest" href="./img/site.webmanifest">
+
+
 </head>
 
 <body>
-    
+
+   
        <!-- Header Navigation Bar From Bootstrap-->
        <nav class="navbar navbar-expand-lg navbar-light bg-danger">
         <div class="container-fluid">
@@ -49,52 +60,33 @@
             </div>
         </div>
     </nav>
-    
-    <!--ProfilePage Main Part-->
-    <div class="profile_container">
-        <div class="col-md-5">
-            <div class="profile-img">
-                <img src="/img/profile-pic.jpg" alt="" />
-                <br />
-                <div class="file btn">
-                    Change Photo
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="profile-head">
-                <div id="username"></div>
-                <h5><span id="fullName">1</span></h5>
-                <h6><span id="email">2</span></h6>
-            </div>
-        </div>
 
-            <div class="col-md-4" id="profile-setting">
-                <p>Profile</p>
-                <a href="profile_info.html">Personal Info</a>
-                <br />
-                <a href="">Favourite</a>
-                <br />
-                <p>Help & Policies</p>
-                <a href="">Help</a>
-                <br />
-                <a href="">Terms & Servies</a>
-                <br />
+    <!-- Search form -->
+    <div class="search">
+        <input type="image" alt="search" src="/img/search.png" class="searchIcon" id="myBtn">
+
+        <form autocomplete="off" class="searchBar">
+            <div class="autocomplete" style="width:100%;">
+                <input id="myInput" type="text" name="mySearch" placeholder="Search">
             </div>
+        </form>
     </div>
-    <!-- JS: Boostrap, Firebase, API related, JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- JS: Boostrap, Firebase, API related    -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script> -->
-    <!-- <script type="module" src="./js/firebase-queries.js"></script> -->
-    <script type="module" src="./js/firebase-api.js"></script>
-    <script type="module" src="./js/firebase-queries.js"></script>
-    <script type="module" src="./js/profile.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+
+    <script src="/js/Search-firebase.js"></script>
+    <!-- Search scripts -->
+    <script src="/js/search.js"> </script>
+
 </body>
 
 </html>
