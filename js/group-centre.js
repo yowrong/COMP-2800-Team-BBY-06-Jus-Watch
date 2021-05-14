@@ -28,13 +28,15 @@ function wait(ms) {
     }
 }
 
-displayNominatedMovies(groupID, movieSection);
+// displayNominatedMovies(groupID, movieSection);
 
 showGroupMembers(groupID, groupInfo);
 
 getNumOfMembers(groupID, movieSection);
 
 getWinningMovie( groupID, movieSection, movieCenterTitle);
+
+getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc)
 
 /* Generates correct links for the buttons */
 function shareLink(groupID) {
@@ -53,7 +55,7 @@ function shareLink(groupID) {
     })
 }
 
-sharelink(groupID);
+shareLink(groupID);
 
 // gets group Info from URL and queries Firestore
 // function getGroupforGroupCentre(groupID, movieSection) {
@@ -95,6 +97,8 @@ sharelink(groupID);
 //         checkVotes(numOfMembers);
 //     });
 // }
+getNumOfMembers(groupID, movieSection, movieCenterTitle);
+
 
 
 /* checks to see if everyone in group has voted, if yes, shows "Movie of the Week" */
@@ -144,6 +148,10 @@ sharelink(groupID);
 //     movieSection.innerHTML = movieCard;
 //     movieCenterTitle.innerText = "Movie of the Week";
 // }
+
+
+
+// getWinningMovie( groupID, movieSection, movieCenterTitle);
 
 
 /* displays nominated movies from group's collection */
