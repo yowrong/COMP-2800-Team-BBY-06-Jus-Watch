@@ -1,6 +1,6 @@
 .movieCenter {
     margin: 0 auto;
-    background-color: rgb(175, 162, 162);
+    background-color: #3b3a3a;
     width: 80%;
     border-radius: 1em;
 }
@@ -22,6 +22,7 @@ body {
     max-width: 90%;
 }
 .container{
+    width: 80%;
     padding: 3%;
     margin: 3% auto 3% auto;
     border-radius: 0.5rem;

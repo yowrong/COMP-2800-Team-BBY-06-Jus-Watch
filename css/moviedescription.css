@@ -1,19 +1,14 @@
 body {
-    background-color: white;
+    background-color: #3b3a3a;
     margin-bottom: 40px;
 }
 
-.content {
-    padding-top: 117px;
+.container {
     width: 80%;
-    margin: 0 auto;
-}
-
-.content2 {
-    padding-top: 90px;
-    width: 80%;
-    margin: 0 auto;
-    padding-bottom: 80px;
+    padding: 3%;
+    margin: 3% auto 3% auto;
+    border-radius: 0.5rem;
+    background: #ffffff;
 }
 
 .content3 {

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap');
 
 body {
-  background-color: #030303;
+  background-color: #3b3a3a;
   padding: 20px;
   font-family: Verdana, sans-serif;
 }
@@ -129,7 +129,7 @@ h2{color: #ffffff;
 .movie_list{
   margin-top: 40%;
   align-self: start;
-  background: black;
+  background: 3b3a3a;
   font-family: 'Montserrat', helvetica, arial, sans-serif;
   font-size: 14px;
   font-weight: 400;

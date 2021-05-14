@@ -3,26 +3,29 @@ body {
   padding: 20px;
   font-family: Arial;
 }
-.profile-head h5{
+
+.profile-head h5 {
   color: #333;
   font-size: 3em;
 }
 
 /* the email  */
-.profile-head h6{
+.profile-head h6 {
   color: #d699ee;
   font-size: 1.25em;
 }
 
-.profile-img{
+.profile-img {
   margin-top: 3%;
   text-align: center;
 }
-.profile-img img{
+
+.profile-img img {
   width: 40%;
   height: 40%;
   border-radius: 50%;
 }
+
 .profile-img .file {
   position: relative;
   overflow: hidden;
@@ -35,35 +38,38 @@ body {
   color: rgb(255, 255, 255);
 }
 
-.profile_container{
-    padding: 3%;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    border-radius: 0.5rem;
-    background: #ffffff;
-  }
-  .profile-work{
-    padding: 11%;
-    margin-top: -20%;
-  }
-  /* Profile; Notification; Help&Policies */
-  #profile-setting p{
-    font-size: 1.5em;
-    color: #723086;
-    font-weight: 700;
-    margin-top: 10%;
-  }
-  #profile-setting a{
-    text-decoration: none;
-    color: #495057;
-    font-weight: 600;
-    font-size: 1.25em;
-  }
-  
-  #profile-setting a:hover{
-    color: #c46a7d;
-  }
-  
-  #profile-setting ul{
-    list-style: none;
-  }
+.profile_container {
+  width: 80%;
+  padding: 3%;
+  margin: 3% auto 3% auto;
+  border-radius: 0.5rem;
+  background: #ffffff;
+}
+
+.profile-work {
+  padding: 11%;
+  margin-top: -20%;
+}
+
+/* Profile; Notification; Help&Policies */
+#profile-setting p {
+  font-size: 1.5em;
+  color: #723086;
+  font-weight: 700;
+  margin-top: 10%;
+}
+
+#profile-setting a {
+  text-decoration: none;
+  color: #495057;
+  font-weight: 600;
+  font-size: 1.25em;
+}
+
+#profile-setting a:hover {
+  color: #c46a7d;
+}
+
+#profile-setting ul {
+  list-style: none;
+}
