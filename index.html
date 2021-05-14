@@ -11,12 +11,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-
     <!--Favicon-->
     <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
     <link rel="manifest" href="./img/site.webmanifest">
+    <link rel="stylesheet" href="./css/index.css" />
 </head>
 
 <body>
@@ -50,10 +50,45 @@
             </div>
         </div>
     </nav>
+    <div class="slideshow-container">
 
-    <div class="container"></div>
+        <div class="mySlides fade">
+            <img src="/img/download.jpg">
+        </div>
 
+        <div class="mySlides fade">
+            <img src="/img/download.jpg">
+            <div class="text">Spirited Away</div>
+        </div>
 
+        <div class="mySlides fade">
+            <img src="/img/ant-man3.jpg">
+        </div>
+
+        <div class="mySlides fade">
+            <img src="/img/the6thsense.jpg">
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext"></div>
+            <img src="/img/totoro-bus-stop.jpg">
+            <div class="text">My Neighbor Totoro</div>
+        </div>
+    </div>
+    <div style="text-align:center">
+        <span class="dot" onclick="currentDiv(1)"></span>
+        <span class="dot" onclick="currentDiv(2)"></span>
+        <span class="dot" onclick="currentDiv(3)"></span>
+        <span class="dot" onclick="currentDiv(4)"></span>
+        <span class="dot" onclick="currentDiv(5)"></span>
+    </div>
+    
+    <div class="arrow">
+        <div class="btn-secondary leftarrow" onclick="plusDivs(-1)">&#10094;</div>
+        <div class="btn-secondary rightarrow" onclick="plusDivs(1)">&#10095;</div>
+        
+    </div>
+    
     <!-- JS: Boostrap, Firebase, API related    -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
@@ -64,7 +99,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
-
+    <script src="/js/index.js"></script>
 </body>
 
 </html>
