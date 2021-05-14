@@ -120,7 +120,7 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
           let userLName = user.displayName.split(' ')[1];
 
           inviteSection.innerHTML = `<h3>Welcome!</h3>
-          <a href="./group_main.html?${groupID}" <button type="button" class="btn btn-primary">
+          <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-primary">
           Click to enter your Group's Page!
           </button>`;
 
