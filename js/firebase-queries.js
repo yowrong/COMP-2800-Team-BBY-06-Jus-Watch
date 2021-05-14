@@ -132,8 +132,8 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
               if (!member.exists) {
                 groupRef.doc(groupID).collection("groupMembers").doc(user.uid).set({
                   userId: user.uid,
-                  userFirstName: userFName,
-                  userLastName: userLName
+                  name: user.displayName
+                //   userLastName: userLName
                 })
               }
           });
