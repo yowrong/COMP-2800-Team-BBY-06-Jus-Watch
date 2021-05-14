@@ -1,7 +1,6 @@
 const db = firebase.firestore();
 const usersRef = db.collection("users");
 const groupRef = db.collection("groups");
-const inviteMsg = document.getElementById("inviteMsg");
 
 // Creates a new user to the user collection after sign-up if they are a new user.
 export function createUser() {
@@ -104,7 +103,7 @@ export function getGroup(groupID, inviteMsg) {
   
       addUser(id, name, desc, inviteMsg);
   
-      console.log("get group:", id + name + desc + inviteMsg)
+    //   console.log("get group:", id + name + desc + inviteMsg)
     })
 }
 
