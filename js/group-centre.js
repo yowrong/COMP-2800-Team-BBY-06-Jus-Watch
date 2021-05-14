@@ -221,7 +221,7 @@ export function shareLink(groupID) {
 
 
 /* creates card for each movie in collection */
-export function renderMovies(title, desc, year, id, pic, movies) {
+export function renderMovies(title, desc, year, id, pic, movieSection) {
     let movieCard = `<div class="card-group">`;
 
     for (let i = 0; i < id.length; i++) {
@@ -237,6 +237,6 @@ export function renderMovies(title, desc, year, id, pic, movies) {
       </div>`;
     }
     movieCard += "</div>";
-    movies.innerHTML = movieCard;
+    movieSection.innerHTML = movieCard;
 }
 
