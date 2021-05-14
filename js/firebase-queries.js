@@ -353,42 +353,50 @@ export function displayGroups(groupSection) {
 }
 
 //Show group member list
-export function showGroupMembers() {
-    var groupNo = [];
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
+export function showGroupMembers(groupID, groupInfo) {
+    groupRef.doc(groupID).collection("groupMembers").get()
+    .then((snap) => {
+        let nameList = "";
+        snap.forEach(function (doc) {
+            nameList += `<p>${doc.data().name}</p>`;
+        })
+        groupInfo.innerHTML = nameList;
+    });
+    // var groupNo = [];
+    // firebase.auth().onAuthStateChanged(function (user) {
+    //     if (user) {
     
-            var query = usersRef.doc(user.uid).get().then((doc) => {
-                if (doc.exists) {
-                    for (var i = 0; i < doc.data().groupId.length; i++) {
+    //         var query = usersRef.doc(user.uid).get().then((doc) => {
+    //             if (doc.exists) {
+    //                 for (var i = 0; i < doc.data().groupId.length; i++) {
     
-                        groupNo[i] = doc.data().groupName[i];
-                        $(".groupInfo").append(`<div class="` + groupNo[i] + `">
-                <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
-                <p id="group-member"></p>
-            </div>`);
-                        console.log(groupNo);
-                        console.log(i);
-                    }
-                } else {
-                    console.log("No such document!");
-                }
+    //                     groupNo[i] = doc.data().groupName[i];
+    //                     $(".groupInfo").append(`<div class="` + groupNo[i] + `">
+    //             <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
+    //             <p id="group-member"></p>
+    //         </div>`);
+    //                     console.log(groupNo);
+    //                     console.log(i);
+    //                 }
+    //             } else {
+    //                 console.log("No such document!");
+    //             }
                 
-                for (var i = 0; i < groupNo.length; i++) {
-                    groupRef.doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            usersRef.doc(doc.id).get().then((doc) => {
-                                if (doc.exists) {
-                                    console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
-                                    $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
-                                }
-                            });
-                        });
-                    });
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-        }
-    })
+    //             for (var i = 0; i < groupNo.length; i++) {
+    //                 groupRef.doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
+    //                     querySnapshot.forEach((doc) => {
+    //                         usersRef.doc(doc.id).get().then((doc) => {
+    //                             if (doc.exists) {
+    //                                 console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
+    //                                 $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
+    //                             }
+    //                         });
+    //                     });
+    //                 });
+    //             }
+    //         }).catch((error) => {
+    //             console.log("Error getting document:", error);
+    //         });
+    //     }
+    // })
 }

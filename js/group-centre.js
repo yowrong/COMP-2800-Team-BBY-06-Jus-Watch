@@ -17,6 +17,7 @@ const nominateBtn = document.getElementById('nominateBtn');
 const chatBtn = document.getElementById('chatBtn');
 const movieSection = document.getElementById('movieList');
 const movieCenterTitle = document.getElementById('movieCenterTitle');
+const groupInfo = document.getElementById('groupInfo');
 
 //https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
 function wait(ms) {
@@ -27,51 +28,6 @@ function wait(ms) {
     }
 }
 
-<<<<<<< HEAD
-=======
-//Show group member list g1 g2
-function showGroupMembers() {
-    var groupNo = [];
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-    
-            var query = db.collection("users").doc(user.uid).get().then((doc) => {
-                if (doc.exists) {
-                    for (var i = 0; i < doc.data().groupId.length; i++) {
-    
-                        groupNo[i] = doc.data().groupId[i];
-                        $(".groupInfo").append(`<div class="` + groupNo[i] + `">
-                <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
-                <p id="group-member"></p>
-            </div>`);
-                        console.log(groupNo);
-                        console.log(i);
-                    }
-                } else {
-                    console.log("No such document!");
-                }
-               
-                for (var i = 0; i < groupNo.length; i++) {
-                    db.collection("groups").doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            db.collection("users").doc(doc.id).get().then((doc) => {
-                                if (doc.exists) {
-                                    console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
-                                    $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
-                                }
-                            });
-                        });
-                    });
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-    
-        }
-    })
-}
-
->>>>>>> 3674cb167656a2360cad0b25e2cf77ac87273282
 
 // gets group Info from URL and queries Firestore
 // function getGroupforGroupCentre(groupID, movieSection) {
@@ -255,7 +211,7 @@ getWinningMovie( groupID, movieSection, movieCenterTitle);
 
 displayNominatedMovies(groupID, movieSection);
 
-showGroupMembers();
+showGroupMembers(groupID, groupInfo);
 // $(document).ready(function(){
 //     showGroupMembers()
 // });
