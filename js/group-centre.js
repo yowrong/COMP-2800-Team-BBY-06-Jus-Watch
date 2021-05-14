@@ -40,7 +40,7 @@ getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc)
 
 /* Generates correct links for the buttons */
 function shareLink(groupID) {
-    share.setAttribute("value", `https://www.JusWatch.com/group_main.html?${groupID}`);         // *** need to change to hosted link         
+    share.setAttribute("value", `https://jus-watch.web.app/invite.html?${groupID}`);         // *** need to change to hosted link         
     nominateBtn.addEventListener("click", function(e) {
         e.preventDefault;
         window.location.href = `nominate.html?${groupID}`;
