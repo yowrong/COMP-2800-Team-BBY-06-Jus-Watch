@@ -10,7 +10,7 @@
 }
 
 body {
-    background-color: rgb(59, 58, 58);
+    background-color: #3b3a3a;
 }
 
 .movieCenterTitle {
@@ -27,3 +27,7 @@ body {
     border-radius: 0.5rem;
     background: #ffffff;
 }
+hr {
+    border: 1px solid #000000;
+    margin-bottom: 25px;
+  }
