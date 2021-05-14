@@ -172,16 +172,16 @@ getNumOfMembers(groupID, movieSection);
 export function renderWinningMovie(title, desc, year, id, pic, movieSection) {
     let movieCard = "";
 
-        movieCard += `<div class="card winningMovie">
+    movieCard += `<div class="card winningMovie">
         <img src="${pic}" class="card-img-top" alt="${title}">
         <div class="card-body">
-          <h5 class="card-title">${title}</h5>
-          <p class="card-text">${desc}</p>
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text">${desc}</p>
         </div>
         <div class="card-footer">
-      <small class="text-muted">${year}</small>
-    </div>
-      </div>`;
+        <small class="text-muted">${year}</small>
+        </div>
+        </div>`;
 
     movieSection.innerHTML = movieCard;
     movieCenterTitle.innerText = "Movie of the Week"

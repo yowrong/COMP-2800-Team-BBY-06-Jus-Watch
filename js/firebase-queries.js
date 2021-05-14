@@ -94,8 +94,6 @@ export function createGroup(name, desc) {
     });
 }
 
-
-
 /* Takes invite URL on invite.html and gets group ID, name, and description from Firestore. */
 export function getGroup(groupID, inviteMsg) {
     groupRef.doc(groupID).get()
