@@ -34,7 +34,7 @@ showGroupMembers(groupID, groupInfo);
 
 getNumOfMembers(groupID, movieSection);
 
-getWinningMovie( groupID, movieSection, movieCenterTitle);
+// getWinningMovie( groupID, movieSection, movieCenterTitle);
 
 getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc)
 

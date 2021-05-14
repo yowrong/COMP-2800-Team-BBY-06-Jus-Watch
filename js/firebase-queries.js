@@ -436,6 +436,9 @@ export function getVotes(id, submit) {
                 numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
             });
         });
+        groupRef.doc(id).update({
+            totalVotes: firebase.firestore.FieldValue.increment(1) 
+        });
     });
 }
   
