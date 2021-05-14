@@ -12,7 +12,7 @@ const searchResultsDiv = document.getElementById('searchResults');
 function searchOMDB(search) {
     // adapted from https://stackoverflow.com/questions/33237200/fetch-response-json-gives-responsedata-undefined
 
-    fetch(`http://www.omdbapi.com/?s=${search}&apikey=6753c87c`)
+    fetch(`https://www.omdbapi.com/?s=${search}&apikey=6753c87c`)
     .then((response) => {
        return response.json() 
     })
@@ -78,7 +78,7 @@ function accessMovie(movieId) {
     let movieYear = "";
     let movieImdbId = movieId;
     
-    fetch(`http://www.omdbapi.com/?i=${movieId}&apikey=6753c87c`)
+    fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=6753c87c`)
     .then((response) => {
        return response.json() 
     })
