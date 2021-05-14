@@ -1,4 +1,4 @@
-import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies } from "./firebase-queries.js";
+import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies, getWinningMovie, showGroupMembers } from "./firebase-queries.js";
 
 let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
 let query = string.split("?");                                  // Projects 1800 lecture slides
@@ -27,48 +27,6 @@ function wait(ms) {
     }
 }
 
-//Show group member list
-function showGroupMembers() {
-    var groupNo = [];
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-    
-            var query = db.collection("users").doc(user.uid).get().then((doc) => {
-                if (doc.exists) {
-                    for (var i = 0; i < doc.data().groupId.length; i++) {
-    
-                        groupNo[i] = doc.data().groupId[i];
-                        $(".groupInfo").append(`<div class="` + groupNo[i] + `">
-                <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
-                <p id="group-member"></p>
-            </div>`);
-                        console.log(groupNo);
-                        console.log(i);
-                    }
-                } else {
-                    console.log("No such document!");
-                }
-               
-                for (var i = 0; i < groupNo.length; i++) {
-                    db.collection("groups").doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            db.collection("users").doc(doc.id).get().then((doc) => {
-                                if (doc.exists) {
-                                    console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
-                                    $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
-                                }
-                            });
-                        });
-                    });
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-    
-        }
-    })
-}
-
 
 // gets group Info from URL and queries Firestore
 // function getGroupforGroupCentre(groupID, movieSection) {
@@ -91,10 +49,9 @@ const groupCall = async () => {
     groupVars = await getGroupforGroupCentre(groupID, movieSection);
     displayGroupOnGroupCentre(groupVars[0], groupVars[1], groupVars[2]);
     shareLink(groupVars[0]);
-    displayNominatedMovies(groupVars[0], movieSection);
+    // displayNominatedMovies(groupVars[0], movieSection);
 }
 groupCall();
-
 
 
 // displays Group name and description
@@ -119,7 +76,6 @@ function shareLink(groupID) {
         window.location.href = `group-msgs.html?${groupID}`;
     })
 }
-
 
 
 /* queries groupMembers subcollection to get number of members in group */
@@ -174,26 +130,25 @@ getNumOfMembers(groupID, movieSection);
 // }
 
 // changes "nominated movies" section to "movie of the week", generates the winning movie
-export function renderWinningMovie(title, desc, year, id, pic, movieSection) {
-    let movieCard = "";
+// function renderWinningMovie(title, desc, year, id, pic) {
+//     let movieCard = "";
 
-    movieCard += `<div class="card winningMovie">
-        <img src="${pic}" class="card-img-top" alt="${title}">
-        <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">${desc}</p>
-        </div>
-        <div class="card-footer">
-        <small class="text-muted">${year}</small>
-        </div>
-        </div>`;
+//     movieCard += `<div class="card winningMovie">
+//         <img src="${pic}" class="card-img-top" alt="${title}">
+//         <div class="card-body">
+//             <h5 class="card-title">${title}</h5>
+//             <p class="card-text">${desc}</p>
+//         </div>
+//         <div class="card-footer">
+//             <small class="text-muted">${year}</small>
+//         </div>
+//         </div>`;
 
-    movieSection.innerHTML = movieCard;
-    movieCenterTitle.innerText = "Movie of the Week"
-}
+//     movieSection.innerHTML = movieCard;
+//     movieCenterTitle.innerText = "Movie of the Week";
+// }
 
-
-
+getWinningMovie( groupID, movieSection, movieCenterTitle);
 
 
 /* displays nominated movies from group's collection */
@@ -233,29 +188,29 @@ export function renderWinningMovie(title, desc, year, id, pic, movieSection) {
 //     })
 // }
 
-
-
 /* creates card for each movie in collection */
-export function renderMovies(title, desc, year, id, pic, movieSection) {
-    let movieCard = `<div class="card-group">`;
+// function renderMovies(title, desc, year, id, pic) {
+//     let movieCard = `<div class="card-group">`;
 
-    for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
-        <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
-        <div class="card-body">
-          <h5 class="card-title">${title[i]}</h5>
-          <p class="card-text">${desc[i]}</p>
-        </div>
-        <div class="card-footer">
-      <small class="text-muted">${year[i]}</small>
-    </div>
-      </div>`;
-    }
-    movieCard += "</div>";
-    movieSection.innerHTML = movieCard;
-}
+//     for (let i = 0; i < id.length; i++) {
+//         movieCard += `<div class="card">
+//         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
+//         <div class="card-body">
+//           <h5 class="card-title">${title[i]}</h5>
+//           <p class="card-text">${desc[i]}</p>
+//         </div>
+//         <div class="card-footer">
+//       <small class="text-muted">${year[i]}</small>
+//     </div>
+//       </div>`;
+//     }
+//     movieCard += "</div>";
+//     movieSection.innerHTML = movieCard;
+// }
 
-$(document).ready(function(){
-    showGroupMembers()
-});
-    
+displayNominatedMovies(groupID, movieSection);
+
+showGroupMembers();
+// $(document).ready(function(){
+//     showGroupMembers()
+// });

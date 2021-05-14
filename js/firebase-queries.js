@@ -1,12 +1,13 @@
-import { renderGroups } from "./group-main.js";
+// import { renderGroups } from "./group-main.js";
 // import { renderMoviesForVote } from "./vote.js";
-import { renderWinningMovie, renderMovies } from "./group-centre.js";
+// import { renderWinningMovie, renderMovies } from "./group-centre.js";
 
 const db = firebase.firestore();
 const usersRef = db.collection("users");
 const groupRef = db.collection("groups");
 const inviteMsg = document.getElementById("inviteMsg");
 
+// Creates a new user to the user collection after sign-up if they are a new user.
 export function createUser() {
     firebase.auth().onAuthStateChanged(function(user) {
         usersRef.doc(user.uid).get()
@@ -25,6 +26,7 @@ export function createUser() {
     });
 }
 
+// Queries the groupMessages subcollection within the groups collection for message sent in the group chat.
 export function displayMsgs(groupID) {
     firebase.auth().onAuthStateChanged(function(user) {
         groupRef.doc("group1").collection("groupMessages")
@@ -50,6 +52,7 @@ export function displayMsgs(groupID) {
     });
 }
 
+// Writes to the groupMessages subcollection when a message is sent including sentBy and sentAt.
 export function sendMsg(msgToSend) {
     firebase.auth().onAuthStateChanged(function(user) {
         usersRef.doc(user.uid).get()
@@ -66,9 +69,6 @@ export function sendMsg(msgToSend) {
                 message: msgToSend.value,
                 uid: user.uid
             });
-            // .then(() => {
-            //     window.location.href = "schedule.html";
-            // });
         })
     });
 }
@@ -208,8 +208,8 @@ export function getGroupforGroupCentre(groupID, movieSection) {
 }
 
 /* Displays nominated movies from group's collection on group-centre.html */
-export function displayNominatedMovies(id, movieSection) {
-    groupRef.doc(id).collection("nominatedMovies").get()
+export function displayNominatedMovies(groupId, movieSection) {
+    groupRef.doc(groupId).collection("nominatedMovies").get()
     .then((doc) => { 
 
         // create arrays of all movies and movie items in group collection
@@ -234,7 +234,8 @@ export function displayNominatedMovies(id, movieSection) {
                 movieYear.push(movie.data().movieYear)
                 moviePic.push(movie.data().moviePoster)
     
-            })   
+            })
+
             renderMovies(movieName, movieDesc, movieYear, movieId, moviePic, movieSection);
         }
     })
@@ -243,36 +244,29 @@ export function displayNominatedMovies(id, movieSection) {
     })
 }
 
+/* displays nominated movies from group's collection */
+function renderMovies(title, desc, year, id, pic, movieSection) {
+    let movieCard = `<div class="card-group">`;
 
-/* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
-export function getNumOfMembers(groupID, movieSection) {
-    groupRef.doc(groupID).collection("groupMembers").get()
-    .then(function(doc) {
-        let numOfMembers = doc.size;
-        console.log("num of members: " + numOfMembers);
-        checkVotes(numOfMembers, groupID, movieSection);
-    });
-
+    for (let i = 0; i < id.length; i++) {
+        movieCard += `<div class="card">
+        <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
+        <div class="card-body">
+          <h5 class="card-title">${title[i]}</h5>
+          <p class="card-text">${desc[i]}</p>
+        </div>
+        <div class="card-footer">
+      <small class="text-muted">${year[i]}</small>
+    </div>
+      </div>`;
+    }
+    movieCard += "</div>";
+    movieSection.innerHTML = movieCard;
 }
-
-/* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
-export function checkVotes(members, groupID, movieSection) {
-    groupRef.doc(groupID).get()
-    .then(function(doc) {
-        if (doc.data().totalVotes == members) {
-            console.log("equal votes");
-            console.log(doc.data().totalVotes);
-            console.log("IF num of members: " + members);
-
-            getWinningMovie(groupID, movieSection);
-        } 
-    })
-}
-
 
 /* Gets movie with most votes in nominatedMovies collection, renders winning movie on group-centre.html */
-export function getWinningMovie(id, movieSection) {
-    groupRef.doc(id).collection("nominatedMovies")
+export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
+    groupRef.doc(groupID).collection("nominatedMovies")
     .orderBy("numOfVotes", "desc").limit(1)
     .get()
     .then(function(snap) {
@@ -280,14 +274,58 @@ export function getWinningMovie(id, movieSection) {
             let title = movie.data().movieTitle;
             let desc = movie.data().movieDescription;
             let year = movie.data().movieYear;
+            let id = movie.data().imdbID;
             let pic = movie.data().moviePoster;
 
-            renderWinningMovie(title, desc, year, id, pic, movieSection)
+            renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle)
         })
     })
     .catch((error) => {
         console.error("Error writing document: ", error);
     });
+}
+
+function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle) {
+    let movieCard = "";
+
+    movieCard += `<div class="card winningMovie">
+        <img src="${pic}" class="card-img-top" alt="${title}">
+        <div class="card-body">
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text">${desc}</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">${year}</small>
+        </div>
+        </div>`;
+
+    movieSection.innerHTML = movieCard;
+    movieCenterTitle.innerText = "Movie of the Week";
+}
+
+/* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
+export function checkVotes(members, groupID) {
+    groupRef.doc(groupID).get()
+    .then(function(doc) {
+        if (doc.data().totalVotes == members) {
+            console.log("equal votes");
+            console.log(doc.data().totalVotes);
+            console.log("IF num of members: " + members);
+
+            getWinningMovie(groupID);
+        } 
+    })
+}
+
+/* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
+export function getNumOfMembers(groupID) {
+    groupRef.doc(groupID).collection("groupMembers").get()
+    .then(function(doc) {
+        let numOfMembers = doc.size;
+        console.log("num of members: " + numOfMembers);
+        checkVotes(numOfMembers, groupID);
+    });
+
 }
 
 
@@ -312,4 +350,45 @@ export function displayGroups(groupSection) {
         }
         console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
     });
+}
+
+//Show group member list
+export function showGroupMembers() {
+    var groupNo = [];
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+    
+            var query = usersRef.doc(user.uid).get().then((doc) => {
+                if (doc.exists) {
+                    for (var i = 0; i < doc.data().groupId.length; i++) {
+    
+                        groupNo[i] = doc.data().groupName[i];
+                        $(".groupInfo").append(`<div class="` + groupNo[i] + `">
+                <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
+                <p id="group-member"></p>
+            </div>`);
+                        console.log(groupNo);
+                        console.log(i);
+                    }
+                } else {
+                    console.log("No such document!");
+                }
+                
+                for (var i = 0; i < groupNo.length; i++) {
+                    groupRef.doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            usersRef.doc(doc.id).get().then((doc) => {
+                                if (doc.exists) {
+                                    console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
+                                    $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
+                                }
+                            });
+                        });
+                    });
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }
+    })
 }
