@@ -1,5 +1,5 @@
-import { renderGroups } from "./js/group-main.js";
-import { renderMovies } from "./js/vote.js";
+import { renderGroups } from "./group-main.js";
+import { renderMoviesForVote } from "./vote.js";
 
 const db = firebase.firestore();
 const usersRef = db.collection("users");
@@ -93,28 +93,7 @@ export function createGroup(name, desc) {
     });
 }
 
-// gets group information from user logged-in, and displays
-export function displayGroups(groupSection) {
-    usersRef.doc("Bjak8WiHFRY52ScuYiVfgcDPmps1").get()
-    .then((doc) => {
-        // let groupList = doc.data().groupId;
-        let groupId = [];
-        let groupName = [];
-        let groupDesc = [];
 
-        if (doc.data().groupId.length == 0) {
-            groupSection.innerHTML = "No Groups found.";
-        } else {
-            for (let i = 0; i < doc.data().groupId.length; i++) {
-                groupId[i] = doc.data().groupId[i];
-                groupName[i] = doc.data().groupName[i];
-                groupDesc[i] = doc.data().groupDescription[i];
-            }
-            renderGroups(groupId, groupName, groupDesc, groupSection)
-        }
-        console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
-    })
-}
 
 // gets group ID, name, and description from invite URL
 export function getGroup(groupID, inviteMsg) {
@@ -175,8 +154,8 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
       });
 }
 
-// gets group's nominated movie collection and displays
-export function displayMovies(movies, id) {
+/* Gets group's nominated movie collection and displays on vote.html */
+export function displayMoviesForVote(id, movieSection) {
     groupRef.doc(id).collection("nominatedMovies").get()
     .then((doc) => { 
         let movieId = [];
@@ -187,7 +166,7 @@ export function displayMovies(movies, id) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movies.innerHTML = "Nominate some movies to vote on!"
+            movieSection.innerHTML = "Nominate some movies to vote on!"
 
         } else {
             doc.forEach((movie) => {
@@ -198,18 +177,16 @@ export function displayMovies(movies, id) {
                 movieYear.push(movie.data().movieYear)
                 moviePic.push(movie.data().moviePoster)
     
-            })
-    
-            renderMovies(movieName, movieDesc, movieYear, movieId, moviePic, movies);
+            })   
+            renderMoviesForVote(movieName, movieDesc, movieYear, movieId, moviePic, movieSection);
         }
-        
     })
     .catch((err) => {
         throw err;
     })
 }
 
-// submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count
+/* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count */
 export function getVotes(id, submit) {
     submit.addEventListener("click", function() {
         let voteList = [];
@@ -222,17 +199,38 @@ export function getVotes(id, submit) {
 
         // Firestore query based on movieId, increments number of votes by one
         voteList.forEach(function(vote) {
-            let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);       // ******** Need to change to movieID
-            
-            // doc("movie2") -> movie documents must be named by imdbID
+            let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);
 
             movie.update({
                 numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
-            });
+                });
 
             });
         });
         groupRef.doc(id).update({
             totalVotes: firebase.firestore.FieldValue.increment(1) 
         })
+}
+
+// gets group information from user logged-in, and displays
+export function displayGroups(groupSection) {
+    usersRef.doc("Bjak8WiHFRY52ScuYiVfgcDPmps1").get()
+    .then((doc) => {
+        // let groupList = doc.data().groupId;
+        let groupId = [];
+        let groupName = [];
+        let groupDesc = [];
+
+        if (doc.data().groupId.length == 0) {
+            groupSection.innerHTML = "No Groups found.";
+        } else {
+            for (let i = 0; i < doc.data().groupId.length; i++) {
+                groupId[i] = doc.data().groupId[i];
+                groupName[i] = doc.data().groupName[i];
+                groupDesc[i] = doc.data().groupDescription[i];
+            }
+            renderGroups(groupId, groupName, groupDesc, groupSection)
+        }
+        console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
+    })
 }
