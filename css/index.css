@@ -127,9 +127,9 @@ h2{color: #ffffff;
   font-weight: 400;
 }
 .movie_list{
-  margin-top: 40%;
+  margin-top: 35%;
   align-self: start;
-  background: 3b3a3a;
+  background: #3b3a3a;
   font-family: 'Montserrat', helvetica, arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -139,7 +139,7 @@ h2{color: #ffffff;
   display: block;
   width: 800px;
   height: 350px;
-  margin: 1% auto;
+  margin: 2% auto 2% auto;
   overflow: hidden;
   border-radius: 10px;
   transition: all 0.4s;
