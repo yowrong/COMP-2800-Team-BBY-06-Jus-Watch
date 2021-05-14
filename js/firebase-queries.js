@@ -187,17 +187,19 @@ export function displayMoviesForVote(id, movieSection) {
 
 /* Gets group Info from URL and queries Firestore, displays group-related info on group-centre.html */
 export function getGroupforGroupCentre(groupID, movieSection) {
-    groupRef.doc(groupID).get()
+    return groupRef.doc(groupID).get()
     .then(function(doc) {
       let id = doc.data().groupId;
       let name = doc.data().groupName;
       let desc = doc.data().groupDescription;
 
-      return {
-         idOfGroup: id,
-         nameOfGroup: name,
-         descOfGroup: desc
-      }
+      console.log("getgroup:", id);
+
+      return [
+         id,
+         name,
+         desc
+    ]
 
     //   displayGroupOnGroupCentre(id, name, desc);
     //   shareLink(id);
@@ -206,7 +208,7 @@ export function getGroupforGroupCentre(groupID, movieSection) {
 }
 
 /* Displays nominated movies from group's collection on group-centre.html */
-export function displayNominatedMovies(id, movies) {
+export function displayNominatedMovies(id, movieSection) {
     groupRef.doc(id).collection("nominatedMovies").get()
     .then((doc) => { 
 
