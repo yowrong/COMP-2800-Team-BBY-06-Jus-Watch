@@ -27,7 +27,7 @@ function wait(ms) {
     }
 }
 
-//Show group member list
+//Show group member list g1 g2
 function showGroupMembers() {
     var groupNo = [];
     firebase.auth().onAuthStateChanged(function (user) {
