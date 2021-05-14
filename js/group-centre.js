@@ -1,4 +1,4 @@
-import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies } from "./firebase-queries.js";
+import { getGroupforGroupCentre, getNumOfMembers } from "./firebase-queries.js";
 
 let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
 let query = string.split("?");                                  // Projects 1800 lecture slides
@@ -87,21 +87,23 @@ function showGroupMembers() {
 
 var groupVars = [];
 
-const groupCall = async () => {
-    groupVars = await getGroupforGroupCentre(groupID, movieSection);
-    displayGroupOnGroupCentre(groupVars[0], groupVars[1], groupVars[2]);
-    shareLink(groupVars[0]);
-    displayNominatedMovies(groupVars[0], movieSection);
-}
-groupCall();
+// const groupCall = async () => {
+//     groupVars = await getGroupforGroupCentre(groupID, movieSection);
+//     displayGroupOnGroupCentre(groupVars[0], groupVars[1], groupVars[2]);
+//     shareLink(groupVars[0]);
+//     displayNominatedMovies(groupVars[0], movieSection);
+// }
+// groupCall();
+
+getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc);
 
 
 
 // displays Group name and description
-function displayGroupOnGroupCentre(id, name, desc) {
-    groupName.innerText = name;
-    groupDesc.innerText = desc;
-}
+// function displayGroupOnGroupCentre(id, name, desc) {
+//     groupName.innerText = name;
+//     groupDesc.innerText = desc;
+// }
 
 /* Generates correct links for the buttons */
 function shareLink(groupID) {
@@ -119,6 +121,8 @@ function shareLink(groupID) {
         window.location.href = `group-msgs.html?${groupID}`;
     })
 }
+
+shareLink(groupID);
 
 
 
@@ -173,24 +177,24 @@ getNumOfMembers(groupID, movieSection);
 //     })
 // }
 
-// changes "nominated movies" section to "movie of the week", generates the winning movie
-export function renderWinningMovie(title, desc, year, id, pic, movieSection) {
-    let movieCard = "";
+/* changes "nominated movies" section to "movie of the week", generates the winning movie */
+// function renderWinningMovie(title, desc, year, id, pic, movieSection) {
+//     let movieCard = "";
 
-        movieCard += `<div class="card winningMovie">
-        <img src="${pic}" class="card-img-top" alt="${title}">
-        <div class="card-body">
-          <h5 class="card-title">${title}</h5>
-          <p class="card-text">${desc}</p>
-        </div>
-        <div class="card-footer">
-      <small class="text-muted">${year}</small>
-    </div>
-      </div>`;
+//         movieCard += `<div class="card winningMovie">
+//         <img src="${pic}" class="card-img-top" alt="${title}">
+//         <div class="card-body">
+//           <h5 class="card-title">${title}</h5>
+//           <p class="card-text">${desc}</p>
+//         </div>
+//         <div class="card-footer">
+//       <small class="text-muted">${year}</small>
+//     </div>
+//       </div>`;
 
-    movieSection.innerHTML = movieCard;
-    movieCenterTitle.innerText = "Movie of the Week"
-}
+//     movieSection.innerHTML = movieCard;
+//     movieCenterTitle.innerText = "Movie of the Week"
+// }
 
 
 
@@ -236,24 +240,24 @@ export function renderWinningMovie(title, desc, year, id, pic, movieSection) {
 
 
 /* creates card for each movie in collection */
-export function renderMovies(title, desc, year, id, pic, movieSection) {
-    let movieCard = `<div class="card-group">`;
+// export function renderMovies(title, desc, year, id, pic, movieSection) {
+//     let movieCard = `<div class="card-group">`;
 
-    for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
-        <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
-        <div class="card-body">
-          <h5 class="card-title">${title[i]}</h5>
-          <p class="card-text">${desc[i]}</p>
-        </div>
-        <div class="card-footer">
-      <small class="text-muted">${year[i]}</small>
-    </div>
-      </div>`;
-    }
-    movieCard += "</div>";
-    movieSection.innerHTML = movieCard;
-}
+//     for (let i = 0; i < id.length; i++) {
+//         movieCard += `<div class="card">
+//         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
+//         <div class="card-body">
+//           <h5 class="card-title">${title[i]}</h5>
+//           <p class="card-text">${desc[i]}</p>
+//         </div>
+//         <div class="card-footer">
+//       <small class="text-muted">${year[i]}</small>
+//     </div>
+//       </div>`;
+//     }
+//     movieCard += "</div>";
+//     movieSection.innerHTML = movieCard;
+// }
 
 $(document).ready(function(){
     showGroupMembers()

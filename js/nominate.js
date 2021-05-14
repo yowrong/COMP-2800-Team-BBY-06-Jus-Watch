@@ -1,4 +1,4 @@
-import { writeMovie } from "./js/firebase-queries.js";
+import { writeMovie } from "./firebase-queries.js";
 
 // const db = firebase.firestore();
 // const groupRef = db.collection("groups");
@@ -88,7 +88,7 @@ function accessMovie(movieId) {
         movieDesc = responseData.Plot;
         moviePic = responseData.Poster;
 
-        writeMovie(movieImdbId, movieTitle, movieYear, movieDesc, moviePic)
+        writeMovie(movieImdbId, movieTitle, movieYear, movieDesc, moviePic, groupID)
     })
   .catch(function(err) {
       console.log(err);
@@ -101,6 +101,11 @@ $(searchResultsDiv).on("click", ".nominateBtn", function(e) {
     let movieId = e.target.id;
 
     accessMovie(movieId);
+
+    setTimeout(function() {
+        window.location.href = `/group-centre.html?${groupID}`
+    }, 1000)
+    
 
 })
 
@@ -213,23 +218,23 @@ var movie;
 var item;
 
 /* Gets the list of products from the database. */
-var promise = db.collection("movies")
-    .get()
-    .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            /* Casts the product list into an array. */
-            movie = Object.values(doc.data());
-            console.log(movie);
-        });
-    })
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    });
+// var promise = db.collection("movies")
+//     .get()
+//     .then(function (querySnapshot) {
+//         querySnapshot.forEach(function (doc) {
+//             /* Casts the product list into an array. */
+//             movie = Object.values(doc.data());
+//             console.log(movie);
+//         });
+//     })
+//     .catch(function (error) {
+//         console.log("Error getting documents: ", error);
+//     });
 
 /* Run autocomplete once list is retrieved. */
-promise.then(function(){
-    autocomplete(document.getElementById("myInput"), movie);
-});
+// promise.then(function(){
+//     autocomplete(document.getElementById("myInput"), movie);
+// });
 
 /* Locally stores the user's search term and redirects to the movie page */
 function saveSearchFromUser() {
