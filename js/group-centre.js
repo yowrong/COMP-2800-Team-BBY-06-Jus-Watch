@@ -1,4 +1,4 @@
-import { getGroupforGroupCentre, getNumOfMembers } from "./firebase-queries.js";
+import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies, getWinningMovie, showGroupMembers } from "./firebase-queries.js";
 
 let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
 let query = string.split("?");                                  // Projects 1800 lecture slides
@@ -17,6 +17,7 @@ const nominateBtn = document.getElementById('nominateBtn');
 const chatBtn = document.getElementById('chatBtn');
 const movieSection = document.getElementById('movieList');
 const movieCenterTitle = document.getElementById('movieCenterTitle');
+const groupInfo = document.getElementById('groupInfo');
 
 //https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
 function wait(ms) {
@@ -25,48 +26,6 @@ function wait(ms) {
     while (end < start + ms) {
         end = new Date().getTime();
     }
-}
-
-//Show group member list
-function showGroupMembers() {
-    var groupNo = [];
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-    
-            var query = db.collection("users").doc(user.uid).get().then((doc) => {
-                if (doc.exists) {
-                    for (var i = 0; i < doc.data().groupId.length; i++) {
-    
-                        groupNo[i] = doc.data().groupId[i];
-                        $(".groupInfo").append(`<div class="` + groupNo[i] + `">
-                <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
-                <p id="group-member"></p>
-            </div>`);
-                        console.log(groupNo);
-                        console.log(i);
-                    }
-                } else {
-                    console.log("No such document!");
-                }
-               
-                for (var i = 0; i < groupNo.length; i++) {
-                    db.collection("groups").doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            db.collection("users").doc(doc.id).get().then((doc) => {
-                                if (doc.exists) {
-                                    console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
-                                    $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
-                                }
-                            });
-                        });
-                    });
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-    
-        }
-    })
 }
 
 
@@ -98,7 +57,6 @@ var groupVars = [];
 getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc);
 
 
-
 // displays Group name and description
 // function displayGroupOnGroupCentre(id, name, desc) {
 //     groupName.innerText = name;
@@ -123,7 +81,6 @@ function shareLink(groupID) {
 }
 
 shareLink(groupID);
-
 
 
 /* queries groupMembers subcollection to get number of members in group */
@@ -198,6 +155,7 @@ getNumOfMembers(groupID, movieSection);
 
 
 
+getWinningMovie( groupID, movieSection, movieCenterTitle);
 
 
 /* displays nominated movies from group's collection */
@@ -237,10 +195,8 @@ getNumOfMembers(groupID, movieSection);
 //     })
 // }
 
-
-
 /* creates card for each movie in collection */
-// export function renderMovies(title, desc, year, id, pic, movieSection) {
+// function renderMovies(title, desc, year, id, pic) {
 //     let movieCard = `<div class="card-group">`;
 
 //     for (let i = 0; i < id.length; i++) {
@@ -259,7 +215,9 @@ getNumOfMembers(groupID, movieSection);
 //     movieSection.innerHTML = movieCard;
 // }
 
-$(document).ready(function(){
-    showGroupMembers()
-});
-    
+displayNominatedMovies(groupID, movieSection);
+
+showGroupMembers(groupID, groupInfo);
+// $(document).ready(function(){
+//     showGroupMembers()
+// });

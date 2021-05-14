@@ -7,6 +7,7 @@ const usersRef = db.collection("users");
 const groupRef = db.collection("groups");
 const inviteMsg = document.getElementById("inviteMsg");
 
+// Creates a new user to the user collection after sign-up if they are a new user.
 export function createUser() {
     firebase.auth().onAuthStateChanged(function(user) {
         usersRef.doc(user.uid).get()
@@ -25,6 +26,7 @@ export function createUser() {
     });
 }
 
+// Queries the groupMessages subcollection within the groups collection for message sent in the group chat.
 export function displayMsgs(groupID) {
     firebase.auth().onAuthStateChanged(function(user) {
         groupRef.doc(groupID).collection("groupMessages")
@@ -66,9 +68,6 @@ export function sendMsg(msgToSend, groupID) {
                 message: msgToSend.value,
                 uid: user.uid
             });
-            // .then(() => {
-            //     window.location.href = "schedule.html";
-            // });
         })
     });
 }
@@ -95,8 +94,6 @@ export function createGroup(name, desc) {
         })
     });
 }
-
-
 
 /* Takes invite URL on invite.html and gets group ID, name, and description from Firestore. */
 export function getGroup(groupID, inviteMsg) {
@@ -232,8 +229,8 @@ function displayGroupOnGroupCentre(id, name, desc, groupName, groupDesc) {
 
 
 /* Displays nominated movies from group's collection on group-centre.html */
-function displayNominatedMovies(id, movieSection) {
-    groupRef.doc(id).collection("nominatedMovies").get()
+export function displayNominatedMovies(groupId, movieSection) {
+    groupRef.doc(groupId).collection("nominatedMovies").get()
     .then((doc) => { 
 
         // create arrays of all movies and movie items in group collection
@@ -258,7 +255,8 @@ function displayNominatedMovies(id, movieSection) {
                 movieYear.push(movie.data().movieYear)
                 moviePic.push(movie.data().moviePoster)
     
-            })   
+            })
+
             renderMovies(movieName, movieDesc, movieYear, movieId, moviePic, movieSection);
         }
     })
@@ -267,7 +265,7 @@ function displayNominatedMovies(id, movieSection) {
     })
 }
 
-
+/* displays nominated movies from group's collection */
 function renderMovies(title, desc, year, id, pic, movieSection) {
     let movieCard = `<div class="card-group">`;
 
@@ -287,18 +285,69 @@ function renderMovies(title, desc, year, id, pic, movieSection) {
     movieSection.innerHTML = movieCard;
 }
 
+// function renderMovies(title, desc, year, id, pic, movieSection) {
+//     let movieCard = `<div class="card-group">`;
+
+//     for (let i = 0; i < id.length; i++) {
+//         movieCard += `<div class="card">
+//         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
+//         <div class="card-body">
+//           <h5 class="card-title">${title[i]}</h5>
+//           <p class="card-text">${desc[i]}</p>
+//         </div>
+//         <div class="card-footer">
+//       <small class="text-muted">${year[i]}</small>
+//     </div>
+//       </div>`;
+//     }
+//     movieCard += "</div>";
+//     movieSection.innerHTML = movieCard;
+// }
 
 
-/* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
-export function getNumOfMembers(groupID, movieSection) {
-    groupRef.doc(groupID).collection("groupMembers").get()
-    .then(function(doc) {
-        let numOfMembers = doc.size;
-        console.log("num of members: " + numOfMembers);
-        checkVotes(numOfMembers, groupID, movieSection);
+
+/* Gets movie with most votes in nominatedMovies collection, renders winning movie on group-centre.html */
+export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
+    groupRef.doc(groupID).collection("nominatedMovies")
+    .orderBy("numOfVotes", "desc").limit(1)
+    .get()
+    .then(function(snap) {
+        snap.forEach(function(movie) {
+            let title = movie.data().movieTitle;
+            let desc = movie.data().movieDescription;
+            let year = movie.data().movieYear;
+            let id = movie.data().imdbID;
+            let pic = movie.data().moviePoster;
+
+            renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle)
+        })
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
     });
-
 }
+
+
+
+/* changes "nominated movies" section to "movie of the week", generates the winning movie */
+function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle) {
+    let movieCard = "";
+
+    movieCard += `<div class="card winningMovie">
+        <img src="${pic}" class="card-img-top" alt="${title}">
+        <div class="card-body">
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text">${desc}</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">${year}</small>
+        </div>
+        </div>`;
+
+    movieSection.innerHTML = movieCard;
+    movieCenterTitle.innerText = "Movie of the Week";
+}
+
 
 /* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
 function checkVotes(members, groupID, movieSection) {
@@ -309,50 +358,24 @@ function checkVotes(members, groupID, movieSection) {
             console.log(doc.data().totalVotes);
             console.log("IF num of members: " + members);
 
-            getWinningMovie(groupID, movieSection);
+            getWinningMovie(groupID);
         } 
     })
 }
 
-
-/* Gets movie with most votes in nominatedMovies collection, renders winning movie on group-centre.html */
-function getWinningMovie(id, movieSection) {
-    groupRef.doc(id).collection("nominatedMovies")
-    .orderBy("numOfVotes", "desc").limit(1)
-    .get()
-    .then(function(snap) {
-        snap.forEach(function(movie) {
-            let title = movie.data().movieTitle;
-            let desc = movie.data().movieDescription;
-            let year = movie.data().movieYear;
-            let pic = movie.data().moviePoster;
-
-            renderWinningMovie(title, desc, year, id, pic, movieSection)
-        })
-    })
-    .catch((error) => {
-        console.error("Error writing document: ", error);
+      
+/* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
+export function getNumOfMembers(groupID) {
+    groupRef.doc(groupID).collection("groupMembers").get()
+    .then(function(doc) {
+        let numOfMembers = doc.size;
+        console.log("num of members: " + numOfMembers);
+        checkVotes(numOfMembers, groupID);
     });
+
 }
 
-/* changes "nominated movies" section to "movie of the week", generates the winning movie */
-function renderWinningMovie(title, desc, year, id, pic, movieSection) {
-    let movieCard = "";
 
-        movieCard += `<div class="card winningMovie">
-        <img src="${pic}" class="card-img-top" alt="${title}">
-        <div class="card-body">
-          <h5 class="card-title">${title}</h5>
-          <p class="card-text">${desc}</p>
-        </div>
-        <div class="card-footer">
-      <small class="text-muted">${year}</small>
-    </div>
-      </div>`;
-
-    movieSection.innerHTML = movieCard;
-    movieCenterTitle.innerText = "Movie of the Week"
-}
 
 
 /* Gets group information from user logged-in, and displays on group-main.html */
@@ -425,6 +448,7 @@ export function writeMovie(id, title, year, desc, pic, groupID) {
     });
 }
 
+<<<<<<< HEAD
 
 /* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count on vote.html */
 export function getVotes(id, submit) {
@@ -449,3 +473,53 @@ export function getVotes(id, submit) {
         })
     }
   
+=======
+//Show group member list
+export function showGroupMembers(groupID, groupInfo) {
+    groupRef.doc(groupID).collection("groupMembers").get()
+    .then((snap) => {
+        let nameList = "";
+        snap.forEach(function (doc) {
+            nameList += `<p>${doc.data().name}</p>`;
+        })
+        groupInfo.innerHTML = nameList;
+    });
+    // var groupNo = [];
+    // firebase.auth().onAuthStateChanged(function (user) {
+    //     if (user) {
+    
+    //         var query = usersRef.doc(user.uid).get().then((doc) => {
+    //             if (doc.exists) {
+    //                 for (var i = 0; i < doc.data().groupId.length; i++) {
+    
+    //                     groupNo[i] = doc.data().groupName[i];
+    //                     $(".groupInfo").append(`<div class="` + groupNo[i] + `">
+    //             <h2><span id="`+ groupNo[i] + `">` + groupNo[i] + `</span></h2>
+    //             <p id="group-member"></p>
+    //         </div>`);
+    //                     console.log(groupNo);
+    //                     console.log(i);
+    //                 }
+    //             } else {
+    //                 console.log("No such document!");
+    //             }
+                
+    //             for (var i = 0; i < groupNo.length; i++) {
+    //                 groupRef.doc(groupNo[i]).collection("groupMembers").get().then((querySnapshot) => {
+    //                     querySnapshot.forEach((doc) => {
+    //                         usersRef.doc(doc.id).get().then((doc) => {
+    //                             if (doc.exists) {
+    //                                 console.log(i.toString() + " " + groupNo[i] + doc.data().FirstName + " " + doc.data().LastName);
+    //                                 $(".group" + (i-1).toString()).append(doc.data().FirstName + " " + doc.data().LastName + '<br>');
+    //                             }
+    //                         });
+    //                     });
+    //                 });
+    //             }
+    //         }).catch((error) => {
+    //             console.log("Error getting document:", error);
+    //         });
+    //     }
+    // })
+}
+>>>>>>> 81559ceaf03c94f8a54693c8e4859a4db7497b76
