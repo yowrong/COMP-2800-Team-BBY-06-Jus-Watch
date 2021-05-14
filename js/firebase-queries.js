@@ -1,7 +1,3 @@
-// import { renderGroups } from "./group-main.js";
-// import { renderMoviesForVote } from "./vote.js";
-// import { renderWinningMovie, renderMovies } from "./group-centre.js";
-
 const db = firebase.firestore();
 const usersRef = db.collection("users");
 const groupRef = db.collection("groups");
@@ -52,6 +48,7 @@ export function displayMsgs(groupID) {
     });
 }
 
+// Creates a new document in the groupMessages collection containing the message, sentBy, and sendAt.
 export function sendMsg(msgToSend, groupID) {
     firebase.auth().onAuthStateChanged(function(user) {
         usersRef.doc(user.uid).get()
@@ -80,10 +77,12 @@ export function createGroup(name, desc) {
             groupName: name.value,
             groupDescription: desc.value,
             chosenMovie: "",
+            totalVotes: 0,
+            isPicked: false
         })
         .then((doc) => {
-            // writes group information to users collection
-            usersRef.doc(user.uid).set({                      //**** TO CHANGE TO USER UID */
+            // writes group information to users collection, adds to arrays in order so that group information corresponds
+            usersRef.doc(user.uid).set({                     
                 groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              // from Firebase website, adds to array
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
@@ -175,7 +174,6 @@ export function displayMoviesForVote(id, movieSection) {
                 movieDesc.push(movie.data().movieDescription)
                 movieYear.push(movie.data().movieYear)
                 moviePic.push(movie.data().moviePoster)
-    
             })   
             renderMoviesForVote(movieName, movieDesc, movieYear, movieId, moviePic, movieSection);
         }
@@ -185,6 +183,7 @@ export function displayMoviesForVote(id, movieSection) {
     })
 }
 
+// Display nominated movies to vote on.
 function renderMoviesForVote(title, desc, year, id, pic, movies) {
     let movieCard = `<div class="card-group">`;
 
@@ -203,7 +202,6 @@ function renderMoviesForVote(title, desc, year, id, pic, movies) {
     movieCard += "</div>";
     movies.innerHTML = movieCard;
 }
-
 
 /* Gets group Info from URL and queries Firestore, displays group-related info on group-centre.html */
 export function getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc) {
@@ -225,8 +223,6 @@ function displayGroupOnGroupCentre(id, name, desc, groupName, groupDesc) {
     groupName.innerText = name;
     groupDesc.innerText = desc;
 }
-
-
 
 /* Displays nominated movies from group's collection on group-centre.html */
 export function displayNominatedMovies(groupId, movieSection) {
@@ -285,27 +281,6 @@ function renderMovies(title, desc, year, id, pic, movieSection) {
     movieSection.innerHTML = movieCard;
 }
 
-// function renderMovies(title, desc, year, id, pic, movieSection) {
-//     let movieCard = `<div class="card-group">`;
-
-//     for (let i = 0; i < id.length; i++) {
-//         movieCard += `<div class="card">
-//         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
-//         <div class="card-body">
-//           <h5 class="card-title">${title[i]}</h5>
-//           <p class="card-text">${desc[i]}</p>
-//         </div>
-//         <div class="card-footer">
-//       <small class="text-muted">${year[i]}</small>
-//     </div>
-//       </div>`;
-//     }
-//     movieCard += "</div>";
-//     movieSection.innerHTML = movieCard;
-// }
-
-
-
 /* Gets movie with most votes in nominatedMovies collection, renders winning movie on group-centre.html */
 export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
     groupRef.doc(groupID).collection("nominatedMovies")
@@ -327,8 +302,6 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
     });
 }
 
-
-
 /* changes "nominated movies" section to "movie of the week", generates the winning movie */
 function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle) {
     let movieCard = "";
@@ -348,9 +321,8 @@ function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCente
     movieCenterTitle.innerText = "Movie of the Week";
 }
 
-
 /* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
-function checkVotes(members, groupID, movieSection) {
+function checkVotes(members, groupID, movieSection, movieCenterTitle) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
         if (doc.data().totalVotes == members) {
@@ -358,25 +330,23 @@ function checkVotes(members, groupID, movieSection) {
             console.log(doc.data().totalVotes);
             console.log("IF num of members: " + members);
 
-            getWinningMovie(groupID);
-        } 
+            getWinningMovie(groupID, movieSection, movieCenterTitle);
+        } else {
+            console.log("not equal votes");
+        }
     })
 }
 
-      
 /* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
-export function getNumOfMembers(groupID) {
+export function getNumOfMembers(groupID, movieSection, movieCenterTitle) {
     groupRef.doc(groupID).collection("groupMembers").get()
     .then(function(doc) {
         let numOfMembers = doc.size;
         console.log("num of members: " + numOfMembers);
-        checkVotes(numOfMembers, groupID);
+        checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle);
     });
 
 }
-
-
-
 
 /* Gets group information from user logged-in, and displays on group-main.html */
 export function displayGroups(groupSection) {
@@ -402,8 +372,6 @@ export function displayGroups(groupSection) {
         })
     })
 }
-
-
 
 /* Renders a "Group" card for each group the user is in, in group-main.html */
 export function renderGroups(id, name, desc, groupSection) {
@@ -466,11 +434,10 @@ export function getVotes(id, submit) {
   
             movie.update({
                 numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
-                });
-  
-            })
-        })
-    }
+            });
+        });
+    });
+}
   
 //Show group member list
 export function showGroupMembers(groupID, groupInfo) {
