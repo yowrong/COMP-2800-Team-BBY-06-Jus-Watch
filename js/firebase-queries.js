@@ -172,7 +172,6 @@ export function displayMoviesForVote(id, movieSection) {
                 movieDesc.push(movie.data().movieDescription)
                 movieYear.push(movie.data().movieYear)
                 moviePic.push(movie.data().moviePoster)
-    
             })   
             renderMoviesForVote(movieName, movieDesc, movieYear, movieId, moviePic, movieSection);
         }
