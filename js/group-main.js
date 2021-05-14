@@ -1,10 +1,12 @@
-import { displayGroups} from "./firebase-queries.js";
+import { displayGroups } from "./firebase-queries.js";
 
-const db = firebase.firestore();
-const usersRef = db.collection("users");
-const groupRef = db.collection("groups");
+// const db = firebase.firestore();
+// const usersRef = db.collection("users");
+// const groupRef = db.collection("groups");
 
 const groupList = document.getElementById("group-list");
+
+// displayGroups(groupList);
 
 // renders a "Group" card for each group the user is in
 export function renderGroups(id, name, desc, groupSection) {
@@ -32,4 +34,3 @@ export function renderGroups(id, name, desc, groupSection) {
     groupSection.innerHTML = groupCard;
 }
 
-displayGroups(groupList);

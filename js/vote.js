@@ -1,17 +1,16 @@
-import { displayMovies, getVotes } from "./js/firebase-queries.js";
+import { displayMoviesForVote, getVotes } from "./firebase-queries.js";
+
 // retrieves group ID from URL
 let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
 let query = string.split("?");                                  // Projects 1800 lecture slides
 let groupID = query[1];
 
-const movies = document.getElementById("movieList");
+const movieList = document.getElementById("movieList");
 const submit = document.getElementById("submit");
 const returnBtn = document.getElementById("returnBtn");
 
-displayMovies(movies, groupID);
-
-// creates card for each movie in collection
-export function renderMovies(title, desc, year, id, pic, movies) {
+/* Creates card for each movie in collection */
+export function renderMoviesForVote(title, desc, year, id, pic, movies) {
     let movieCard = `<div class="card-group">`;
 
     for (let i = 0; i < id.length; i++) {
@@ -22,7 +21,7 @@ export function renderMovies(title, desc, year, id, pic, movies) {
           <p class="card-text">${desc[i]}</p>
           <p class="card-text"><small class="text-muted">${year[i]}</small></p>
           <input type="checkbox" class="btn-check" id="${id[i]}" autocomplete="off">
-            <label class="btn btn-outline-primary" for="${id[i]}">Vote</label><br>
+            <label class="btn btn-outline-danger" for="${id[i]}">Vote</label><br>
         </div>
       </div>`;
     }
@@ -31,6 +30,8 @@ export function renderMovies(title, desc, year, id, pic, movies) {
 }
 
 getVotes(groupID, submit);
+
+displayMoviesForVote(groupID, movieList);
 
 returnBtn.addEventListener("click", function(e) {
     e.preventDefault();
