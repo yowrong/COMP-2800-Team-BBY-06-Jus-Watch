@@ -130,7 +130,7 @@ function saveSearchFromUser() {
     document.getElementById("myBtn").addEventListener('click', function () {
         item = document.getElementById("myInput").value;
 
-        window.location.href = "moviedescription.html"
+        window.location.href = "moviedecription.htmld"
 
         localStorage.setItem("item", item);
     });

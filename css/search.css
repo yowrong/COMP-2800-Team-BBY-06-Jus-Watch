@@ -58,7 +58,6 @@
 .search {
     background-color: #3466AA;
     position: fixed;
-    margin-top: 70px;
     width: 100%;
     z-index: 2;
 }
