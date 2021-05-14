@@ -97,11 +97,11 @@ export function createGroup(name, desc) {
 export function getGroup(groupID, inviteMsg) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
-      let id = doc.data().groupId;
+    //   let id = doc.data().groupId;
       let name = doc.data().groupName;
       let desc = doc.data().groupDescription;
   
-      addUser(id, name, desc, inviteMsg);
+      addUser(groupID, name, desc, inviteMsg);
   
     //   console.log("get group:", id + name + desc + inviteMsg)
     })
