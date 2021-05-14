@@ -9,6 +9,16 @@ const movieList = document.getElementById("movieList");
 const submit = document.getElementById("submit");
 const returnBtn = document.getElementById("returnBtn");
 
+getVotes(groupID, submit);
+
+displayMoviesForVote(groupID, movieList);
+
+returnBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    window.location.href = `/group-centre.html?${groupID}`;
+})
+
+
 /* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count on vote.html */
 // function getVotes(id, submit) {
 //   submit.addEventListener("click", function() {
@@ -51,13 +61,3 @@ const returnBtn = document.getElementById("returnBtn");
 //     movieCard += "</div>";
 //     movies.innerHTML = movieCard;
 // }
-
-getVotes(groupID, submit);
-
-displayMoviesForVote(groupID, movieList);
-
-returnBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    window.location.href = `/group-centre.html?${groupID}`;
-})
-
