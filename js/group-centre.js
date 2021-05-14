@@ -85,12 +85,17 @@ function showGroupMembers() {
 //     })
 //   }
 
+var groupVars = [];
 
-const { idOfGroup, nameOfGroup, descOfGroup } = getGroupforGroupCentre(groupID, movieSection);
+const groupCall = async () => {
+    groupVars = await getGroupforGroupCentre(groupID, movieSection);
+    displayGroupOnGroupCentre(groupVars[0], groupVars[1], groupVars[2]);
+    shareLink(groupVars[0]);
+    displayNominatedMovies(groupVars[0], movieSection);
+}
+groupCall();
 
-displayGroupOnGroupCentre(idOfGroup, nameOfGroup, descOfGroup);
-shareLink(idOfGroup);
-displayNominatedMovies(idOfGroup, movieSection);
+
 
 // displays Group name and description
 function displayGroupOnGroupCentre(id, name, desc) {
