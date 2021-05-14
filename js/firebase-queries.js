@@ -352,7 +352,7 @@ function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCente
 
 
 /* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
-function checkVotes(members, groupID, movieSection) {
+function checkVotes(members, groupID, movieSection, movieCenterTitle) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
         if (doc.data().totalVotes == members) {
@@ -360,19 +360,21 @@ function checkVotes(members, groupID, movieSection) {
             console.log(doc.data().totalVotes);
             console.log("IF num of members: " + members);
 
-            getWinningMovie(groupID);
-        } 
+            getWinningMovie(groupID, movieSection, movieCenterTitle);
+        } else {
+            console.log("not equal votes");
+        }
     })
 }
 
       
 /* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
-export function getNumOfMembers(groupID) {
+export function getNumOfMembers(groupID, movieSection, movieCenterTitle) {
     groupRef.doc(groupID).collection("groupMembers").get()
     .then(function(doc) {
         let numOfMembers = doc.size;
         console.log("num of members: " + numOfMembers);
-        checkVotes(numOfMembers, groupID);
+        checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle);
     });
 
 }

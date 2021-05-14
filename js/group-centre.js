@@ -94,7 +94,7 @@ shareLink(groupID);
 //     });
 
 // }
-getNumOfMembers(groupID, movieSection);
+getNumOfMembers(groupID, movieSection, movieCenterTitle);
 
 
 
@@ -155,7 +155,7 @@ getNumOfMembers(groupID, movieSection);
 
 
 
-getWinningMovie( groupID, movieSection, movieCenterTitle);
+// getWinningMovie( groupID, movieSection, movieCenterTitle);
 
 
 /* displays nominated movies from group's collection */
