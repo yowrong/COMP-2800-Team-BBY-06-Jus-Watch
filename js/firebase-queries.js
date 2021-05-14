@@ -80,10 +80,12 @@ export function createGroup(name, desc) {
             groupName: name.value,
             groupDescription: desc.value,
             chosenMovie: "",
+            totalVotes: 0,
+            isPicked: false
         })
         .then((doc) => {
-            // writes group information to users collection
-            usersRef.doc(user.uid).set({                      //**** TO CHANGE TO USER UID */
+            // writes group information to users collection, adds to arrays in order so that group information corresponds
+            usersRef.doc(user.uid).set({                     
                 groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              // from Firebase website, adds to array
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
@@ -448,7 +450,6 @@ export function writeMovie(id, title, year, desc, pic, groupID) {
     });
 }
 
-<<<<<<< HEAD
 
 /* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count on vote.html */
 export function getVotes(id, submit) {
@@ -473,7 +474,6 @@ export function getVotes(id, submit) {
         })
     }
   
-=======
 //Show group member list
 export function showGroupMembers(groupID, groupInfo) {
     groupRef.doc(groupID).collection("groupMembers").get()
@@ -522,4 +522,3 @@ export function showGroupMembers(groupID, groupInfo) {
     //     }
     // })
 }
->>>>>>> 81559ceaf03c94f8a54693c8e4859a4db7497b76
