@@ -60,8 +60,8 @@ function searchOMDB(search) {
 let title = ['Test Movie'];
 let year = ['0000'];
 let poster = ['www.testlink.com'];
-let movieId = ['Test Id'];
-let groupId = 'Test Group';
+let movieId = ['TestId'];
+let groupId = 'TestGroup';
 
 function renderSearchResults(title, year, poster, movieId, groupId, searchResultsDiv) {
     let card = "";
@@ -101,15 +101,15 @@ test("Sets searchResultsDiv's innerHTML to display movie information", () => {
     expect(searchResultsDiv.innerHTML).toEqual(`<div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="${poster[0]}" alt="${title[0]}" style="max-width: 100%">
+                <img src="www.testlink.com" alt="Test Movie" style="max-width: 100%">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">${title[0]}</h5>
-                    <p class="card-text">${year[0]}</p>
+                    <h5 class="card-title">Test Movie</h5>
+                    <p class="card-text">0000</p>
                     <p class="card-text">
-                        <a href="group_centre.html?${groupId}">
-                            <button type="button" class="btn btn-primary btn-lg nominateBtn" id="${movieId[0]}">Nominate</button>
+                        <a href="group_centre.html?TestGroup">
+                            <button type="button" class="btn btn-primary btn-lg nominateBtn" id="TestId">Nominate</button>
                         </a>
                     </p>
                 </div>

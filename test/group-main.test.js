@@ -6,7 +6,7 @@ document.body.innerHTML =
 let groupSection = document.getElementById("group-list");
 let name = ["Test Movie"];
 let desc = ["Test Description"];
-let id = ["Test ID"];
+let id = ["TestID"];
 
 function renderGroups(id, name, desc, groupSection) {
     let groupCard = "";
@@ -43,10 +43,10 @@ test("Sets groupSection's innerHTML to display group cards", () => {
     </div>
     <div class="col-md-8">
     <div class="card-body">
-    <h5 class="card-title">${name[0]}</h5>
-    <p class="card-text">${desc[0]}</p>
-    <a href="./index.html?${id[0]}">
-    <button id="${id[0]}" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
+    <h5 class="card-title">Test Movie</h5>
+    <p class="card-text">Test Description</p>
+    <a href="./index.html?TestID">
+    <button id="TestID" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
     </a>
     </div>
     </div>
