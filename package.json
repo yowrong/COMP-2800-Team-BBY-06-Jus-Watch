@@ -29,9 +29,14 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "jest": "^26.6.3"
 =======
     "firebaseui": "^4.8.0"
 >>>>>>> origin/invite_feature
+=======
+    "firebaseui": "^4.8.0",
+    "node-fetch": "^2.6.1"
+>>>>>>> movieDB_api_feature
   }
 }
