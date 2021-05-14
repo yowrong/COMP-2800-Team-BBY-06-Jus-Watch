@@ -137,7 +137,7 @@ getNumOfMembers(groupID, movieSection);
 // }
 
 // changes "nominated movies" section to "movie of the week", generates the winning movie
-export function renderWinningMovie(title, desc, year, id, pic, movies) {
+export function renderWinningMovie(title, desc, year, id, pic, movieSection) {
     let movieCard = "";
 
         movieCard += `<div class="card winningMovie">
@@ -151,7 +151,7 @@ export function renderWinningMovie(title, desc, year, id, pic, movies) {
     </div>
       </div>`;
 
-    movies.innerHTML = movieCard;
+    movieSection.innerHTML = movieCard;
     movieCenterTitle.innerText = "Movie of the Week"
 }
 

@@ -1,6 +1,5 @@
-import { displayGroupOnGroupCentre, shareLink, renderWinningMovie, renderMovies } from "./js/group-centre.js";
-import { renderGroups } from "./js/group-main.js";
-import { renderMovies } from "./js/vote.js";
+import { renderGroups } from "./group-main.js";
+import { displayGroupOnGroupCentre, shareLink, renderWinningMovie, renderMovies } from "./group-centre.js";
 
 const db = firebase.firestore();
 const usersRef = db.collection("users");
@@ -204,7 +203,7 @@ export function getGroupforGroupCentre(groupID, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movies.innerHTML = "Nominate some movies to vote on!"
+            movies.innerHTML = "No Movies Nominated Yet!"
 
         } else {
             doc.forEach((movie) => {
@@ -270,46 +269,3 @@ export function getWinningMovie(id, movieSection) {
 }
 
 
-// submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count
-export function getVotes(id, submit) {
-    submit.addEventListener("click", function() {
-        let voteList = [];
-        let votes = document.querySelectorAll(".btn-check:checked");        // StackOverflow: https://stackoverflow.com/questions/11599666/get-the-value-of-checked-checkbox
-    
-        // gets id's of all checked movies
-        votes.forEach(function(vote) {
-            voteList.push(vote.id)
-        });
-
-        // Firestore query based on movieId, increments number of votes by one
-        voteList.forEach(function(vote) {
-            let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);       // ******** Need to change to movieID
-            
-            // doc("movie2") -> movie documents must be named by imdbID
-
-            movie.update({
-                numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
-            });
-
-            });
-        });
-        groupRef.doc(id).update({
-            totalVotes: firebase.firestore.FieldValue.increment(1) 
-        })
-}
-
-/* writes movie to Firestore nominatedMovies collection */
-export function writeMovie(id, title, year, desc, pic) {
-    groupRef.doc("group1").collection("nominatedMovies").doc(id).set({
-        chosen: false,
-        imdbID: id,
-        movieDescription: desc,
-        moviePoster: pic,
-        movieTitle: title,
-        movieYear: year,
-        numOfVotes: 0
-    })
-    .catch((error) => {
-        console.error("Error writing document: ", error);
-    });
-}
