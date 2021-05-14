@@ -448,7 +448,6 @@ export function writeMovie(id, title, year, desc, pic, groupID) {
     });
 }
 
-<<<<<<< HEAD
 
 /* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count on vote.html */
 export function getVotes(id, submit) {
@@ -473,7 +472,6 @@ export function getVotes(id, submit) {
         })
     }
   
-=======
 //Show group member list
 export function showGroupMembers(groupID, groupInfo) {
     groupRef.doc(groupID).collection("groupMembers").get()
@@ -522,4 +520,3 @@ export function showGroupMembers(groupID, groupInfo) {
     //     }
     // })
 }
->>>>>>> 81559ceaf03c94f8a54693c8e4859a4db7497b76
