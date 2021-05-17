@@ -1,5 +1,6 @@
-const { user } = require("firebase-functions/lib/providers/auth");
 
+var db = firebase.firestore(); 
+// const { user } = require("firebase-functions/lib/providers/auth");
 function getUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -19,24 +20,16 @@ function getUser() {
     })
 }
 
-function readFullName() {
-    db.collection("users").doc(user.uid)
-    .onSnapshot(function(snap) {
-        console.log(snap.data()); //print the document fields of the user
-        console.log(snap.data().name);
-        //document.getElementById("fullName").innerText = snap.data().name;
-        document.getElementById("fullName").innerText = snap.data().name;
-    })
-}
- 
-readFullName();
-
-function readEMail() {
-    db.collection("users").doc(user.uid)
-    .onSnapshot(function(snap) {
-        console.log(snap.data()); //print the document fields of the user
-        console.log(snap.data().email);
-        document.getElementById("email").innerText = snap.data().email;
-    })
-}
-readEMail();
+//get current user for reading user email.
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        db.collection("users").doc(user.uid).get().then((s) => {
+            var n = 0;
+            console.log(user.email);
+            console.log(s.data().name);
+            $("#fullName").append(s.data().name);
+            $("#email").append(user.email);
+           
+        });
+    }
+});
