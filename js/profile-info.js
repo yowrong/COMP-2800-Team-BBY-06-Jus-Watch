@@ -1,3 +1,5 @@
+var db = firebase.firestore(); 
+// const { user } = require("firebase-functions/lib/providers/auth");
 function getUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -17,26 +19,17 @@ function getUser() {
     })
 }
 
-var fn = document.getElementById('firstName');
-var ln = document.getElementById('lastName');
+var n = document.getElementById('name');
 var age = document.getElementById('age');
-var contactEmail = document.getElementById('email');
-var address = document.getElementById('address');
-const db = firebase.firestore();
-var addBtn = document.getElementById('saveBtn');
+var email = document.getElementById('email');
 $(addBtn).click(function (event) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            db.collection('users').doc(user.uid).update({
-                FirstName: fn.value,
-                LastName: ln.value,
-                name:fn.value + ' ' + ln.value,
-                age: age.value,
-                contactEmail: contactEmail.value,
-                address: address.value,
+            db.collection("users").doc(user.uid).update({
+                "name":n.value,
+                "age": age.value,
+                "email": email.value,
             });
         }
     });
 });
-
-

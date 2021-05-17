@@ -12,12 +12,12 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
     <!-- Custom styles -->
-    <link href="profile.css" rel="stylesheet">
+    <link href="/css/profile.css" rel="stylesheet">
 </head>
 
 <body>
-    
-    <!-- Header Navigation Bar from Bootstrap -->
+
+    <!-- Header Navigation Bar From Bootstrap-->
     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#">Jus'Watch</a>
@@ -34,10 +34,13 @@
                         <a class="nav-link text-white" href="login.html">Login/Signup</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="group-centre.html">Groups</a>
+                        <a class="nav-link text-white" href="group-main.html">Groups</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="search.html">Search</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="about-us.html">About Us</a>
@@ -47,12 +50,12 @@
         </div>
     </nav>
 
-    
     <!--ProfilePage Main Part-->
     <div class="profile_container">
         <div class="col-md-5">
             <div class="profile-img">
-                <img src="profile-pic.jpg" alt="" />
+                <img src="https://st2.depositphotos.com/1009634/7235/v/600/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg"
+                    alt="" />
                 <br />
                 <div class="file btn">
                     Change Photo
@@ -62,23 +65,23 @@
         <div class="col-md-6">
             <div class="profile-head">
                 <div id="username"></div>
-                <h5><span id="fullName">1</span></h5>
-                <h6><span id="email">2</span></h6>
+                <h5><span id="fullName"></span></h5>
+                <h6><span id="email"></span></h6>
             </div>
         </div>
 
-            <div class="col-md-4" id="profile-setting">
-                <p>Profile</p>
-                <a href="profile_info.html">Personal Info</a>
-                <br />
-                <a href="">Favourite</a>
-                <br />
-                <p>Help & Policies</p>
-                <a href="">Help</a>
-                <br />
-                <a href="">Terms & Servies</a>
-                <br />
-            </div>
+        <div class="col-md-4" id="profile-setting">
+            <p>Profile</p>
+            <a href="profile_info.html">Personal Info</a>
+            <br />
+            <a href="">Favourite</a>
+            <br />
+            <p>Help & Policies</p>
+            <a href="">Help</a>
+            <br />
+            <a href="">Terms & Servies</a>
+            <br />
+        </div>
     </div>
     <!-- JS: Boostrap, Firebase, API related, JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
