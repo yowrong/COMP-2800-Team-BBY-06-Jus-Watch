@@ -20,21 +20,18 @@ function getUser() {
     })
 }
 
-var fn = document.getElementById('firstName');
-var ln = document.getElementById('lastName');
+var n = document.getElementById('name');
 var age = document.getElementById('age');
 var email = document.getElementById('email');
-var address = document.getElementById('address');
 const db = firebase.firestore();
 var addBtn = document.getElementById('saveBtn');
 $(addBtn).click(function (event) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             db.collection('users').doc(user.uid).update({
-                name:fn.value + ' ' + ln.value,
+                name:n.value,
                 age: age.value,
                 email: email.value,
-                address: address.value,
             });
         }
     });
