@@ -24,12 +24,10 @@ function getUser() {
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         db.collection("users").doc(user.uid).get().then((s) => {
-            var n = 0;
             console.log(user.email);
             console.log(s.data().name);
             $("#fullName").append(s.data().name);
             $("#email").append(user.email);
-           
         });
     }
 });
