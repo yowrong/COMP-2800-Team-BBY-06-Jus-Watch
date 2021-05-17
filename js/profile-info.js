@@ -26,7 +26,7 @@ var email = document.getElementById('email');
 $(addBtn).click(function (event) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            db.collection('users').doc(user.uid).update({
+            db.collection("users").doc(user.uid).update({
                 "name":n.value,
                 "age": age.value,
                 "email": email.value,
