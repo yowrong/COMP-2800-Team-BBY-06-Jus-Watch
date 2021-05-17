@@ -224,7 +224,9 @@ li {
   transition-delay: 0.15s;
   margin: 0 10px;
 }
-
+.icons{
+  font-size: 16pt;
+}
 li:hover {
   transition: color 0.3s;
   color: rgba(255, 255, 255, 0.8);
