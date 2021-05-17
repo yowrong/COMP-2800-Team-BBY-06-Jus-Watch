@@ -1,7 +1,6 @@
 const db = firebase.firestore();
 const usersRef = db.collection("users");
 const groupRef = db.collection("groups");
-const inviteMsg = document.getElementById("inviteMsg");
 
 // Creates a new user to the user collection after sign-up if they are a new user.
 export function createUser() {
@@ -98,13 +97,13 @@ export function createGroup(name, desc) {
 export function getGroup(groupID, inviteMsg) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
-      let id = doc.data().groupId;
+    //   let id = doc.data().groupId;
       let name = doc.data().groupName;
       let desc = doc.data().groupDescription;
   
-      addUser(id, name, desc, inviteMsg);
+      addUser(groupID, name, desc, inviteMsg);
   
-      console.log("get group:", id + name + desc + inviteMsg)
+    //   console.log("get group:", id + name + desc + inviteMsg)
     })
 }
 
@@ -121,7 +120,7 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
           let userLName = user.displayName.split(' ')[1];
 
           inviteSection.innerHTML = `<h3>Welcome!</h3>
-          <a href="./group_main.html?${groupID}" <button type="button" class="btn btn-primary">
+          <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-primary">
           Click to enter your Group's Page!
           </button>`;
 
@@ -133,8 +132,8 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
               if (!member.exists) {
                 groupRef.doc(groupID).collection("groupMembers").doc(user.uid).set({
                   userId: user.uid,
-                  userFirstName: userFName,
-                  userLastName: userLName
+                  name: user.displayName
+                //   userLastName: userLName
                 })
               }
           });
