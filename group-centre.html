@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Jus'Watch</title>
+    <title>Main</title>
     <meta name="author" content="BBY-06">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,6 +17,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
     <link rel="manifest" href="./img/site.webmanifest">
+
+    <link rel="stylesheet" href="./css/group-centre.css" />
+
 </head>
 
 <body>
@@ -54,9 +57,48 @@
         </div>
     </nav>
 
+
     <div class="container">
-        <div id="firebaseui-auth-container"></div>
-        <div id="loader">Loading...</div>
+        <div class="title">
+            <h2><span id="group-name"></span> Movie Center</h2>
+            <hr>
+            <p id="group-description"></p>
+        </div>
+        <div class="movieCenter">
+            <h3 class="movieCenterTitle" id="movieCenterTitle">Nominated Movies</h3>
+            <div id="movieList">
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 col-6 mx-auto group_button">
+            <button class="btn btn-danger" type="button" id="chatBtn">Group Chat</button>
+            <button class="btn btn-danger" type="button" id="nominateBtn">Nominate a movie!</button>
+            <button class="btn btn-danger" type="button" id="voteBtn">Vote for this week's movie!</button>
+            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Invite a
+                friend!</button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Invite</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Share this link with your friends:</p>
+                        <p><input type="text" value="" id="shareLink"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Show group member list -->
+        <div class="groupInfo" id="groupInfo">
+        </div>
     </div>
 
     <!-- JS: Boostrap, Firebase, API related, JQuery -->
@@ -68,8 +110,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+
     <script type="module" src="./js/firebase-api.js"></script>
-    <script type="module" src="./js/login.js"></script>
+    <script type="module" src="./js/group-centre.js"></script>
+    <script type="module" src="./js/firebase-queries.js"></script>
+ 
 
 </body>
 

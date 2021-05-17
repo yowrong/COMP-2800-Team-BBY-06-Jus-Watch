@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>About Us</title>
+  <title>Jus'Watch - Vote</title>
   <meta name="author" content="BBY-06">
 
   <!-- Bootstrap for Mobile-first, and JQuery -->
@@ -11,14 +11,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+  <link rel="stylesheet" href="./css/vote.css" />
 
   <!--Favicon-->
   <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
   <link rel="manifest" href="./img/site.webmanifest">
-
-  <link rel="stylesheet" href="./css/about-us.css">
 </head>
 
 <body>
@@ -57,46 +56,37 @@
   </nav>
 
   <div class="container">
-    <div class="title">
-      <h1>About Us</h1>
+    <h2>Vote on what you want to watch this week!</h2>
+    <div id="movieList">
     </div>
-
-    <div class="avatars">
-      <figure>
-        <img src="./img/avatar_andy.png" alt="andy" class="avatar" />
-        <figcaption>Andy</figcaption>
-      </figure>
+    <div class="buttons">
+    <div id="submit">
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Submit Vote
+      </button></div>
+    <div id="returnBtn">
+      <button type="button" class="btn btn-danger">
+        Return to Group Center
+      </button>
     </div>
+  </div>
+  </div>
 
-    <div class="avatars">
-      <figure>
-        <img src="./img/avatar_shirley.png" alt="shirley" class="avatar" />
-        <figcaption>Shirley</figcaption>
-      </figure>
-    </div>
-
-    <div class="avatars">
-      <figure>
-        <img src="./img/avatar_josef.png" alt="josef" class="avatar" />
-        <figcaption>Josef</figcaption>
-      </figure>
-    </div>
-
-    <div class="avatars">
-      <figure>
-        <img src="./img/avatar_lillian.png" alt="lillian" class="avatar" />
-        <figcaption>Lillian</figcaption>
-      </figure>
-    </div>
-
-    <div>
-      <p>
-        Miss movie nights with your friends? We at Jus'Watch do too!
-        We are a team of developers with a strong passion for movies (good and bad),
-        and want to use our skills to help you reconnect with your friends during these times.
-        That's why we have come together to create an online Movie Club where you can nominate, vote on,
-        and discuss movies with your friends.
-      </p>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Voting</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Thanks for Voting!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -111,6 +101,13 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+
+  
+  <script type="module" src="./js/firebase-api.js"></script>
+  
+  <script type="module" src="./js/vote.js"></script>
+  <script type="module" src="./js/firebase-queries.js"></script>
+  
 
 </body>
 
