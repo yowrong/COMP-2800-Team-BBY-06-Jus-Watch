@@ -23,15 +23,13 @@ function getUser() {
 var n = document.getElementById('name');
 var age = document.getElementById('age');
 var email = document.getElementById('email');
-const db = firebase.firestore();
-var addBtn = document.getElementById('saveBtn');
 $(addBtn).click(function (event) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             db.collection('users').doc(user.uid).update({
-                name:n.value,
-                age: age.value,
-                email: email.value,
+                "name":n.value,
+                "age": age.value,
+                "email": email.value,
             });
         }
     });
