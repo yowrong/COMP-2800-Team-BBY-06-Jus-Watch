@@ -381,15 +381,12 @@ export function renderGroups(id, name, desc, groupSection) {
         // Bootstrap card template, "Enter Group" button redirects to Group Center page
         groupCard += `<div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4">
-                                <!-- <img src="..." alt="..."> -->
-                            </div>
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">${name[i]}</h5>
                                     <p class="card-text">${desc[i]}</p>
                                     <a href="./group-centre.html?${id[i]}">
-                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
+                                        <button id="${id[i]}" type="button" class="btn btn-danger btn-lg enter">Enter Group</button>
                                     </a>
                                 </div>
                             </div>
