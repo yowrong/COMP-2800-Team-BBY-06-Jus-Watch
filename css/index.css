@@ -75,10 +75,6 @@ img {
   transition: background-color 1s ease;
 }
 
-.active1 {
-  background-color: #717171;
-}
-
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
@@ -110,22 +106,25 @@ img {
 /* On smaller screens, decrease text size */
 @media only screen and (max-width: 300px) {
   .text {
-    font-size: 11pt
+    font-size: 11pt;
   }
 }
 
 /*css from https://blog.avada.io/examples/responsive-movie-card-dark-version-zimuzo-ejinkeonye.html*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800');
+
 * {
   box-sizing: border-box;
   margin: 0;
 }
 
 
-h2{color: #ffffff;
+h2 {
+  color: #ffffff;
   font-weight: 400;
 }
-.movie_list{
+
+.movie_list {
   margin-top: 35%;
   align-self: start;
   background: #3b3a3a;
@@ -133,6 +132,7 @@ h2{color: #ffffff;
   font-size: 14px;
   font-weight: 400;
 }
+
 .movie_card {
   position: relative;
   display: block;
@@ -223,9 +223,11 @@ li {
   transition-delay: 0.15s;
   margin: 0 10px;
 }
-.icons{
+
+.icons {
   font-size: 17pt;
 }
+
 li:hover {
   transition: color 0.3s;
   color: rgba(255, 255, 255, 0.8);
@@ -235,6 +237,7 @@ i {
   font-size: 19px;
   cursor: pointer;
 }
+
 .blur_back {
   position: absolute;
   top: 0;
@@ -294,7 +297,7 @@ i {
 
 
 #wall {
-  box-shadow: 0px 0px 150px -45px rgba(255, 51, 0, 0.5);
+  box-shadow: 0px 0px 150px -45px #ff330080;
 
 }
 
@@ -331,4 +334,39 @@ i {
 
 .ave_back {
   background: url("https://www.gannett-cdn.com/-mm-/c03fd140debe8ad4c05cf81a5cad7ad61a12ce52/c=0-1580-2985-3266&r=x803&c=1600x800/local/-/media/2017/06/09/USATODAY/USATODAY/636326272873599176-Black-Panther-Teaser.jpg");
+}
+
+footer {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: -1.15%;
+  background:none;
+}
+
+footer ul {
+  display: flex;
+  height: 50px;
+  text-align: center;
+}
+
+footer ul li {
+  flex: 1;
+  text-align: center;
+  line-height: 45px;
+  box-sizing: border-box;
+}
+
+.footerbtn {
+  box-shadow: 0px 0px 30px -1px #ff1f1f;
+  border-radius: 60%;
+}
+
+.footerbtn:hover {
+  box-shadow: 0px 0px 30px -1px #1900fa;
+}
+footer .active{
+  border-radius: 15px 15px 0px 0px;
+  box-shadow: 0px 0px 30px -1px #ffffff;
 }
