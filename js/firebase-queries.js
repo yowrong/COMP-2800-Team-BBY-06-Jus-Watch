@@ -82,8 +82,10 @@ export function createGroup(name, desc) {
         })
         .then((doc) => {
             // writes group information to users collection, adds to arrays in order so that group information corresponds
-            usersRef.doc(user.uid).set({                     
-                groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              // from Firebase website, adds to array
+            usersRef.doc(user.uid).set({          
+
+                /* Used Firebase doc https://firebase.google.com/docs/firestore/manage-data/add-data for reference */    
+                groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
             }, { merge: true });
@@ -368,7 +370,6 @@ export function displayGroups(groupSection) {
                 }
                 renderGroups(groupId, groupName, groupDesc, groupSection)
             }
-            console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
         })
     })
 }
