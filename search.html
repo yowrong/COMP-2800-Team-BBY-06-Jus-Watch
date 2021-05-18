@@ -15,6 +15,7 @@
 
     <!-- Optional styles and scripts of your own -->
     <link rel="stylesheet" href="/css/search.css">
+    <link rel="stylesheet" href="/css/easter-egg.css">
 
     <!--Favicon-->
     <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
@@ -27,9 +28,9 @@
 
 <body>
 
-   
-       <!-- Header Navigation Bar From Bootstrap-->
-       <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+
+    <!-- Header Navigation Bar From Bootstrap-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#">Jus'Watch</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -62,7 +63,7 @@
     </nav>
 
     <!-- Search form -->
-    <div class="search">
+    <div class="search" id="searchBar">
         <input type="image" alt="search" src="/img/search.png" class="searchIcon" id="myBtn">
 
         <form autocomplete="off" class="searchBar">
@@ -70,6 +71,24 @@
                 <input id="myInput" type="text" name="mySearch" placeholder="Search">
             </div>
         </form>
+    </div>
+
+    <div>
+        <div id='starter'></div>
+        <div id='scene'>
+            <div id='curtain'>
+                <div class="vid-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/zkmTs5m-9XE"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+                <div class='ground'></div>
+                <div class='left'></div>
+                <div class='right'></div>
+            </div>
+        </div>
+
     </div>
 
     <!-- JS: Boostrap, Firebase, API related    -->
@@ -82,10 +101,12 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script src="/js/Search-firebase.js"></script>
     <!-- Search scripts -->
-    <script src="/js/search.js"> </script>
+    <script src="/js/search.js"></script>
+    <script src="/js/easter-egg.js"></script>
 
 </body>
 

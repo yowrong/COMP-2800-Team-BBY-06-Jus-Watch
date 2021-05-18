@@ -130,12 +130,44 @@ function saveSearchFromUser() {
     document.getElementById("myBtn").addEventListener('click', function () {
         item = document.getElementById("myInput").value;
 
-        window.location.href = "moviedescription.html"
+        const search = document.getElementById('myInput');
+        if (search.value === "juswatch") {
+            showTime();
+            document.getElementById('searchBar').style.display = "none";
+        }
 
-        localStorage.setItem("item", item);
+
+
+        else {
+            window.location.href = "moviedescription.html"
+
+            localStorage.setItem("item", item);
+        }
+
+        
     });
 }
 saveSearchFromUser();
+
+
+/* Adapted from https://codepen.io/alexisr/pen/dJmpdR */
+function showTime()
+{
+	var curtain = document.getElementById("curtain");
+	curtain.className = "open";
+	
+	var scene = document.getElementById("scene");
+	scene.className = "expand";
+	
+	var starter = document.getElementById("starter");
+	starter.className = "fade-out";
+	
+	setTimeout(function() {
+        starter.style.display = 'none';
+    }, 2000);
+}
+
+
 
 /* Retrieves the user's search term */
 function displaySearch() {
