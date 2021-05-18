@@ -1,4 +1,4 @@
-var db = firebase.firestore(); 
+var db = firebase.firestore();
 // const { user } = require("firebase-functions/lib/providers/auth");
 function getUser() {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -19,17 +19,38 @@ function getUser() {
     })
 }
 
-var n = document.getElementById('name');
-var age = document.getElementById('age');
-var email = document.getElementById('email');
-$(addBtn).click(function (event) {
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        var originalPhone;
+        var originalAge;
+        var originalName;
+        db.collection("users").doc(user.uid).get().then((s) => {
+            originalName = s.data().name;
+            originalAge = s.data().age;
+            originalPhone = s.data().phone;
+            $('#name').attr("placeholder", originalName);
+            $('#name').attr("value", originalName);
+            $('#age').attr("placeholder", originalAge);
+            $('#age').attr("value", originalAge);
+            $('#phone').attr("placeholder", originalPhone);
+            $('#phone').attr("value", originalPhone);
+        });
+    };
+});
+
+
+$("#saveBtn").click(function (event) {
+    var n = document.getElementById('name');
+    var age = document.getElementById('age');
+    var phone = document.getElementById('phone');
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             db.collection("users").doc(user.uid).update({
-                "name":n.value,
+                "name": n.value,
                 "age": age.value,
-                "email": email.value,
+                "phone": phone.value,
             });
         }
     });
+    alert("Changes Saved!");
 });
