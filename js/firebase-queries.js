@@ -489,3 +489,21 @@ export function showGroupMembers(groupID, groupInfo) {
     //     }
     // })
 }
+
+export function welcomeUser() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if(user) {
+            usersRef.doc(user.uid).get()
+            .then(function(doc) {
+                $("#welcome-msg").text(`Welcome ${doc.data().name}!`);
+                $("#log-status").text("You are now logged in.");
+            }).catch(function(err) {
+                console.log(err);
+            });
+        } else {
+            $("#welcome-msg").hide();
+            $(".my-btns").hide();
+            $("#log-status").text("You are now logged out.");
+        }
+    });
+}
