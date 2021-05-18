@@ -3,7 +3,7 @@
 const { mockFirebase } = require('firestore-jest-mock');
 
 // Import the mock versions of the functions you expect to be called
-const { mockCollection, mockDoc, mockSet } = require('firestore-jest-mock/mocks/firestore');
+const { mockCollection, mockDoc, mockSet, mockAdd, mockUpdate } = require('firestore-jest-mock/mocks/firestore');
 
 mockFirebase({
     database: {
@@ -19,12 +19,20 @@ mockFirebase({
             email: 'testuser2@jw.com',
         },
         ],
+        groups: [
+        {
+            groupName: 'Test Group',
+            groupDescription: 'Comedy movie club',
+            chosenMovie: "hello",
+        }
+        ],
     },
 });
 
 const firebase = require('firebase');
 const db = firebase.firestore();
 const usersRef = db.collection('users');
+const groupRef = db.collection('groups');
 
 beforeAll(() => {
     usersRef.doc('zMFM5BxLDBcKnKXa4B2WH36KNWS2').get()
@@ -38,6 +46,16 @@ beforeAll(() => {
                     groupName: ""
                 }).catch(function(err) {console.log(err);});
         });
+    groupRef.add({
+        groupName: 'Test Group 2',
+        groupDescription: 'Drama movie club',
+        chosenMovie: "hi",
+    });
+    usersRef.doc('zMFM5BxLDBcKnKXa4B2WH36KNWS2').update({
+        groupId: firebase.firestore.FieldValue.arrayUnion('Test ID'),
+        groupName: firebase.firestore.FieldValue.arrayUnion('Test Group'),
+        groupDescription: firebase.firestore.FieldValue.arrayUnion('Comedy movie club')
+    })
 })
 
 test('test firestore reference collections', () => {
@@ -68,18 +86,46 @@ test('test firestore reference documents', () => {
         });
 });
 
-test('test firestore function set', () => {
+test('test firestore function .set', () => {
     return db
         .collection('users')
         .doc('zMFM5BxLDBcKnKXa4B2WH36KNWS2')
         .get()
         .then(() => {
-        // Assert that a document was updated
+        // Assert that a document was set
         expect(mockSet).toHaveBeenCalledWith({ "name": "Test User", "email": "testuser4@jw.com", "uid": "zMFM5BxLDBcKnKXa4B2WH36KNWS2", "groupDescription": "", "groupId": "", "groupName": ""});
 
         }).catch(function(err) {
             console.log(err);
         });
 });
+
+test('test firestore function .add', () => {
+    return db
+        .collection('groups')
+        .get()
+        .then(() => {
+        // Assert that a document was added
+        expect(mockAdd).toHaveBeenCalledWith({ "groupName": 'Test Group 2', "groupDescription": 'Drama movie club', "chosenMovie": "hi"});
+
+        }).catch(function(err) {
+            console.log(err);
+        });
+});
+
+test('test firestore function .update', () => {
+    return db
+    .collection('users')
+    .doc('zMFM5BxLDBcKnKXa4B2WH36KNWS2')
+    .get()
+    .then(() => {
+    // Assert that a document was updated
+    expect(mockUpdate).toHaveBeenCalledWith({ "groupId": ["Test ID"], "groupName": ["Test Group"], "groupDescription": ["Comedy movie club"]});
+
+    }).catch(function(err) {
+        console.log(err);
+    });
+});
+
 
 // Run tests using `jest --env=node`
