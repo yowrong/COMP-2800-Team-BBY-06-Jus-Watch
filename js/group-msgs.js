@@ -15,7 +15,7 @@ const msgToSend = document.getElementById("sendMsg");
 
 sendBtn.addEventListener("click", function (event) {
     event.preventDefault();
-    sendMsg(msgToSend);
+    sendMsg(msgToSend, groupID);
 
     setTimeout(function() {
         $("#sendMsg").val('');
