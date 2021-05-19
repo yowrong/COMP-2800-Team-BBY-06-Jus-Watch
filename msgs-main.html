@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Main</title>
+  <title>Messages</title>
   <meta name="author" content="BBY-06">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -39,6 +39,9 @@
             <a class="nav-link text-white" href="group-main.html">Groups</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link text-white" href="msgs-main.html">Messages</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link text-white" href="profile.html">Profile</a>
           </li>
           <li class="nav-item">
@@ -56,16 +59,8 @@
   </nav>
 
   <div class="container">
-    <h1 id="welcome-msg" class="display-4"></h1>
-    <h1 id="log-status"></h1>
-  </div>
-
-  <div class="d-grid gap-2 col-6 mx-auto">
-    <a href="group-main.html" class="btn btn-danger btn-lg my-btns" role="button">My Groups</a>
-    <a href="msgs-main.html" class="btn btn-danger btn-lg my-btns" role="button">My Chats</a>
-    <a href="search.html" class="btn btn-danger btn-lg my-btns" role="button">Search Movies</a>
-    <a href="index.html" class="btn btn-danger btn-lg login-btn" role="button">Home</a>
-    <a href="login.html" class="btn btn-danger btn-lg login-btn" role="button">Login</a>
+    <h3>Messages</h3>
+    <div id="group-msgs"></div>
   </div>
 
   <!-- JS: Boostrap, Firebase, API related, JQuery -->
@@ -80,7 +75,7 @@
 
   <!-- <script type="module" src="./js/firebase-queries.js"></script> -->
   <script type="module" src="./js/firebase-api.js"></script>
-  <script type="module" src="./js/main.js"></script>
+  <script type="module" src="./js/msgs-main.js"></script>
   <script type="module" src="./js/logout.js"></script>
 
 </body>

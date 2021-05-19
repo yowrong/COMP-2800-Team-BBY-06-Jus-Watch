@@ -1,0 +1,34 @@
+body,
+html {
+    height: auto;
+}
+
+body {
+    background-image: linear-gradient(#3d0b0b, #3b3a3a);
+    font-family: Verdana, sans-serif;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #ffffff;
+    margin-bottom: 30px;
+}
+
+.search {
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1000px;
+    text-align: center;
+}
+
+#movies {
+    padding-inline-start: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 40px;
+}

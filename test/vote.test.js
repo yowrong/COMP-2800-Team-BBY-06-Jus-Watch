@@ -6,7 +6,7 @@ document.body.innerHTML =
 let title = ["Test Movie"];
 let desc = ["Test Description"];
 let year = ["0000"];
-let id = ["Test Id"];
+let id = ["TestId"];
 let pic = ["www.testlink.com"];
 let movies = document.getElementById("movieList");
 
@@ -34,13 +34,13 @@ test("Sets movie's innerHTML to display movie cards", () => {
     renderMovies(title, desc, year, id, pic, movies);
 
     expect(movies.innerHTML).toEqual(`<div class="card-group"><div class="card">
-        <img src="${pic[0]}" class="card-img-top" alt="${title[0]}">
+        <img src="www.testlink.com" class="card-img-top" alt="Test Movie">
         <div class="card-body">
-            <h5 class="card-title">${title[0]}</h5>
-            <p class="card-text">${desc[0]}</p>
-            <p class="card-text"><small class="text-muted">${year[0]}</small></p>
-            <input type="checkbox" class="btn-check" id="${id[0]}" autocomplete="off">
-            <label class="btn btn-outline-primary" for="${id[0]}">Vote</label><br>
+            <h5 class="card-title">Test Movie</h5>
+            <p class="card-text">Test Description</p>
+            <p class="card-text"><small class="text-muted">0000</small></p>
+            <input type="checkbox" class="btn-check" id="TestId" autocomplete="off">
+            <label class="btn btn-outline-primary" for="TestId">Vote</label><br>
         </div>
         </div></div>`);
 });
