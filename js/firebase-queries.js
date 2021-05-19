@@ -41,6 +41,7 @@ export function displayMsgs(groupID) {
                         }
                     });
                     $("#messages").html(msg);
+                    window.scrollTo($("#messages"));
                 }
             });
         });
@@ -53,7 +54,7 @@ export function sendMsg(msgToSend, groupID) {
         usersRef.doc(user.uid).get()
         .then(function (doc) {
             const userName = doc.data().name;
-            const date = new Date(date.now);
+            const date = new Date(Date.now());
             //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
             const formattedDate = new Intl.DateTimeFormat("en", {
                 dateStyle: "short",
