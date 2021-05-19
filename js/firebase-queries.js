@@ -53,14 +53,15 @@ export function sendMsg(msgToSend, groupID) {
         usersRef.doc(user.uid).get()
         .then(function (doc) {
             const userName = doc.data().name;
+            const date = new Date(date.now);
             //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-            const date = new Intl.DateTimeFormat("en", {
+            const formattedDate = new Intl.DateTimeFormat("en", {
                 dateStyle: "short",
                 timeStyle: "medium"
-            }).format(Date.now());
+            }).format(date);
             groupRef.doc(groupID).collection("groupMessages").add({
                 sentBy: userName,
-                sentAt: date,
+                sentAt: formattedDate,
                 message: msgToSend.value,
                 uid: user.uid
             });
