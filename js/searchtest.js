@@ -1,54 +1,61 @@
+new_element = document.createElement("link");
+new_element.setAttribute("rel", "stylesheet");
+new_element.setAttribute("type", "text/css");
+new_element.setAttribute("href", "./css/search.css");
+document.body.appendChild(new_element);
 $(document).ready(() => {
-    $('#searchBar').on('submit', (e) => {
-      let myInput = $('#myInput').val();
-      getMovies(myInput);
-      e.preventDefault();
-    });
+  $('#searchBar').on('submit', (e) => {
+    let myInput = $('#myInput').val();
+    getMovies(myInput);
+    e.preventDefault();
   });
-  
-  function getMovies(myInput) {
-    axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=6753c87c')
-      .then((response) => {
-        console.log(response);
-        let movies = response.data.Search;
-        let output = '';
-        $.each(movies, (index, movie) => {
-          output += `
-            <div class="card" style="width: 18rem;" style="mergin-top: 2rem";>
+});
+
+function getMovies(myInput) {
+  axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=6753c87c')
+    .then((response) => {
+      console.log(response);
+      let movies = response.data.Search;
+      let output = '';
+      $.each(movies, (index, movie) => {
+        output += `
+            <a onclick="movieSelected('${movie.imdbID}')" class="nav-link text-white" href="#">
+            <div class="movie_card" style="width: 18rem;margin: 0 auto;>
               <div class="card h-100">
-                <img src="${movie.Poster}"  class="card-img-top">
+                <img src="${movie.Poster}"  class="poster">
                 <div class="card-body">
                 <h5>${movie.Title}</h5>
-                <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>
+                
                 </div>
               </div>
             </div>
+          </a>
           `;
-        });
-  
-        $('#movies').html(output);
-      })
-      .catch((err) => {
-        console.log(err);
       });
-  }
-  
-  function movieSelected(id) {
-    sessionStorage.setItem('movieId', id);
-    window.location = "movieresult.html";
-   // window.location.href = "/movieresult.html";
-    return false;
-  }
-  
-  function getMovie() {
-    let movieId = sessionStorage.getItem('movieId');
-  
-    axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
-      .then((response) => {
-        console.log(response);
-        let movie = response.data;
-  
-        let output = `
+
+      $('#movies').html(output);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function movieSelected(id) {
+  sessionStorage.setItem('movieId', id);
+  window.location = "movieresult.html";
+  // window.location.href = "/movieresult.html";
+  return false;
+}
+
+function getMovie() {
+  let movieId = sessionStorage.getItem('movieId');
+
+  axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+    .then((response) => {
+      console.log(response);
+      let movie = response.data;
+
+      let output = `
           <div class="row">
             <div class="col-md-4">
               <img src="${movie.Poster}" class="thumbnail">
@@ -76,11 +83,11 @@ $(document).ready(() => {
             </div>
           </div>
         `;
-  
-        $('#movie').html(output);
-        
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+
+      $('#movie').html(output);
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

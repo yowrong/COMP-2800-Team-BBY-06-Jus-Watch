@@ -1,5 +1,6 @@
 body,
 html {
+    min-height: 100%;
     height: auto;
 }
 
@@ -14,11 +15,6 @@ body {
     box-sizing: border-box;
 }
 
-h1 {
-    color: #ffffff;
-    margin-bottom: 30px;
-}
-
 .search {
     padding: 40px;
     margin: 0 auto;
@@ -31,4 +27,37 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     grid-gap: 40px;
+}
+
+/* movie card display...link JS */
+.movie_card {
+    overflow: hidden;
+    transition: all 0.4s;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 0;
+    height: 400px;
+    word-wrap: break-word;
+    background: #00000080;
+    box-shadow: 0px 0px 150px -45px #ffffff;
+    border-radius: .25rem;
+
+}
+.movie_card:hover {
+    box-shadow: 0px 0px 120px -55px #e100ff80;
+}
+
+.poster {
+    margin: 10px auto auto auto;
+    display: flex;
+    width: 70%;
+    height: auto;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    color: #fff;
+    font-weight: 400;
 }
