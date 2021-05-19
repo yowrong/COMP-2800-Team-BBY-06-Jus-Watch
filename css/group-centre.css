@@ -34,8 +34,25 @@ hr {
 }
 
 .accordion {
-    width: 50%;
+    max-width: 500px;
     margin: 5% auto;
+}
+
+#resetBtn {
+    display: none;
+}
+
+.group_button {
+    max-width: 500px;
+}
+
+#shareLink {
+    width: 100%;
+}
+
+.fas {
+    float: right;
+    margin: 5px;
 }
 
 /****** MOVIE CARDS ******/
