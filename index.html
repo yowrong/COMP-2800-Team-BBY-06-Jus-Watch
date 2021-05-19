@@ -11,12 +11,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-
     <!--Favicon-->
     <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
     <link rel="manifest" href="./img/site.webmanifest">
+    <link rel="stylesheet" href="./css/index.css" />
+    <!--Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -38,10 +40,13 @@
                         <a class="nav-link text-white" href="login.html">Login/Signup</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="group-centre.html">Groups</a>
+                        <a class="nav-link text-white" href="group-main.html">Groups</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="search.html">Search</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="about-us.html">About Us</a>
@@ -50,10 +55,142 @@
             </div>
         </div>
     </nav>
+    <div class="slideshow-container">
 
-    <div class="container"></div>
+        <div class="mySlides fade">
+            <img src="/img/spongebob.jpg">
+        </div>
 
+        <div class="mySlides fade">
+            <img src="/img/download.jpg">
+            <div class="text">Spirited Away</div>
+        </div>
 
+        <div class="mySlides fade">
+            <img src="/img/ant-man3.jpg">
+        </div>
+
+        <div class="mySlides fade">
+            <img src="/img/the6thsense.jpg">
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext"></div>
+            <img src="/img/totoro-bus-stop.jpg">
+            <div class="text">My Neighbor Totoro</div>
+        </div>
+    </div>
+    <div style="text-align:center">
+        <span class="dot" onclick="currentDiv(1)"></span>
+        <span class="dot" onclick="currentDiv(2)"></span>
+        <span class="dot" onclick="currentDiv(3)"></span>
+        <span class="dot" onclick="currentDiv(4)"></span>
+        <span class="dot" onclick="currentDiv(5)"></span>
+    </div>
+
+    <div class="arrow">
+        <div class="btn-dark leftarrow" onclick="plusDivs(-1)">&#10094;</div>
+        <div class="btn-dark rightarrow" onclick="plusDivs(1)">&#10095;</div>
+    </div>
+    <br><br>
+    <!--From https://blog.avada.io/examples/responsive-movie-card-dark-version-zimuzo-ejinkeonye.html-->
+    <div class="movie_list">
+        <br>
+        <h2>Trending</h2>
+        <a class="nav-link text-white" href="/moviedescription.html">
+            <div class="movie_card" id="wall">
+                <div class="info_section">
+                    <div class="movie_header">
+                        <img class="locandina" src="/img/theGreatWall.png" />
+                        <h1>The Great Wall</h1>
+                        <h4>2016, Zhang Yimou</h4>
+                        <span class="minutes">120 min</span>
+                        <p class="type">Action, Adventure</p>
+                    </div>
+                    <div class="movie_desc">
+                    </div>
+                    <div class="movie_social">
+                        <ul>
+                            <li>
+                                <p class="icons">&#10084</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blur_back wall_back"></div>
+            </div>
+        </a>
+        <a class="nav-link text-white" href="/moviedescription.html">
+            <div class="movie_card" id="tomb">
+                <div class="info_section">
+                    <div class="movie_header">
+                        <img class="locandina" src="https://mr.comingsoon.it/imgdb/locandine/235x336/53750.jpg" />
+                        <h1>Tomb Raider</h1>
+                        <h4>2018, Roar Uthaug</h4>
+                        <span class="minutes">125 min</span>
+                        <p class="type">Action, Fantasy</p>
+                    </div>
+                    <div class="movie_desc">
+                    </div>
+                    <div class="movie_social">
+                        <ul>
+                            <li>
+                                <p class="icons">&#10084</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blur_back tomb_back"></div>
+            </div>
+        </a>
+        <a class="nav-link text-white" href="/moviedescription.html">
+            <div class="movie_card" id="ave">
+                <div class="info_section">
+                    <div class="movie_header">
+                        <img class="locandina" src="https://mr.comingsoon.it/imgdb/locandine/235x336/53715.jpg" />
+                        <h1>Black Panther</h1>
+                        <h4>2018, Ryan Coogler</h4>
+                        <span class="minutes">134 min</span>
+                        <p class="type">Action, Adventure, Sci-Fi</p>
+                    </div>
+                    <div class="movie_desc">
+                    </div>
+                    <div class="movie_social">
+                        <ul>
+                            <li>
+                                <p class="icons">&#10084</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blur_back ave_back"></div>
+            </div>
+        </a>
+    </div>
+    <footer>
+        <ul>
+            <li>
+                <a class="nav-link active text-white" aria-current="page" href="index.html">
+                    <i class="fa fa-home footerbtn" style="font-size: 180%;"></i>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="group-main.html">
+                    <i class="fa fa-group footerbtn" style="font-size: 180%;"></i>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="search.html">
+                    <i class="fa fa-search footerbtn" style="font-size: 180%;"></i>
+                </a>
+            </li>
+            <li >
+                <a class="nav-link text-white"  href="profile.html">
+                    <i class="fa fa-user-circle footerbtn" style="font-size: 180%;"></i>
+                </a>
+            </li>
+        </ul>
+    </footer>
     <!-- JS: Boostrap, Firebase, API related    -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
@@ -64,7 +201,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
-
+    <script src="/js/index.js"></script>
 </body>
 
 </html>
