@@ -504,6 +504,7 @@ export function welcomeUser() {
             $("#welcome-msg").hide();
             $(".my-btns").hide();
             $("#log-status").text("You are now logged out.");
+            $(".login-btn").show();
         }
     });
 }
