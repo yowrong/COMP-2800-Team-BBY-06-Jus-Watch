@@ -260,19 +260,21 @@ export function displayNominatedMovies(groupId, movieSection) {
     })
 }
 
-/* displays nominated movies from group's collection */
+/* displays nominated movies from group's collection on group-centre.html*/
+/** Adapted from https://blog.avada.io/examples/bootstrap-movie-cards-sukhmeet.html **/
 function renderMovies(title, desc, year, id, pic, movieSection) {
-    let movieCard = `<div class="card-group">`;
+    let movieCard = `<div class="row justify-content-center">`;
 
     for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
+        movieCard += `<div class="card movie_card">
         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
         <div class="card-body">
           <h5 class="card-title">${title[i]}</h5>
           <p class="card-text">${desc[i]}</p>
+          
         </div>
         <div class="card-footer">
-      <small class="text-muted">${year[i]}</small>
+        <span class="movie_info">${year[i]}</span><span class="movie_info float-end">&#9733 9 / 10</span>
     </div>
       </div>`;
     }
@@ -293,7 +295,7 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
             let id = movie.data().imdbID;
             let pic = movie.data().moviePoster;
 
-            renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle)
+            renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTitle)
         })
     })
     .catch((error) => {
@@ -302,19 +304,20 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
 }
 
 /* changes "nominated movies" section to "movie of the week", generates the winning movie */
-function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle) {
-    let movieCard = "";
+function renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTitle) {
+    let movieCard = `<div class="row justify-content-center">`;
 
-    movieCard += `<div class="card winningMovie">
+    movieCard += `<div class="card movie_card">
         <img src="${pic}" class="card-img-top" alt="${title}">
         <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">${desc}</p>
+          <h5 class="card-title">${title}</h5>
+          <p class="card-text">${desc}</p>
+          
         </div>
         <div class="card-footer">
-            <small class="text-muted">${year}</small>
-        </div>
-        </div>`;
+        <span class="movie_info">${year}</span><span class="movie_info float-end">&#9733 9 / 10</span>
+    </div>
+      </div>`;
 
     movieSection.innerHTML = movieCard;
     movieCenterTitle.innerText = "Movie of the Week";

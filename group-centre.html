@@ -60,15 +60,15 @@
 
     <div class="container">
         <div class="title">
-            <h2><span id="group-name"></span> Movie Center</h2>
+            <h3 class="title"><span id="group-name"></span> Movie Center</h2>
             <hr>
             <p id="group-description"></p>
             <hr>
         </div>
-        <div class="movieCenter">
+        <!-- <div class="movieCenter"> -->
             <h3 class="movieCenterTitle" id="movieCenterTitle">Nominated Movies</h3>
             <div id="movieList">
-            </div>
+            <!-- </div> -->
         </div>
 
         <div class="d-grid gap-2 col-6 mx-auto group_button">
@@ -78,6 +78,22 @@
             <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Invite a
                 friend!</button>
         </div>
+
+    <!-- Show group member list -->
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Group Members
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="groupInfo" id="groupInfo"></p>
+                </div>
+              </div>
+            </div>
+          </div>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -97,9 +113,9 @@
                 </div>
             </div>
         </div>
-        <!-- Show group member list -->
-        <div class="groupInfo" id="groupInfo">
-        </div>
+        
+        <!-- <div class="groupInfo" id="groupInfo">
+        </div> -->
     </div>
 
     <!-- JS: Boostrap, Firebase, API related, JQuery -->
@@ -114,7 +130,7 @@
 
     <script type="module" src="./js/firebase-api.js"></script>
     <script type="module" src="./js/group-centre.js"></script>
-    <script type="module" src="./js/firebase-queries.js"></script>
+    <!-- <script type="module" src="./js/firebase-queries.js"></script> -->
  
 
 </body>

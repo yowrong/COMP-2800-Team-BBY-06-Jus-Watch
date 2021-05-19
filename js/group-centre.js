@@ -32,7 +32,7 @@ function wait(ms) {
 
 showGroupMembers(groupID, groupInfo);
 
-getNumOfMembers(groupID, movieSection);
+getNumOfMembers(groupID, movieSection, movieCenterTitle);
 
 // getWinningMovie( groupID, movieSection, movieCenterTitle);
 
