@@ -72,7 +72,7 @@ $(document).ready(() => {
               ${movie.Plot}
               <hr>
               <a href="post-review.html" target="_blank" class="btn btn-primary">Leave a Command</a>
-              <a href="index.html" class="btn btn-primary">Favorite</a>
+              <a href="profile_favorite.html" class="btn btn-primary">Favorite</a>
             </div>
           </div>
         `;
