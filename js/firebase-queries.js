@@ -503,7 +503,8 @@ export function welcomeUser() {
         } else {
             $("#welcome-msg").hide();
             $(".my-btns").hide();
-            $("#log-status").text("You are now logged out.");
+            $("#log-status").text("You are not logged in.");
+            $(".login-btn").show();
         }
     });
 }
