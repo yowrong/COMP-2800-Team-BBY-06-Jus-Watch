@@ -1,4 +1,4 @@
-import { createGroup } from "./js/firebase-queries.js";
+import { createGroup } from "./firebase-queries.js";
 const db = firebase.firestore();
 
 const groupName = document.getElementById("groupName");
@@ -18,7 +18,7 @@ createBtn.addEventListener("click", function(e) {
 
 modalBtn.addEventListener("click", function(e) {
     e.preventDefault();
-    window.location.href = "./group_main.html";
+    window.location.href = "./group-main.html";
 })
 
 

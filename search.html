@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Group Messages</title>
+    <title>Search</title>
     <meta name="author" content="BBY-06">
 
     <!-- Bootstrap for Mobile-first, and JQuery -->
@@ -11,12 +11,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-    <link rel="stylesheet" href="./css/group-msgs.css"/>
+
+
+    <!--Favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+    <link rel="manifest" href="./img/site.webmanifest">
+
+
 </head>
 
 <body>
-    <!-- Header Navigation Bar From Bootstrap-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+
+   
+       <!-- Header Navigation Bar From Bootstrap-->
+       <nav class="navbar navbar-expand-lg navbar-light bg-danger">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#">Jus'Watch</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -48,18 +58,29 @@
         </div>
     </nav>
 
-    <div class="container" id="container">
-        <div id="messages"></div>
-        <div id="text">
-            <div id="form" class="input-group mb-3">
-                <input id="sendMsg" type="text" class="form-control" placeholder="type here...">
-                <button id="sendBtn" type="button" class="btn btn-outline-secondary">Send</button>
-            </div>
+      <!-- Search form -->
+      <div class="search">
+        <div class="jumbotron">
+            <form id ="searchBar">
+                <input id="myInput" type="text"  class="form-control" placeholder="Search">
+            </form>
         </div>
     </div>
 
+    <div class="container">
+        <div id="movies" class="row"></div>
+    </div>
 
-    <!-- JS: Boostrap, Firebase, API related, JQuery -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/test.js"></script>
+
+    <!-- JS: Boostrap, Firebase, API related    -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
@@ -69,10 +90,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script type="module" src="./js/firebase-api.js"></script>
-    <script type="module" src="./js/group-msgs.js"></script>
+    <script src="/js/Search-firebase.js"></script>
+    <!-- Search scripts -->
+    <script src="/js/searchtest.js"> </script>
+
 </body>
 
 </html>
