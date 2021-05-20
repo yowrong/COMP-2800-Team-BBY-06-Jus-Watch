@@ -106,8 +106,6 @@ export function getGroup(groupID, inviteMsg) {
       let desc = doc.data().groupDescription;
   
       addUser(groupID, name, desc, inviteMsg);
-  
-    //   console.log("get group:", id + name + desc + inviteMsg)
     })
 }
 
@@ -118,18 +116,14 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
 
       // user must be logged in
         if (user) {
-          console.log(user.uid);
-          console.log(user.displayName);
-          let userFName = user.displayName.split(' ')[0];
-          let userLName = user.displayName.split(' ')[1];
 
-          inviteSection.innerHTML = `<h3>Welcome!</h3>
-          <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-primary">
-          Click to enter your Group's Page!
+          inviteSection.innerHTML = `<h3>Welcome to ${groupName}!</h3>
+          <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-danger">
+          Enter Group
           </button>`;
 
           // adds user info to groupMember subcollection
-          groupRef.doc(groupID).collection("groupMembers").get()                       // to change "group1" to groupID
+          groupRef.doc(groupID).collection("groupMembers").get()                      
           .then(member => {
             
             // if not yet a member, creates a new user document under groupMember collection
@@ -137,7 +131,6 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
                 groupRef.doc(groupID).collection("groupMembers").doc(user.uid).set({
                   userId: user.uid,
                   name: user.displayName
-                //   userLastName: userLName
                 })
               }
           });
@@ -149,8 +142,12 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
             groupDescription: firebase.firestore.FieldValue.arrayUnion(groupDesc)
           });
 
+          // if not logged in, displays message to login
         } else {
-          inviteSection.innerHTML = "<h3>Please Log in first!</h3>"
+          inviteSection.innerHTML = `<h3>Please Log in first!</h3>
+          <a href="login.html" <button type="button" class="btn btn-danger">
+          Login
+          </button>`;
         }
       });
 }
