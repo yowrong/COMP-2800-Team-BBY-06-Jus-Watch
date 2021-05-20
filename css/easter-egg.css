@@ -92,11 +92,11 @@ body {
 
 iframe {
 	position: absolute;
-	left: 25%;
-	top: 10%;
+	left: 21%;
+	/* top: 10%; */
 	display: block;
-	width: 1080px;
-	height: 609px;
+	width: 80vw;
+	height: 47vw;
 	/* margin-top: -90px;
 	margin-left: -250px; */
 	text-align: center;
