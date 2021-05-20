@@ -153,7 +153,7 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
 }
 
 /* Gets group's nominated movie collection and displays on vote.html */
-export function displayMoviesForVote(id, movieSection) {
+export function displayMoviesForVote(id, movieSection, submit) {
     groupRef.doc(id).collection("nominatedMovies").get()
     .then((doc) => { 
         let movieId = [];
@@ -164,8 +164,8 @@ export function displayMoviesForVote(id, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movieSection.innerHTML = "Nominate some movies to vote on!";
-
+            movieSection.innerHTML = `<h5 class="text-center nominate">Nominate some movies to vote on!</h4>`;
+            submit.style.display = "none";
         } else {
             doc.forEach((movie) => {
                 // console.log("movie: " + movie.data().movieTitle);
@@ -183,24 +183,27 @@ export function displayMoviesForVote(id, movieSection) {
     })
 }
 
-// Display nominated movies to vote on.
+/** Displays nominated movies on */
 function renderMoviesForVote(title, desc, year, id, pic, movies) {
-    let movieCard = `<div class="card-group">`;
+    let movieCard = `<div class="row justify-content-center">`;
 
     for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
+        movieCard += `<div class="card movie_card">
         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
         <div class="card-body">
           <h5 class="card-title">${title[i]}</h5>
+          <p class="movie_info">${year[i]}</p>
           <p class="card-text">${desc[i]}</p>
-          <p class="card-text"><small class="text-muted">${year[i]}</small></p>
-          <input type="checkbox" class="btn-check" id="${id[i]}" autocomplete="off">
-            <label class="btn btn-outline-danger" for="${id[i]}">Vote</label><br>
         </div>
+        <div class="card-footer d-flex justify-content-center">       
+        <input type="checkbox" class="btn-check" id="${id[i]}" autocomplete="off">
+        <label class="btn btn-outline-danger" for="${id[i]}"><i class="fas fa-check"></i></label><br>
+    </div>
       </div>`;
     }
     movieCard += "</div>";
     movies.innerHTML = movieCard;
+    
 }
 
 /* Gets group Info from URL and queries Firestore, displays group-related info on group-centre.html */

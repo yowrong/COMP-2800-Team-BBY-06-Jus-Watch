@@ -12,6 +12,7 @@
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <link rel="stylesheet" href="./css/vote.css" />
+  <script src="https://kit.fontawesome.com/6d23be533d.js" crossorigin="anonymous"></script>
 
   <!--Favicon-->
   <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
@@ -56,17 +57,17 @@
   </nav>
 
   <div class="container">
-    <h2>Vote on what you want to watch this week!</h2>
+    <h2 class="voteTitle">Vote on what you want to watch this week!</h2>
     <div id="movieList">
     </div>
-    <div class="buttons">
+    <div class="d-grid gap-2 col-6 mx-auto buttons">
     <div id="submit">
-      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-danger shadow p-3 mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Submit Vote
       </button></div>
     <div id="returnBtn">
-      <button type="button" class="btn btn-danger">
-        Return to Group Center
+      <button type="button" class="btn btn-danger shadow p-3 mb-5">
+        Return
       </button>
     </div>
   </div>
@@ -77,7 +78,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Voting</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Vote</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -106,7 +107,7 @@
   <script type="module" src="./js/firebase-api.js"></script>
   
   <script type="module" src="./js/vote.js"></script>
-  <script type="module" src="./js/firebase-queries.js"></script>
+  <!-- <script type="module" src="./js/firebase-queries.js"></script> -->
   
 
 </body>
