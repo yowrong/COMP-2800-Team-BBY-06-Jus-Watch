@@ -61,3 +61,12 @@ h1 {
     color: #fff;
     font-weight: 400;
 }
+
+#results {
+    color: white;
+    text-align: center;
+}
+
+#buttons {
+    margin-top: 1em;
+}

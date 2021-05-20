@@ -19,14 +19,15 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
     <link rel="manifest" href="./img/site.webmanifest">
 
+    <script src="https://kit.fontawesome.com/6d23be533d.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
 
-   
-       <!-- Header Navigation Bar From Bootstrap-->
-       <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+
+    <!-- Header Navigation Bar From Bootstrap-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#">Jus'Watch</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -58,25 +59,26 @@
         </div>
     </nav>
 
-      <!-- Search form -->
-      <div class="search">
+    <!-- Search form -->
+    <div class="search">
         <h1>&#x2728;Search a Movie &#x2728;</h1>
         <div class="jumbotron">
             <form id ="searchBar">
                 <input id="myInput" type="text"  class="form-control" placeholder="Search">
             </form>
+            <div id="buttons">
+                <button id="search" type="button" class="btn btn-danger">Search</button>
+                <button id="random" type="button" class="btn btn-danger">Feeling Lucky</button>
+            </div>
         </div>
     </div>
 
     <div class="container">
-        <div id="movies" class="row"></div>
+        <div id="movie" class="row"></div>
     </div>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- <script src="/js/test.js"></script> -->
