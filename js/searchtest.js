@@ -4,11 +4,14 @@ new_element.setAttribute("type", "text/css");
 new_element.setAttribute("href", "./css/search.css");
 document.body.appendChild(new_element);
 
+
+
+
 $(document).ready(() => {
   $('#searchBar').on('submit', (e) => {
     let myInput = $('#myInput').val();
     if (myInput === 'juswatch') {
-      window.location = 'donghua.html';
+      window.location = 'easter.html';
     } else {
       getMovies(myInput);
     }
