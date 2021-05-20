@@ -18,13 +18,3 @@ function getUser() {
         }
     })
 }
-
-//get current user for reading user email.
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        db.collection("users").doc(user.uid).get().then((s) => {
-            $("#fullName").append(s.data().name);
-            $("#email").append(user.email);
-        });
-    }
-});

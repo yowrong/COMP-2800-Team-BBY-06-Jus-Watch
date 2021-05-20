@@ -1,0 +1,10 @@
+body {
+    background-color: #3b3a3a;
+}
+
+.container{
+    width: 90%;
+    padding: 3%;
+    margin: 3% auto 3% auto;
+    border-radius: 0.5rem;
+}

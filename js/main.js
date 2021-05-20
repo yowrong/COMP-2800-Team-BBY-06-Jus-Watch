@@ -1,3 +1,4 @@
-import { createUser } from "./firebase-queries.js";
+import { createUser, welcomeUser } from "./firebase-queries.js";
 
 createUser();
+welcomeUser();

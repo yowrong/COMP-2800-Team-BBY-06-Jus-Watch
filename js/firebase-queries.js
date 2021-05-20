@@ -41,6 +41,7 @@ export function displayMsgs(groupID) {
                         }
                     });
                     $("#messages").html(msg);
+                    window.scrollTo($("#messages"));
                 }
             });
         });
@@ -53,14 +54,15 @@ export function sendMsg(msgToSend, groupID) {
         usersRef.doc(user.uid).get()
         .then(function (doc) {
             const userName = doc.data().name;
+            const date = new Date(Date.now());
             //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-            const date = new Intl.DateTimeFormat("en", {
+            const formattedDate = new Intl.DateTimeFormat("en", {
                 dateStyle: "short",
                 timeStyle: "medium"
-            }).format(Date.now());
+            }).format(date);
             groupRef.doc(groupID).collection("groupMessages").add({
                 sentBy: userName,
-                sentAt: date,
+                sentAt: formattedDate,
                 message: msgToSend.value,
                 uid: user.uid
             });
@@ -488,4 +490,69 @@ export function showGroupMembers(groupID, groupInfo) {
     //         });
     //     }
     // })
+}
+
+export function welcomeUser() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if(user) {
+            usersRef.doc(user.uid).get()
+            .then(function(doc) {
+                $("#welcome-msg").text(`Welcome ${doc.data().name}!`);
+                $("#log-status").text("You are now logged in.");
+            }).catch(function(err) {
+                console.log(err);
+            });
+        } else {
+            $("#welcome-msg").hide();
+            $(".my-btns").hide();
+            $("#log-status").text("You are not logged in.");
+            $(".login-btn").show();
+        }
+    });
+}
+
+/* Gets all group messages a user has, and displays them on msgs-main.html */
+export function displayGroupMsgs(groupMsgs) {
+    firebase.auth().onAuthStateChanged(function(user) {
+        usersRef.doc(user.uid).get()
+        .then((doc) => {
+
+            let groupId = [];
+            let groupName = [];
+            let groupDesc = [];
+
+            if (doc.data().groupId.length == 0) {
+                groupMsgs.innerHTML = "No Group Chats found.";
+            } else {
+                for (let i = 0; i < doc.data().groupId.length; i++) {
+                    groupId[i] = doc.data().groupId[i];
+                    groupName[i] = doc.data().groupName[i];
+                }
+                renderGroupMsgs(groupId, groupName, groupMsgs)
+            }
+            console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
+        })
+    })
+}
+
+/* Renders a "Group Message" card for each group chat the user is in, in msgs-main.html */
+function renderGroupMsgs(id, name, groupMsgs) {
+    let groupMsgCard = "";
+    for (let i = 0; i < id.length; i++) {
+
+        // Bootstrap card template, "Enter Group" button redirects to Group Center page
+        groupMsgCard += `<div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">${name[i]}</h5>
+                                    <a href="./group-msgs.html?${id[i]}">
+                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group Chat</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+    groupMsgs.innerHTML = groupMsgCard;
 }

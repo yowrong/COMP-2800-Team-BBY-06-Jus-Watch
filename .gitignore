@@ -1,12 +1,9 @@
 node_modules/
-node_modules
-
-profile.html
-profile_info.html
 
 .firebase/
 .firebaserc
 firebase.json
-firestore.json
-firestore.rules
 firestore.indexes.json
+firestore.rules
+.vscode/
+.vscode/settings.json
