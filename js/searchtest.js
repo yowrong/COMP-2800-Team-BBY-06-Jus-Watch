@@ -65,7 +65,7 @@ function getMovie() {
               <img src="${movie.Poster}" class="thumbnail">
             </div>
             <div class="col-md-8">
-              <h2>${movie.Title}</h2>
+              <h2  style = "color: white">${movie.Title}</h2>
               <ul class="list-group">
                 <li class="list-group-item"><strong>Genre:</strong> ${movie.Genre}</li>
                 <li class="list-group-item"><strong>Released:</strong> ${movie.Released}</li>
@@ -79,8 +79,8 @@ function getMovie() {
           </div>
           <div class="row">
             <div class="well">
-              <h3>Plot</h3>
-              ${movie.Plot}
+              <h3 style = "color: white" >Plot</h3>
+              <p style = "color: white">${movie.Plot}</p>
               <hr>
               <a href="post-review.html" target="_blank" class="btn btn-primary">Leave a Command</a>
               <a href="profile_favorite.html" class="btn btn-primary">Favorite</a>
