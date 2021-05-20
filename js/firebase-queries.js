@@ -237,7 +237,7 @@ export function displayNominatedMovies(groupId, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movieSection.innerHTML = `<p class="movieCenterTitle">Nominate some movies to vote on!</p>`;
+            movieSection.innerHTML = `<h5 class="movieCenterTitle">Nominate some movies to vote on!</h5>`;
 
         } else {
             doc.forEach((movie) => {

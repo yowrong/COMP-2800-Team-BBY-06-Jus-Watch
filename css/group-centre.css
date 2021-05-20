@@ -43,7 +43,12 @@ hr {
 }
 
 .group_button {
+  margin-top: 100px;
     max-width: 500px;
+}
+
+button {
+  margin-top: -50px;
 }
 
 #shareLink {
@@ -75,7 +80,7 @@ hr {
   }
   .movie_card{
     padding: 0 !important;
-    width: 22rem;
+    width: 20rem;
     margin:14px; 
     border-radius: 10px;
     box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
@@ -83,7 +88,7 @@ hr {
   .movie_card img{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    height: 33rem;
+    height: auto;
   }
   .movie_info{
     color: #5e5c5c;
