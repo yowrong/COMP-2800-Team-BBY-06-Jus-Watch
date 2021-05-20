@@ -591,6 +591,8 @@ export function endVoting(groupID, endVoteBtn) {
         groupRef.doc(groupID).update({ 
             totalVotes: 100
         });
-        
+        setTimeout(function () {
+            window.location = `group-centre.html?${groupID}`;
+        }, 500);    
     })  
 }
