@@ -1,0 +1,49 @@
+.my-groups {
+    margin-top: 2%;
+}
+
+#group-list {
+    margin-top: 5%;
+}
+
+body,
+html {
+    min-height: 100%;
+    height: auto;
+}
+
+body {
+    background-image: linear-gradient(#3d0b0b, #3b3a3a);
+    font-family: Verdana, sans-serif;
+    /* height: 100%; */
+    background-repeat: no-repeat;
+    color: #ebe8e8ce;
+}
+
+#group-list {
+    color: black;
+    text-align: left;
+}
+
+.container {
+    text-align: center;
+    /* position: absolute; */
+    margin-top: 25px;
+    /* left: 50%; */
+    width: 80%;
+    padding: 2%;
+    /* transform: translate(-50%, -50%); */
+    background: #00000080;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 120px -55px rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+hr {
+    border: 1px solid #000000;
+    margin-bottom: 25px;
+}
+
+.login-btn {
+    display: none;
+}

@@ -83,8 +83,10 @@ export function createGroup(name, desc) {
         })
         .then((doc) => {
             // writes group information to users collection, adds to arrays in order so that group information corresponds
-            usersRef.doc(user.uid).set({                     
-                groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              // from Firebase website, adds to array
+            usersRef.doc(user.uid).set({          
+
+                /* Used Firebase doc https://firebase.google.com/docs/firestore/manage-data/add-data for reference */    
+                groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
             }, { merge: true });
@@ -369,7 +371,6 @@ export function displayGroups(groupSection) {
                 }
                 renderGroups(groupId, groupName, groupDesc, groupSection)
             }
-            console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
         })
     })
 }
@@ -382,15 +383,12 @@ export function renderGroups(id, name, desc, groupSection) {
         // Bootstrap card template, "Enter Group" button redirects to Group Center page
         groupCard += `<div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4">
-                                <!-- <img src="..." alt="..."> -->
-                            </div>
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">${name[i]}</h5>
                                     <p class="card-text">${desc[i]}</p>
                                     <a href="./group-centre.html?${id[i]}">
-                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
+                                        <button id="${id[i]}" type="button" class="btn btn-danger btn-lg enter">Enter Group</button>
                                     </a>
                                 </div>
                             </div>
