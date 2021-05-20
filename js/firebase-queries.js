@@ -618,3 +618,30 @@ export function endVoting(groupID, endVoteBtn) {
         }, 500);    
     })  
 }
+
+/** Removes the user from the group and the group from the user's groups. */
+export function leaveGroup(groupID, leaveBtn) {
+    leaveBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        firebase.auth().onAuthStateChanged(function(user) {
+            groupRef.doc(groupID).get()
+            .then((doc) => {
+                let groupTitle = doc.data().groupName;
+                let groupDesc = doc.data().groupDescription;
+
+                usersRef.doc(user.uid).update({
+                    groupId: firebase.firestore.FieldValue.arrayRemove(groupID),
+                    groupName: firebase.firestore.FieldValue.arrayRemove(groupTitle),
+                    groupDescription: firebase.firestore.FieldValue.arrayRemove(groupDesc)
+                });
+
+                groupRef.doc(groupID).collection("groupMembers").doc(user.uid).delete();
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
+        // setTimeout(function () {
+        //     window.location = `group-main.html`;
+        // }, 3000);
+    });
+}

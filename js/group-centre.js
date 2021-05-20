@@ -1,4 +1,4 @@
-import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies, getWinningMovie, showGroupMembers, endVoting } from "./firebase-queries.js";
+import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies, getWinningMovie, showGroupMembers, endVoting, leaveGroup } from "./firebase-queries.js";
 
 let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
 let query = string.split("?");                                  // Projects 1800 lecture slides
@@ -20,6 +20,7 @@ const movieCenterTitle = document.getElementById('movieCenterTitle');
 const groupInfo = document.getElementById('groupInfo');
 const resetBtn = document.getElementById('resetBtn');
 const endVoteBtn = document.getElementById('endVoteBtn');
+const leaveBtn = document.getElementById('leaveBtn');
 
 //https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
 function wait(ms) {
@@ -37,6 +38,8 @@ showGroupMembers(groupID, groupInfo);
 getNumOfMembers(groupID, movieSection, movieCenterTitle, resetBtn);
 
 endVoting(groupID, endVoteBtn);
+
+leaveGroup(groupID, leaveBtn);
 
 // getWinningMovie( groupID, movieSection, movieCenterTitle);
 
