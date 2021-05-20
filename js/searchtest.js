@@ -3,10 +3,15 @@ new_element.setAttribute("rel", "stylesheet");
 new_element.setAttribute("type", "text/css");
 new_element.setAttribute("href", "./css/search.css");
 document.body.appendChild(new_element);
+
 $(document).ready(() => {
   $('#searchBar').on('submit', (e) => {
     let myInput = $('#myInput').val();
-    getMovies(myInput);
+    if (myInput === 'juswatch') {
+      window.location = 'donghua.html';
+    } else {
+      getMovies(myInput);
+    }
     e.preventDefault();
   });
 });
@@ -25,7 +30,6 @@ function getMovies(myInput) {
                 <img src="${movie.Poster}"  class="poster">
                 <div class="card-body">
                 <h5>${movie.Title}</h5>
-                
                 </div>
               </div>
             </div>
