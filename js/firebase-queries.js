@@ -90,6 +90,9 @@ export function createGroup(name, desc) {
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
             }, { merge: true });
+
+            // adds user to groupMembers.
+            addFirstUser(doc.id);
         })
         .catch((error) => {
             console.log(error);
@@ -106,6 +109,25 @@ export function getGroup(groupID, inviteMsg) {
       let desc = doc.data().groupDescription;
   
       addUser(groupID, name, desc, inviteMsg);
+    })
+}
+
+/** Adds user to groupMembers subcollection when first creating group on create-group.html */
+function addFirstUser(groupID) {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            groupRef.doc(groupID).collection("groupMembers").get()                      
+          .then(member => {
+            
+            // if not yet a member, creates a new user document under groupMember collection
+              if (!member.exists) {
+                groupRef.doc(groupID).collection("groupMembers").doc(user.uid).set({
+                  userId: user.uid,
+                  name: user.displayName
+                })
+              }
+          });
+        }
     })
 }
 
