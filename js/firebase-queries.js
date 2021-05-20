@@ -167,7 +167,7 @@ export function displayMoviesForVote(id, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movieSection.innerHTML = "Nominate some movies to vote on!"
+            movieSection.innerHTML = "Nominate some movies to vote on!";
 
         } else {
             doc.forEach((movie) => {
@@ -241,7 +241,7 @@ export function displayNominatedMovies(groupId, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movieSection.innerHTML = "Nominate some movies to vote on!"
+            movieSection.innerHTML = `<h5 class="movieCenterTitle">Nominate some movies to vote on!</h5>`;
 
         } else {
             doc.forEach((movie) => {
@@ -264,19 +264,21 @@ export function displayNominatedMovies(groupId, movieSection) {
     })
 }
 
-/* displays nominated movies from group's collection */
+/* displays nominated movies from group's collection on group-centre.html*/
+/** Adapted from https://blog.avada.io/examples/bootstrap-movie-cards-sukhmeet.html **/
 function renderMovies(title, desc, year, id, pic, movieSection) {
-    let movieCard = `<div class="card-group">`;
+    let movieCard = `<div class="row justify-content-center">`;
 
     for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
+        movieCard += `<div class="card movie_card">
         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
         <div class="card-body">
           <h5 class="card-title">${title[i]}</h5>
           <p class="card-text">${desc[i]}</p>
+          
         </div>
         <div class="card-footer">
-      <small class="text-muted">${year[i]}</small>
+        <span class="movie_info">${year[i]}</span><span class="movie_info float-end">&#9733 9 / 10</span>
     </div>
       </div>`;
     }
@@ -285,7 +287,7 @@ function renderMovies(title, desc, year, id, pic, movieSection) {
 }
 
 /* Gets movie with most votes in nominatedMovies collection, renders winning movie on group-centre.html */
-export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
+export function getWinningMovie(groupID, movieSection, movieCenterTitle, resetBtn) {
     groupRef.doc(groupID).collection("nominatedMovies")
     .orderBy("numOfVotes", "desc").limit(1)
     .get()
@@ -297,7 +299,7 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
             let id = movie.data().imdbID;
             let pic = movie.data().moviePoster;
 
-            renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle)
+            renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTitle, resetBtn, groupID)
         })
     })
     .catch((error) => {
@@ -305,35 +307,63 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
     });
 }
 
-/* changes "nominated movies" section to "movie of the week", generates the winning movie */
-function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle) {
-    let movieCard = "";
+/* Changes "nominated movies" section to "movie of the week", generates the winning movie on group-centre.html */
+function renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTitle, resetBtn, groupID) {
+    let movieCard = `<div class="row justify-content-center">`;
 
-    movieCard += `<div class="card winningMovie">
+    movieCard += `<div class="card movie_card">
         <img src="${pic}" class="card-img-top" alt="${title}">
         <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">${desc}</p>
+          <h5 class="card-title">${title}</h5>
+          <p class="card-text">${desc}</p>
+          
         </div>
         <div class="card-footer">
-            <small class="text-muted">${year}</small>
-        </div>
-        </div>`;
+        <span class="movie_info">${year}</span><span class="movie_info float-end">&#9733 / 10</span>
+    </div>
+      </div>`;
+
+    resetBtn.style.display = "block";
+    resetVotes(groupID, resetBtn);
 
     movieSection.innerHTML = movieCard;
     movieCenterTitle.innerText = "Movie of the Week";
+
+}
+
+/** Resets Nominated Movies Section by deleting all movies in nominatedMovies subcollection for group-centre.html.
+ * Resets group's totalVotes to 0. **/
+/* Adapted from https://stackoverflow.com/questions/47860812/deleting-all-documents-in-firestore-collection */
+function resetVotes(groupID, resetBtn) {
+    resetBtn.addEventListener("click", function() {
+        let movieDocs = groupRef.doc(groupID).collection("nominatedMovies");
+        
+        movieDocs.onSnapshot((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                movieDocs.doc(doc.id).delete()
+            })
+            
+        });
+        groupRef.doc(groupID).update({
+            totalVotes: 0
+        });
+        setTimeout(() => {
+            window.location.href = `group-centre.html?${groupID}`
+        }, 500)
+        
+    });
 }
 
 /* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
-function checkVotes(members, groupID, movieSection, movieCenterTitle) {
+function checkVotes(members, groupID, movieSection, movieCenterTitle, resetBtn) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
-        if (doc.data().totalVotes == members) {
+        if (doc.data().totalVotes >= members) {
             console.log("equal votes");
             console.log(doc.data().totalVotes);
             console.log("IF num of members: " + members);
 
-            getWinningMovie(groupID, movieSection, movieCenterTitle);
+            getWinningMovie(groupID, movieSection, movieCenterTitle, resetBtn);
         } else {
             console.log("not equal votes");
         }
@@ -341,12 +371,12 @@ function checkVotes(members, groupID, movieSection, movieCenterTitle) {
 }
 
 /* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
-export function getNumOfMembers(groupID, movieSection, movieCenterTitle) {
+export function getNumOfMembers(groupID, movieSection, movieCenterTitle, resetBtn) {
     groupRef.doc(groupID).collection("groupMembers").get()
     .then(function(doc) {
         let numOfMembers = doc.size;
         console.log("num of members: " + numOfMembers);
-        checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle);
+        checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle, resetBtn);
     });
 
 }
@@ -553,4 +583,14 @@ function renderGroupMsgs(id, name, groupMsgs) {
                     </div>`;
     }
     groupMsgs.innerHTML = groupMsgCard;
+}
+
+/** Ends voting round and displays winning movie on group-centre.html. */
+export function endVoting(groupID, endVoteBtn) {
+    endVoteBtn.addEventListener("click", function () {
+        groupRef.doc(groupID).update({ 
+            totalVotes: 100
+        });
+        
+    })  
 }
