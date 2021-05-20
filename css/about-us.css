@@ -1,8 +1,23 @@
+body,
+html {
+    min-height: 100%;
+    height: auto;
+}
+
 body {
+    background-image: linear-gradient(#3d0b0b, #3b3a3a);
+    font-family: Verdana, sans-serif;
+    height: 100%;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+
+/* body {
   font-family: Verdana;
   background-color: rgba(128, 3, 3, 0.585);
   color: white;
-}
+} */
 
 figcaption {
   text-align: center;
