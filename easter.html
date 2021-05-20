@@ -14,7 +14,7 @@
 
 
     <!-- Optional styles and scripts of your own -->
-    <link rel="stylesheet" href="/js/donghua.css">
+    <link rel="stylesheet" href="/css/easter-egg.css">
     <link rel="stylesheet" href="">
 
     <!--Favicon-->
@@ -26,21 +26,24 @@
 
 </head>
 
-<body>
-    <div id='starter'>Press Enter</div>
+<body id="body">
+    <div id='starter'>Presenting...</div>
     <div id='scene'>
         <div id='curtain'>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/zkmTs5m-9XE"
+            <iframe src="https://www.youtube.com/embed/zkmTs5m-9XE"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
-             <a href="test.html" id= "" class="btn btn-primary">Favorite</a>
+                allowfullscreen>
+            </iframe>
+             
             <div class='ground'></div>
             <div class='left'></div>
             <div class='right'></div>
         </div>
     </div>
-    <script src="/js/donghua.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="/js/easter-egg.js"> </script>
 </body>
 
 </html>
