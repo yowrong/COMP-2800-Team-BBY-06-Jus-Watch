@@ -1,0 +1,94 @@
+.searchIcon {
+    margin-left: 7px;
+    width: 45px;
+    height: 45px;
+    background-color: #3466AA;
+    position: absolute;
+}
+
+.searchBar {
+    margin-left: 55px;
+}
+
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #3466AA;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #3466AA;
+    color: white;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #114084;
+    color: white;
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: #114084 !important;
+    color: #114084;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#myInput {
+    color: white;
+}
+
+.search {
+    background-color: #3466AA;
+    position: fixed;
+    margin-top: 70px;
+    width: 100%;
+    z-index: 2;
+}
+
+input {
+    border: 1px solid transparent;
+    background-color: white;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+input[type=text] {
+    background-color: #3466AA;
+    color: #82B7DC;
+    width: 100%;
+}
+
+input[type=text]:focus {
+    border-bottom: 1px solid white;
+}
+
+::placeholder {
+    color: gainsboro;
+}
+/* 
+.card {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    height: 350px;
+    width: 215px !important;
+    z-index: 0;
+} */
