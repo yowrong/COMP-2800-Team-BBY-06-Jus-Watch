@@ -20,6 +20,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="/css/post-review.css">
 
 </head>
 
@@ -56,23 +57,36 @@
       </div>
     </div>
   </nav>
-  <div class="container">
-    <h4 class="mt-3 text-center border-bottom pb-2">Comments</h4>
-    <form id="comments">
-      <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input id="name" name="name" type="text" class="form-control" autocomplete="off">
-      </div>
-      <div class="mb-3">
-        <label for="comment" class="form-label">Write a Comment</label>
-        <textarea id="comment" name="comment" class="form-control"></textarea>
-      </div>
-      <button class="btn btn-outline-primary">Post Comment</button>
-    </form>
-  </div>
-  <div class="container cont">
 
-  </div>
+
+  <div class="container">
+    <div class="message-board">
+      <h1>Review Board</h1>
+      <div id="load-data">
+        <p>Loading...</p>
+      </div>
+    </div>
+
+    <div id="command" class="type-message box-shadow">
+      <h1>Post Your Review</h1>
+      <form>
+        <div id="name" class="p-1 ">
+          <input type="text" placeholder="Nickname" id="nickname" required />
+        </div>
+        <div id="input" class="p-1 ">
+          <textarea placeholder="Type message here..." id="message" required></textarea>
+        </div>
+        <div id="myBtn">
+          <button type="submit">SEND</button>
+        </div>
+      </form>
+      <div class="error-message">
+        <p>Error! Please fill in all the fields.</p>
+        <span class="close position-right">&times;</span>
+      </div>
+    </div>
+
+ 
 
   <!-- Icon Footer -->
   <footer>
@@ -112,9 +126,8 @@
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
 
   <!-- Our scripts -->
-  <script type="module" src="/js/firebase-api.js"></script>
   <script type="module" src="/js/post-review2.js"></script>
-  <script type="module" src="./js/logout.js"></script>
+
 
 </body>
 
