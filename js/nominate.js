@@ -77,7 +77,7 @@ function accessMovie(movieId) {
     let movieYear = "";
     let movieImdbId = movieId;
 
-    fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=6753c87c`)
+    fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=5623718`)
         .then((response) => {
             return response.json()
         })

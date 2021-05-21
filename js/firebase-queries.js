@@ -673,7 +673,7 @@ export function addFavourite(e) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         let movieId = sessionStorage.getItem('movieId');
-        axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+        axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
           .then((response) => {
             let movie = response.data;
             if (addFavBtn.localeCompare('Remove Favourite') != 0) {
@@ -700,7 +700,7 @@ export function addFavourite(e) {
       firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
               let movieId = sessionStorage.getItem('movieId');
-              axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+              axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
                   .then((response) => {
                       let movie = response.data;
                       if (addFavBtn.localeCompare('Remove Favourite') != 0) {
