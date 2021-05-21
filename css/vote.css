@@ -1,12 +1,82 @@
 body {
-    background-color: #3b3a3a;
+  background-color: #3b3a3a;
 }
+
 h2 {
-    text-align: center;
+  text-align: center;
 }
+
+.voteTitle {
+  padding-bottom: 2%;
+}
+
+.nominate {
+  padding-bottom: 2%;
+}
+
+
 .container {
-    padding: 3%;
-    margin: 3% auto 3% auto;
-    border-radius: 0.5rem;
-    background: #ffffff;
+  padding: 3%;
+  margin: 3% auto 16% auto;
+  border-radius: 0.5rem;
+  background: #ffffff;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.buttons .btn {
+  min-width: 200px;
+  margin: 0 auto;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+
+img {
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+img {
+  pointer-events: none;
+}
+
+.movie_card {
+  padding: 0 !important;
+  width: 20rem;
+  margin: 14px;
+  border-radius: 10px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
+}
+
+.movie_card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: auto;
+}
+
+.movie_info {
+  color: #5e5c5c;
+}
+
+.movie_info i {
+  font-size: 20px;
+}
+
+.card-title {
+  width: 80%;
+  height: 1.5rem;
+}
+
+.btn {
+  min-width: 100px;
 }

@@ -1,3 +1,5 @@
+var db = firebase.firestore();
+// const { user } = require("firebase-functions/lib/providers/auth");
 function getUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -17,26 +19,38 @@ function getUser() {
     })
 }
 
-var fn = document.getElementById('firstName');
-var ln = document.getElementById('lastName');
-var age = document.getElementById('age');
-var contactEmail = document.getElementById('email');
-var address = document.getElementById('address');
-const db = firebase.firestore();
-var addBtn = document.getElementById('saveBtn');
-$(addBtn).click(function (event) {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            db.collection('users').doc(user.uid).update({
-                FirstName: fn.value,
-                LastName: ln.value,
-                name:fn.value + ' ' + ln.value,
-                age: age.value,
-                contactEmail: contactEmail.value,
-                address: address.value,
-            });
-        }
-    });
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        var originalPhone;
+        var originalAge;
+        var originalName;
+        db.collection("users").doc(user.uid).get().then((s) => {
+            originalName = s.data().name;
+            originalAge = s.data().age;
+            originalPhone = s.data().phone;
+            $('#name').attr("placeholder", originalName);
+            $('#name').attr("value", originalName);
+            $('#age').attr("placeholder", originalAge);
+            $('#age').attr("value", originalAge);
+            $('#phone').attr("placeholder", originalPhone);
+            $('#phone').attr("value", originalPhone);
+        });
+    };
 });
 
 
+$("#saveBtn").click(function (event) {
+    var n = document.getElementById('name');
+    var age = document.getElementById('age');
+    var phone = document.getElementById('phone');
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            db.collection("users").doc(user.uid).update({
+                "name": n.value,
+                "age": age.value,
+                "phone": phone.value,
+            });
+        }
+    });
+    alert("Changes Saved!");
+});

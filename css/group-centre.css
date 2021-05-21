@@ -1,34 +1,160 @@
 .movieCenter {
-    margin: 0 auto;
-    background-color: #3b3a3a;
-    width: 80%;
-    border-radius: 1em;
+  margin: 0 auto;
+  background-color: #3b3a3a;
+  width: 80%;
+  border-radius: 1em;
 }
 
+
 .card-group {
-    padding: 5%;
+  padding: 5%;
 }
 
 body {
-    background-color: #3b3a3a;
+  background-color: #3b3a3a;
 }
 
 .movieCenterTitle {
-    text-align: center;
+  text-align: center;
 }
 
 .winningMovie {
-    margin: 0 auto;
-    max-width: 90%;
+  margin: 0 auto;
+  max-width: 90%;
 }
-.container{
-    width: 80%;
-    padding: 3%;
-    margin: 3% auto 3% auto;
-    border-radius: 0.5rem;
-    background: #ffffff;
+
+.container {
+  /* width: 80%;
+  padding: 3%;
+  margin: 3% auto 3% auto;
+  border-radius: 0.5rem; */
+  /* background: #ffffff; */
+  background-image: linear-gradient(#3d0b0b, #3b3a3a);
+  color: white;
+
+  border-radius: 10px;
+  text-align: center;
+  /* position: absolute; */
+  /* margin-top: 70em; */
+  /* left: 50%;
+  width: 90%; */
+  padding: 2%;
+  /* transform: translate(-50%, -50%); */
+  background: rgba(0,0,0,.5);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+ 
 }
+
+#exampleModal {
+  color: black;
+  text-align: right;
+}
+
+
 hr {
-    border: 1px solid #000000;
-    margin-bottom: 25px;
+  border: 1px solid white;
+  margin-bottom: 25px;
+}
+
+.accordion {
+  max-width: 500px;
+  margin: 5% auto;
+}
+
+#resetBtn {
+  display: none;
+}
+
+.accordion-button {
+  color: white;
+}
+
+.group_button {
+  margin-top: 100px;
+  max-width: 500px;
+}
+
+.btn-danger {
+  margin-top: -50px;
+}
+
+#shareLink {
+  width: 100%;
+}
+
+.fas {
+  float: right;
+  margin: 5px;
+}
+
+/****** MOVIE CARDS ******/
+/** Adapted from https://blog.avada.io/examples/bootstrap-movie-cards-sukhmeet.html **/
+/* *{
+    font-family: 'Poppins', sans-serif;
+     -webkit-user-select: none;
+      -moz-user-select: -moz-none;
+      -o-user-select: none;
+      user-select: none;
   }
+  img {
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+  } */
+img {
+  pointer-events: none;
+}
+
+.movie_card {
+  padding: 0 !important;
+  width: 20rem;
+  margin: 14px;
+  border-radius: 10px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
+  color: black;
+  text-align: left;
+}
+
+.movie_card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: auto;
+}
+
+.movie_info {
+  color: #5e5c5c;
+}
+
+.movie_info i {
+  font-size: 20px;
+}
+
+.card-title {
+  width: 80%;
+  height: 4rem;
+}
+
+
+.credits {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #8e24aa;
+  font-size: 18px;
+}
+
+.credits .card-body {
+  padding: 0;
+}
+
+.credits p {
+  padding-top: 15px;
+  padding-left: 18px;
+}
+
+.credits .card-body i {
+  color: #8e24aa;
+}

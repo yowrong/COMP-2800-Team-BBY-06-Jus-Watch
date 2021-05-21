@@ -33,4 +33,3 @@ displayGroups(groupList);
 //     }
 //     groupSection.innerHTML = groupCard;
 // }
-

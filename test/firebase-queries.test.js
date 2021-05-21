@@ -55,7 +55,7 @@ beforeAll(() => {
         groupId: firebase.firestore.FieldValue.arrayUnion('Test ID'),
         groupName: firebase.firestore.FieldValue.arrayUnion('Test Group'),
         groupDescription: firebase.firestore.FieldValue.arrayUnion('Comedy movie club')
-    })
+    });
 })
 
 test('test firestore reference collections', () => {
@@ -126,6 +126,3 @@ test('test firestore function .update', () => {
         console.log(err);
     });
 });
-
-
-// Run tests using `jest --env=node`
