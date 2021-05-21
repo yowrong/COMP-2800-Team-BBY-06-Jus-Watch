@@ -18,7 +18,6 @@ firebase.initializeApp(firebaseConfig);
 function firebaseAuthUI() {
     // Firebase authentication configuration and pre-built sign-in widget from https://firebase.google.com/docs/auth/web/firebaseui
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    var provider = new firebase.auth.GoogleAuthProvider();
 
     var uiConfig = {
         callbacks: {

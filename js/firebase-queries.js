@@ -597,7 +597,7 @@ function renderGroupMsgs(id, name, groupMsgs) {
                                 <div class="card-body">
                                     <h5 class="card-title">${name[i]}</h5>
                                     <a href="./group-msgs.html?${id[i]}">
-                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group Chat</button>
+                                        <button id="${id[i]}" type="button" class="btn btn-danger btn-lg enter">Enter Group Chat</button>
                                     </a>
                                 </div>
                             </div>
