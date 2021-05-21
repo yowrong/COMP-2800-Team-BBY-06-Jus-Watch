@@ -54,6 +54,8 @@ function firebaseAuthUI() {
     ui.start('#firebaseui-auth-container', uiConfig);
 }
 
+var db = firebase.firestore(); 
+
 export {
     firebaseConfig,
     firebaseAuthUI

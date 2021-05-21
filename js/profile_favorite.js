@@ -1,20 +1,64 @@
-var db = firebase.firestore(); 
-// const { user } = require("firebase-functions/lib/providers/auth");
-function getUser() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log("user is signed in");
-            db.collection("users")
-                .doc(user.uid)
-                .get()
-                .then(function (doc) {
-                    var n = doc.data().name;
-                    console.log(n);
-                    $("#username").text(n);
-                })
-        }
-        else {
-            console.log("no user is signed in");
-        }
-    })
+
+
+const db = firebase.firestore();
+//read the favourite list in firestore and append in the table
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        var favList;
+        db.collection("users").doc(user.uid).get().then((s) => {
+            favList = s.data().favouriteLists;
+            favList.forEach(element => {
+                axios.get('http://www.omdbapi.com?i=' + element + '&apikey=6753c87c')
+                    .then((response) => {
+                        let movie = response.data;
+                        $("#favTable").append(`
+                            <tr id = "movie` + element+`" >
+                                <th><a class="link-light" id="`+ element + `" style="cursor: pointer;">` + movie.Title + `<a></th>
+                                <th>` + movie.Released + `</th> 
+                                <th>` + movie.Genre + `</th>
+                                <th><button class="removeFav btn btn-danger " 
+                                onClick="setTimeout(function () { 
+                                    location.reload();
+                                  }, 400);" 
+                                value="`+ element + `">X</button></th>
+                            
+                            </tr>
+                        `);
+                    });
+                console.log(element);
+            });
+        });
+    };
+});
+
+//user can delete the movie in favourite list and click the name to see the details
+$(document).ready(() => {
+    var el = document.getElementById('favTable');
+    if (el) {
+        el.addEventListener("click", function (event) {
+            var movieId = $(el).val();
+            console.log(event.target.value);
+            if(event.target.value!==undefined) {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        db.collection("users").doc(user.uid).update({
+                            "favouriteLists": firebase.firestore.FieldValue.arrayRemove(event.target.value),
+                        });
+                    }
+                });
+                //if user click the name
+            } else if(event.target.id!==undefined) {
+                movieSelected(event.target.id);
+            }       
+        });
+    }
+});
+
+//redirect to the detail page
+function movieSelected(id) {
+    sessionStorage.setItem('movieId', id);
+    window.location = "movieresult.html";
+    return false;
 }
+
+
