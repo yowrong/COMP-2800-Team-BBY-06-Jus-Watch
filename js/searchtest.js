@@ -258,32 +258,46 @@ function getRandomMovie() {
                 } else {
 
                     let output = `
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="${movie.Poster}" class="thumbnail">
-                            </div>
-                            <div class="col-md-8">
-                                <h2 style = "color: white">${movie.Title}</h2>
-                                    <ul class="list-group">
-                                    <li class="list-group-item"><strong>Genre:</strong> ${movie.Genre}</li>
-                                    <li class="list-group-item"><strong>Released:</strong> ${movie.Released}</li>
-                                    <li class="list-group-item"><strong>Rated:</strong> ${movie.Rated}</li>
-                                    <li class="list-group-item"><strong>IMDB Rating:</strong> ${movie.imdbRating}</li>
-                                    <li class="list-group-item"><strong>Director:</strong> ${movie.Director}</li>
-                                    <li class="list-group-item"><strong>Writer:</strong> ${movie.Writer}</li>
-                                    <li class="list-group-item"><strong>Actors:</strong> ${movie.Actors}</li>
-                                </ul>
-                            </div>
-                            </div>
-                            <div class="row">
-                            <div class="well">
-                                <h3 style = "color: white" >Plot</h3>
-                                <p style = "color: white">${movie.Plot}</p>
-                                <hr>
-                                <a href="post-review.html" target="_blank" class="btn btn-primary">Leave a Command</a>
-                                <a href="profile_favorite.html" class="btn btn-primary">Favorite</a>
-                            </div>
-                        </div>`;
+                    <div class="moviedscrpt">
+                    <div class="centerbox">
+                      <img src="${movie.Poster}" class="thumbnail">
+                      <h2  style = "color: white;">${movie.Title}</h2>
+                    </div>
+                        <ul class="list-group">
+                          <li class="list-group-item"><strong>Genre:</strong> ${movie.Genre}</li>
+                          <li class="list-group-item"><strong>Released:</strong> ${movie.Released}</li>
+                          <li class="list-group-item"><strong>Rated:</strong> ${movie.Rated}</li>
+                          <li class="list-group-item"><strong>IMDB Rating:</strong> ${movie.imdbRating}</li>
+                          <li class="list-group-item"><strong>Director:</strong> ${movie.Director}</li>
+                          <li class="list-group-item"><strong>Writer:</strong> ${movie.Writer}</li>
+                          <li class="list-group-item"><strong>Actors:</strong> ${movie.Actors}</li>
+                        </ul>
+                    <div class="well" style="margin:4%">
+                        <h3 style = "color: white" >Plot</h3>
+                        <p style = "color: white">${movie.Plot}</p>
+                        <hr>
+                        <div class="centerbox">
+                        <a href="post-review.html" target="_blank" class="anotest">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          Leave a Comment</a>
+                        <a href="" onclick="addFavourite(event)"; id = "Addfavourite" class="anotest">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          Add Favourite</a>
+                        <a href="profile_favorite.html" ; class="anotest">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          Favourite List</a>
+                          </div>
+                    </div>
+                  </div>`;
 
                     $('#movies').html(output);
                 }
