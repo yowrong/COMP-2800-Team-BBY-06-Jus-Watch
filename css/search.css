@@ -94,7 +94,6 @@ h1 {
     border: none;
 }
 
-
 .anotest {
   position: relative;
   display: inline-block;
@@ -198,4 +197,13 @@ h1 {
   50%,100% {
     bottom: 100%;
   }
+}
+
+#results {
+    color: white;
+    text-align: center;
+}
+
+#buttons {
+    margin-top: 1em;
 }
