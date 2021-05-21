@@ -241,3 +241,10 @@ input{
     bottom: 100%;
   }
 }
+
+
+#favTable {
+  color: rgb(100, 93, 93);
+  font-size: xx-small;
+  font-family: 'Courier New', Courier, monospace;
+}
