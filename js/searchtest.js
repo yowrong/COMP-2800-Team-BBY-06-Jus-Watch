@@ -1,7 +1,9 @@
+// link to search.css
 new_element = document.createElement("link");
 new_element.setAttribute("rel", "stylesheet");
 new_element.setAttribute("type", "text/css");
 new_element.setAttribute("href", "./css/search.css");
+
 document.body.appendChild(new_element);
 $(document).ready(() => {
   $('#searchBar').on('submit', (e) => {
@@ -56,7 +58,7 @@ function getMovie() {
       let movie = response.data;
 
       let output = `
-          <div class="row">
+          <div class="moviedscrpt">
             <div class="col-md-4">
               <img src="${movie.Poster}" class="thumbnail">
             </div>
@@ -73,13 +75,13 @@ function getMovie() {
               </ul>
             </div>
           </div>
-          <div class="row">
+          <div class="">
             <div class="well">
               <h3>Plot</h3>
               ${movie.Plot}
               <hr>
               <a href="post-review.html" target="_blank" class="btn btn-primary">Leave a Command</a>
-              <a href="profile_favorite.html" class="btn btn-primary">Favorite</a>
+              <a href="#" id="favorite" class="btn btn-primary">Favorite</a>
             </div>
           </div>
         `;
@@ -91,3 +93,47 @@ function getMovie() {
       console.log(err);
     });
 }
+// 
+// Lillian21520 add movie to favorite..from here
+// 
+//catch user login
+
+var db = firebase.firestore();
+// const { user } = require("firebase-functions/lib/providers/auth");
+function getUser() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log("user is signed in");
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then(function (doc) {
+          var n = doc.data().name;
+          console.log(n);
+          $("#username").text(n);
+        })
+    } else {
+      console.log("no user is signed in");
+    }
+  })
+}
+
+// Click "favorite" button in movieresult page, get movie&store into firebase
+const addBtn = document.getElementById("favorite");
+
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+      let movieId = sessionStorage.getItem('movieId');
+    
+      axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+        .addBtn.addEventListener("click", function (e) {
+          // console.log("clicked create");
+          console.log("New movie id", movieId);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    
+  }
+});
