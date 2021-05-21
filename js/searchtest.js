@@ -70,7 +70,7 @@ function getMovie() {
 
       let movie = response.data;
       let output = `
-          <div class="row">
+          <div class="moviedscrpt">
             <div class="col-md-4">
               <img src="${movie.Poster}" class="thumbnail">
             </div>
@@ -86,7 +86,7 @@ function getMovie() {
                 <li class="list-group-item"><strong>Actors:</strong> ${movie.Actors}</li>
               </ul>
             </div>
-          </div>
+          
           <div class="">
             <div class="well">
               <h3 style = "color: white" >Plot</h3>
@@ -96,6 +96,7 @@ function getMovie() {
               <a href="" onclick="addFavourite(event)"; id = "Addfavourite" class="btn btn-danger">Add Favourite</a>
               <a href="profile_favorite.html" ; class="btn btn-danger">Favourite List</a>
               </div>
+          </div>
           </div>
         `;
       console.log(1 + output);
