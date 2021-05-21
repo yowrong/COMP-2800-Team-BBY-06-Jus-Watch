@@ -10,6 +10,7 @@ document.body.appendChild(new_element);
 
 
 getUser();
+// addFavourite();
 
 if (document.URL.includes("movieresult.html")) {
   let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"

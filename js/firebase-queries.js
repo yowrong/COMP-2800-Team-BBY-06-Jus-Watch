@@ -666,10 +666,10 @@ export function getUser() {
 }
 
 
-export function addFavourite(e) {
+export function addFavourite() {
 
     var addFavBtn = $("#Addfavourite").text();
-    e.preventDefault();
+    // e.preventDefault();
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         let movieId = sessionStorage.getItem('movieId');
@@ -694,31 +694,31 @@ export function addFavourite(e) {
     });
   
     //window.location = "\profile_favorite.html"
-      var db = firebase.firestore();
-      var addFavBtn = $("#Addfavourite").text();
-      e.preventDefault();
-      firebase.auth().onAuthStateChanged(function (user) {
-          if (user) {
-              let movieId = sessionStorage.getItem('movieId');
-              axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
-                  .then((response) => {
-                      let movie = response.data;
-                      if (addFavBtn.localeCompare('Remove Favourite') != 0) {
-                          db.collection("users").doc(user.uid).update({
-                              "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
-                          });
-                          $('#Addfavourite').text('Remove Favourite');
-                          addFavBtn = $("#Addfavourite").text();
-                      } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
-                          db.collection("users").doc(user.uid).update({
-                              "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
-                          });
-                          $('#Addfavourite').text('Add Favourite');
-                          addFavBtn = $("#Addfavourite").text();
-                      }
-                  });
-          };
-      });
+    //   var db = firebase.firestore();
+    //   var addFavBtn = $("#Addfavourite").text();
+    //   e.preventDefault();
+    //   firebase.auth().onAuthStateChanged(function (user) {
+    //       if (user) {
+    //           let movieId = sessionStorage.getItem('movieId');
+    //           axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
+    //               .then((response) => {
+    //                   let movie = response.data;
+    //                   if (addFavBtn.localeCompare('Remove Favourite') != 0) {
+    //                       db.collection("users").doc(user.uid).update({
+    //                           "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
+    //                       });
+    //                       $('#Addfavourite').text('Remove Favourite');
+    //                       addFavBtn = $("#Addfavourite").text();
+    //                   } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
+    //                       db.collection("users").doc(user.uid).update({
+    //                           "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
+    //                       });
+    //                       $('#Addfavourite').text('Add Favourite');
+    //                       addFavBtn = $("#Addfavourite").text();
+    //                   }
+    //               });
+    //       };
+    //   });
   
       //window.location = "\profile_favorite.html"
   }
