@@ -112,6 +112,7 @@ img {
 
 /*css from https://blog.avada.io/examples/responsive-movie-card-dark-version-zimuzo-ejinkeonye.html*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -131,6 +132,7 @@ h2 {
   font-size: 14px;
   font-weight: 400;
 }
+
 .movie_card {
   position: relative;
   display: block;
@@ -235,6 +237,7 @@ i {
   font-size: 19px;
   cursor: pointer;
 }
+
 .blur_back {
   position: absolute;
   top: 0;
@@ -339,7 +342,7 @@ footer {
   bottom: 0;
   width: 100%;
   margin-bottom: -1.15%;
-  background:none;
+  background: none;
 }
 
 footer ul {
@@ -363,7 +366,8 @@ footer ul li {
 .footerbtn:hover {
   box-shadow: 0px 0px 30px -1px #1900fa;
 }
-footer .active{
+
+footer .active {
   border-radius: 15px 15px 0px 0px;
   box-shadow: 0px 0px 30px -1px #ffffff;
 }

@@ -1,7 +1,7 @@
 import { getGroupforGroupCentre, getNumOfMembers, displayNominatedMovies, getWinningMovie, showGroupMembers, endVoting, leaveGroup } from "./firebase-queries.js";
 
-let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
-let query = string.split("?");                                  // Projects 1800 lecture slides
+let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?"); // Projects 1800 lecture slides
 let groupID = query[1];
 
 const db = firebase.firestore();
@@ -47,16 +47,16 @@ getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc)
 
 /* Generates correct links for the buttons */
 function shareLink(groupID) {
-    share.setAttribute("value", `https://jus-watch.web.app/invite.html?${groupID}`);         // *** need to change to hosted link         
-    nominateBtn.addEventListener("click", function(e) {
+    share.setAttribute("value", `https://jus-watch.web.app/invite.html?${groupID}`); // *** need to change to hosted link         
+    nominateBtn.addEventListener("click", function (e) {
         e.preventDefault;
         window.location.href = `nominate.html?${groupID}`;
     })
-    voteBtn.addEventListener("click", function(e) {
+    voteBtn.addEventListener("click", function (e) {
         e.preventDefault;
         window.location.href = `vote.html?${groupID}`;
     })
-    chatBtn.addEventListener("click", function(e) {
+    chatBtn.addEventListener("click", function (e) {
         e.preventDefault;
         window.location.href = `group-msgs.html?${groupID}`;
     })

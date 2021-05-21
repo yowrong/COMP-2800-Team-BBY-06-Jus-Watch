@@ -1,50 +1,52 @@
 .movieCenter {
-    margin: 0 auto;
-    background-color: #3b3a3a;
-    width: 80%;
-    border-radius: 1em;
+  margin: 0 auto;
+  background-color: #3b3a3a;
+  width: 80%;
+  border-radius: 1em;
 }
 
 .card-group {
-    padding: 5%;
+  padding: 5%;
 }
 
 body {
-    background-color: #3b3a3a;
+  background-color: #3b3a3a;
 }
 
 .movieCenterTitle {
-    text-align: center;
+  text-align: center;
 }
 
 .winningMovie {
-    margin: 0 auto;
-    max-width: 90%;
+  margin: 0 auto;
+  max-width: 90%;
 }
-.container{
-    width: 80%;
-    padding: 3%;
-    margin: 3% auto 3% auto;
-    border-radius: 0.5rem;
-    background: #ffffff;
+
+.container {
+  width: 80%;
+  padding: 3%;
+  margin: 3% auto 3% auto;
+  border-radius: 0.5rem;
+  background: #ffffff;
 }
+
 hr {
-    border: 1px solid #000000;
-    margin-bottom: 25px;
+  border: 1px solid #000000;
+  margin-bottom: 25px;
 }
 
 .accordion {
-    max-width: 500px;
-    margin: 5% auto;
+  max-width: 500px;
+  margin: 5% auto;
 }
 
 #resetBtn {
-    display: none;
+  display: none;
 }
 
 .group_button {
   margin-top: 200px;
-    max-width: 500px;
+  max-width: 500px;
 }
 
 button {
@@ -52,12 +54,12 @@ button {
 }
 
 #shareLink {
-    width: 100%;
+  width: 100%;
 }
 
 .fas {
-    float: right;
-    margin: 5px;
+  float: right;
+  margin: 5px;
 }
 
 /****** MOVIE CARDS ******/
@@ -75,48 +77,55 @@ button {
       -o-user-drag: none;
       user-drag: none;
   } */
-  img {
-    pointer-events: none;
-  }
-  .movie_card{
-    padding: 0 !important;
-    width: 20rem;
-    margin:14px; 
-    border-radius: 10px;
-    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
-  }
-  .movie_card img{
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: auto;
-  }
-  .movie_info{
-    color: #5e5c5c;
-  }
+img {
+  pointer-events: none;
+}
 
-  .movie_info i{
-    font-size: 20px;
-  }
-  .card-title{
-    width: 80%;
-    height: 4rem;
-  }
+.movie_card {
+  padding: 0 !important;
+  width: 20rem;
+  margin: 14px;
+  border-radius: 10px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
+}
+
+.movie_card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: auto;
+}
+
+.movie_info {
+  color: #5e5c5c;
+}
+
+.movie_info i {
+  font-size: 20px;
+}
+
+.card-title {
+  width: 80%;
+  height: 4rem;
+}
 
 
-  .credits{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border: 2px solid #8e24aa;
-    font-size: 18px;
-  }
-  .credits .card-body{
-    padding: 0;
-  }
-  .credits p{
-    padding-top: 15px;
-    padding-left: 18px;
-  }
-  .credits .card-body i{
-    color: #8e24aa;
-  }
+.credits {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #8e24aa;
+  font-size: 18px;
+}
+
+.credits .card-body {
+  padding: 0;
+}
+
+.credits p {
+  padding-top: 15px;
+  padding-left: 18px;
+}
+
+.credits .card-body i {
+  color: #8e24aa;
+}
