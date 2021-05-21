@@ -17,7 +17,7 @@ h2 {
 
 .container {
   padding: 3%;
-  margin: 3% auto 3% auto;
+  margin: 3% auto 16% auto;
   border-radius: 0.5rem;
   background: #ffffff;
 }
@@ -44,7 +44,6 @@ img {
   -webkit-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
-  user-drag: none;
 }
 
 img {

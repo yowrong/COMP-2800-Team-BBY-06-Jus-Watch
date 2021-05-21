@@ -1,0 +1,38 @@
+footer {
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: -1.15%;
+    background: none;
+  }
+  
+  footer ul {
+    display: flex;
+    height: 50px;
+    text-align: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  footer ul li {
+    flex: 1;
+    text-align: center;
+    line-height: 45px;
+    box-sizing: border-box;
+  }
+  
+  .footerbtn {
+    box-shadow: 0px 0px 30px -1px #ff1f1f;
+    border-radius: 60%;
+  }
+  
+  .footerbtn:hover {
+    box-shadow: 0px 0px 30px -1px #1900fa;
+  }
+  footer .active{
+    border-radius: 15px 15px 0px 0px;
+  
+    box-shadow: 0px 0px 30px -1px #ffffff;
+  }
+  

@@ -21,6 +21,8 @@
   <link rel="manifest" href="./img/site.webmanifest">
 
   <link rel="stylesheet" href="./css/group-centre.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/footer.css">
 
 </head>
 
@@ -72,7 +74,7 @@
     </div>
 
     <div class="d-grid gap-2 col-6 mx-auto group_button">
-      
+
       <button class="btn btn-danger shadow mb-5 rounded" type="button" id="chatBtn">Chat<i
           class="fas fa-comments fa-lg"></i></button>
       <button class="btn btn-danger shadow mb-5 rounded" type="button" id="nominateBtn">Nominate<i
@@ -83,7 +85,7 @@
         data-bs-target="#exampleModal">Invite<i class="fas fa-users fa-lg"></i></button>
       <button class="btn btn-danger shadow mb-5 rounded" type="button" id="endVoteBtn">End Voting<i
           class="fas fa-fast-forward fa-lg"></i></button>
-          <button type="button" class="btn btn-outline-danger" id="resetBtn">Reset Vote</button>
+      <button type="button" class="btn btn-danger shadow mb-5 rounded" id="resetBtn">Reset Vote</button>
       <button type="button" class="btn btn-danger shadow mb-5 rounded" id="leaveBtn">Leave Group<i
           class="fas fa-sign-out-alt fa-lg"></i></button>
     </div>
@@ -92,7 +94,7 @@
     <div class="accordion" id="accordionExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button bg-white" type="button" data-bs-toggle="collapse"
+          <button class="accordion-button bg-danger" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             Group Members
           </button>
@@ -126,6 +128,32 @@
     </div>
 
   </div>
+
+  <!-- Icon Footer -->
+  <footer>
+    <ul>
+      <li>
+        <a class="nav-link text-white" href="index.html">
+          <i class="fa fa-home footerbtn" style="font-size: 180%;"></i>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link text-white" href="group-main.html">
+          <i class="fa fa-group footerbtn" style="font-size: 180%;"></i>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link text-white" href="search.html">
+          <i class="fa fa-search footerbtn" style="font-size: 180%;"></i>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link active text-white" aria-current="page" href="profile.html">
+          <i class="fa fa-user-circle footerbtn" style="font-size: 180%;"></i>
+        </a>
+      </li>
+    </ul>
+  </footer>
 
   <!-- JS: Boostrap, Firebase, API related, JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

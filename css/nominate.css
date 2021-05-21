@@ -77,6 +77,10 @@ input[type=text]:focus {
   color: gainsboro;
 }
 
+.modal {
+  max-height: 90%;
+}
+
 body,
 html {
   height: 100%;
