@@ -7,6 +7,7 @@ let groupID = query[1];
 displayMsgs(groupID);
 
 const msgToSend = document.getElementById("sendMsg");
+const returnBtn = document.getElementById('returnBtn');
 
 sendBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -21,3 +22,8 @@ sendBtn.addEventListener("click", function (event) {
         $("#sendMsg").val('');
     }, 500);
 });
+
+returnBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location = `group-centre.html?${groupID}`;
+})
