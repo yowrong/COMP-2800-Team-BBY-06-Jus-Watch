@@ -85,8 +85,8 @@ function getMovie() {
               <h3 style = "color: white" >Plot</h3>
               <p style = "color: white">${movie.Plot}</p>
               <hr>
-              <a href="post-review.html" target="_blank" class="btn btn-primary">Leave a Command</a>
-              <a href="profile_favorite.html" class="btn btn-primary">Favorite</a>
+              <a href="post-review.html" target="_blank" class="btn btn-danger">Leave a Comment</a>
+              <a href="profile_favorite.html" class="btn btn-danger">Favourite</a>
             </div>
           </div>
         `;
