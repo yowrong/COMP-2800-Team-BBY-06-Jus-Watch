@@ -1,13 +1,22 @@
+import { getUser, addFavourite } from "./firebase-queries.js";
+
 // link to search.css
-new_element = document.createElement("link");
+let new_element = document.createElement("link");
 new_element.setAttribute("rel", "stylesheet");
 new_element.setAttribute("type", "text/css");
 new_element.setAttribute("href", "./css/search.css");
 
 document.body.appendChild(new_element);
 
+
+getUser();
+
 if (document.URL.includes("movieresult.html")) {
-    getMovie();
+  let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+  let query = string.split("?"); // Projects 1800 lecture slides
+  let movieID = query[1];
+  
+    getMovie(movieID);
 }
 
 $(document).ready(() => {
@@ -36,14 +45,14 @@ $(document).ready(() => {
 });
 
 function getMovies(myInput) {
-    axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=6753c87c')
+    axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=5623718')
         .then((response) => {
             console.log(response);
             let movies = response.data.Search;
             let output = '';
             $.each(movies, (index, movie) => {
                 output += `
-            <a onclick="movieSelected('${movie.imdbID}')" class="nav-link text-white" href="#">
+            <a href="movieresult.html?${movie.imdbID}" class="nav-link text-white">
             <div class="movie_card" style="width: 18rem;margin: 0 auto;>
               <div class="card h-100">
                 <img src="${movie.Poster}"  class="poster">
@@ -64,17 +73,16 @@ function getMovies(myInput) {
 }
 
 
-function movieSelected(id) {
-    sessionStorage.setItem('movieId', id);
-    window.location = "movieresult.html";
+// function movieSelected(id) {
+//     sessionStorage.setItem('movieId', id);
+//     window.location = "movieresult.html";
 
-    return false;
-}
+//     return false;
+// }
 
-function getMovie() {
-    let movieId = sessionStorage.getItem('movieId');
-
-    axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+function getMovie(movieID) {
+ 
+    axios.get('http://www.omdbapi.com?i=' + movieID + '&apikey=5623718')
         .then((response) => {
             console.log(1 + 1);
             console.log(response);
@@ -135,83 +143,83 @@ function getMovie() {
 // 
 //catch user login
 
-const db = firebase.firestore();
+// const db = firebase.firestore();
 // const { user } = require("firebase-functions/lib/providers/auth");
-function getUser() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log("user is signed in");
-            db.collection("users")
-                .doc(user.uid)
-                .get()
-                .then(function (doc) {
-                    var n = doc.data().name;
-                    console.log(n);
-                    $("#username").text(n);
-                })
-        } else {
-            console.log("no user is signed in");
-        }
-    })
-}
+// function getUser() {
+//     firebase.auth().onAuthStateChanged(function (user) {
+//         if (user) {
+//             console.log("user is signed in");
+//             db.collection("users")
+//                 .doc(user.uid)
+//                 .get()
+//                 .then(function (doc) {
+//                     var n = doc.data().name;
+//                     console.log(n);
+//                     $("#username").text(n);
+//                 })
+//         } else {
+//             console.log("no user is signed in");
+//         }
+//     })
+// }
 
 // Click "favorite" button in movieresult page, get movie&store into firebase
-function addFavourite(e) {
-  var db = firebase.firestore();
-  var addFavBtn = $("#Addfavourite").text();
-  e.preventDefault();
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      let movieId = sessionStorage.getItem('movieId');
-      axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
-        .then((response) => {
-          let movie = response.data;
-          if (addFavBtn.localeCompare('Remove Favourite') != 0) {
-            db.collection("users").doc(user.uid).update({
-              "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
-            });
-            $('#Addfavourite').text('Remove Favourite');
-            addFavBtn = $("#Addfavourite").text();
-          } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
-            db.collection("users").doc(user.uid).update({
-              "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
-            });
-            $('#Addfavourite').text('Add Favourite');
-            addFavBtn = $("#Addfavourite").text();
-          }
-        });
-    };
-  });
+// function addFavourite(e) {
+//   var db = firebase.firestore();
+//   var addFavBtn = $("#Addfavourite").text();
+//   e.preventDefault();
+//   firebase.auth().onAuthStateChanged(function (user) {
+//     if (user) {
+//       let movieId = sessionStorage.getItem('movieId');
+//       axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+//         .then((response) => {
+//           let movie = response.data;
+//           if (addFavBtn.localeCompare('Remove Favourite') != 0) {
+//             db.collection("users").doc(user.uid).update({
+//               "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
+//             });
+//             $('#Addfavourite').text('Remove Favourite');
+//             addFavBtn = $("#Addfavourite").text();
+//           } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
+//             db.collection("users").doc(user.uid).update({
+//               "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
+//             });
+//             $('#Addfavourite').text('Add Favourite');
+//             addFavBtn = $("#Addfavourite").text();
+//           }
+//         });
+//     };
+//   });
 
-  //window.location = "\profile_favorite.html"
-    var db = firebase.firestore();
-    var addFavBtn = $("#Addfavourite").text();
-    e.preventDefault();
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            let movieId = sessionStorage.getItem('movieId');
-            axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
-                .then((response) => {
-                    let movie = response.data;
-                    if (addFavBtn.localeCompare('Remove Favourite') != 0) {
-                        db.collection("users").doc(user.uid).update({
-                            "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
-                        });
-                        $('#Addfavourite').text('Remove Favourite');
-                        addFavBtn = $("#Addfavourite").text();
-                    } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
-                        db.collection("users").doc(user.uid).update({
-                            "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
-                        });
-                        $('#Addfavourite').text('Add Favourite');
-                        addFavBtn = $("#Addfavourite").text();
-                    }
-                });
-        };
-    });
+//   //window.location = "\profile_favorite.html"
+//     var db = firebase.firestore();
+//     var addFavBtn = $("#Addfavourite").text();
+//     e.preventDefault();
+//     firebase.auth().onAuthStateChanged(function (user) {
+//         if (user) {
+//             let movieId = sessionStorage.getItem('movieId');
+//             axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+//                 .then((response) => {
+//                     let movie = response.data;
+//                     if (addFavBtn.localeCompare('Remove Favourite') != 0) {
+//                         db.collection("users").doc(user.uid).update({
+//                             "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
+//                         });
+//                         $('#Addfavourite').text('Remove Favourite');
+//                         addFavBtn = $("#Addfavourite").text();
+//                     } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
+//                         db.collection("users").doc(user.uid).update({
+//                             "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
+//                         });
+//                         $('#Addfavourite').text('Add Favourite');
+//                         addFavBtn = $("#Addfavourite").text();
+//                     }
+//                 });
+//         };
+//     });
 
-    //window.location = "\profile_favorite.html"
-}
+//     //window.location = "\profile_favorite.html"
+// }
 
 
 /* Uses the OMDB API to randomly generate a movie suggestion */
@@ -228,7 +236,7 @@ function getRandomMovie() {
 
     // Continuously fetch until a satisfactory movie is generated
     // Source: https://stackoverflow.com/questions/45008330/how-can-i-use-fetch-in-while-loop
-    axios.get('http://www.omdbapi.com?i=' + movieID + imdbID + '&apikey=6753c87c')
+    axios.get('https://www.omdbapi.com?i=' + movieID + imdbID + '&apikey=5623718')
         .then((response) => {
 
             console.log(response);
@@ -277,7 +285,7 @@ function getRandomMovie() {
                             </div>
                         </div>`;
 
-                    $('#movie').html(output);
+                    $('#movies').html(output);
                 }
             }
         }).catch((err) => {
