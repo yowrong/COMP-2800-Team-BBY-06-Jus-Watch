@@ -62,6 +62,7 @@ h1 {
     color: #fff;
     font-weight: 400;
 }
+<<<<<<< HEAD
 /* movie description page css */
 .moviedscrpt {
     position: relative;
@@ -93,3 +94,14 @@ h1 {
     background-color: #3533338f;
     border: none;
 }
+=======
+
+#results {
+    color: white;
+    text-align: center;
+}
+
+#buttons {
+    margin-top: 1em;
+}
+>>>>>>> random_movie_feature
