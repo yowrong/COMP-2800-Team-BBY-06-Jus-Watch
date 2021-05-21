@@ -13,7 +13,7 @@ const searchResultsDiv = document.getElementById('searchResults');
 function searchOMDB(search) {
     // adapted from https://stackoverflow.com/questions/33237200/fetch-response-json-gives-responsedata-undefined
 
-    fetch(`https://www.omdbapi.com/?s=${search}&apikey=6753c87c`)
+    fetch(`https://www.omdbapi.com/?s=${search}&apikey=5623718`)
         .then((response) => {
             return response.json()
         })
