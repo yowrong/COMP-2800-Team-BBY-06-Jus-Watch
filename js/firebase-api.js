@@ -54,5 +54,8 @@ function firebaseAuthUI() {
     ui.start('#firebaseui-auth-container', uiConfig);
 }
 
-export { firebaseConfig, firebaseAuthUI };
+export {
+    firebaseConfig,
+    firebaseAuthUI
+};
 // module.exports = firebaseAuthUI;

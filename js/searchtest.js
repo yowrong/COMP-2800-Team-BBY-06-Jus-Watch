@@ -5,28 +5,26 @@ new_element.setAttribute("href", "./css/search.css");
 document.body.appendChild(new_element);
 
 
-
-
 $(document).ready(() => {
-  $('#searchBar').on('submit', (e) => {
-    let myInput = $('#myInput').val();
-    if (myInput === 'juswatch') {
-      window.location = 'easter.html';
-    } else {
-      getMovies(myInput);
-    }
-    e.preventDefault();
-  });
+    $('#searchBar').on('submit', (e) => {
+        let myInput = $('#myInput').val();
+        if (myInput === 'juswatch') {
+            window.location = 'easter.html';
+        } else {
+            getMovies(myInput);
+        }
+        e.preventDefault();
+    });
 });
 
 function getMovies(myInput) {
-  axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=6753c87c')
-    .then((response) => {
-      console.log(response);
-      let movies = response.data.Search;
-      let output = '';
-      $.each(movies, (index, movie) => {
-        output += `
+    axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=6753c87c')
+        .then((response) => {
+            console.log(response);
+            let movies = response.data.Search;
+            let output = '';
+            $.each(movies, (index, movie) => {
+                output += `
             <a onclick="movieSelected('${movie.imdbID}')" class="nav-link text-white" href="#">
             <div class="movie_card" style="width: 18rem;margin: 0 auto;>
               <div class="card h-100">
@@ -38,31 +36,31 @@ function getMovies(myInput) {
             </div>
           </a>
           `;
-      });
+            });
 
-      $('#movies').html(output);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+            $('#movies').html(output);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 function movieSelected(id) {
-  sessionStorage.setItem('movieId', id);
-  window.location = "movieresult.html";
-  // window.location.href = "/movieresult.html";
-  return false;
+    sessionStorage.setItem('movieId', id);
+    window.location = "movieresult.html";
+    // window.location.href = "/movieresult.html";
+    return false;
 }
 
 function getMovie() {
-  let movieId = sessionStorage.getItem('movieId');
+    let movieId = sessionStorage.getItem('movieId');
 
-  axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
-    .then((response) => {
-      console.log(response);
-      let movie = response.data;
+    axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=6753c87c')
+        .then((response) => {
+            console.log(response);
+            let movie = response.data;
 
-      let output = `
+            let output = `
           <div class="row">
             <div class="col-md-4">
               <img src="${movie.Poster}" class="thumbnail">
@@ -91,12 +89,12 @@ function getMovie() {
           </div>
         `;
 
-      $('#movie').html(output);
+            $('#movie').html(output);
 
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 getMovie();

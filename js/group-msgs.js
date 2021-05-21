@@ -1,7 +1,7 @@
 import { displayMsgs, sendMsg } from "./firebase-queries.js";
 
-let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
-let query = string.split("?");                                  // Projects 1800 lecture slides
+let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?"); // Projects 1800 lecture slides
 let groupID = query[1];
 
 displayMsgs(groupID);
@@ -18,7 +18,7 @@ sendBtn.addEventListener("click", function (event) {
     let msgWindow = document.getElementById("messages");
     msgWindow.scrollTop = msgWindow.scrollHeight;
 
-    setTimeout(function() {
+    setTimeout(function () {
         $("#sendMsg").val('');
     }, 500);
 });

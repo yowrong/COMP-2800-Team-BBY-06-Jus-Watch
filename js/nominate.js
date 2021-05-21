@@ -3,8 +3,8 @@ import { writeMovie } from "./firebase-queries.js";
 // const db = firebase.firestore();
 // const groupRef = db.collection("groups");
 
-let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
-let query = string.split("?");                                  // Projects 1800 lecture slides
+let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?"); // Projects 1800 lecture slides
 let groupID = query[1];
 
 const searchResultsDiv = document.getElementById('searchResults');
@@ -14,31 +14,31 @@ function searchOMDB(search) {
     // adapted from https://stackoverflow.com/questions/33237200/fetch-response-json-gives-responsedata-undefined
 
     fetch(`https://www.omdbapi.com/?s=${search}&apikey=6753c87c`)
-    .then((response) => {
-       return response.json() 
-    })
-    // returns array of search results
-    .then((responseData) => { 
-
-        let searchResults = responseData.Search;
-        let titles = [];
-        let years = [];
-        let posters = [];
-        let ids = [];
-
-        // loop through search results to grab movie info
-        searchResults.forEach(function(movie) {
-            titles.push(movie.Title)
-            years.push(movie.Year)
-            posters.push(movie.Poster)
-            ids.push(movie.imdbID)
+        .then((response) => {
+            return response.json()
         })
+        // returns array of search results
+        .then((responseData) => {
 
-        renderSearchResults(titles, years, posters, ids, groupID, searchResultsDiv);                       
-    })
-  .catch(function(err) {
-      console.log(err);
-  })
+            let searchResults = responseData.Search;
+            let titles = [];
+            let years = [];
+            let posters = [];
+            let ids = [];
+
+            // loop through search results to grab movie info
+            searchResults.forEach(function (movie) {
+                titles.push(movie.Title)
+                years.push(movie.Year)
+                posters.push(movie.Poster)
+                ids.push(movie.imdbID)
+            })
+
+            renderSearchResults(titles, years, posters, ids, groupID, searchResultsDiv);
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
 }
 
 // renders Cards of movies in search results in modal for nomination
@@ -76,35 +76,35 @@ function accessMovie(movieId) {
     let moviePic = "";
     let movieYear = "";
     let movieImdbId = movieId;
-    
-    fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=6753c87c`)
-    .then((response) => {
-       return response.json() 
-    })
-    .then((responseData) => { 
-        movieTitle = responseData.Title;
-        movieYear = responseData.Year;
-        movieDesc = responseData.Plot;
-        moviePic = responseData.Poster;
 
-        writeMovie(movieImdbId, movieTitle, movieYear, movieDesc, moviePic, groupID)
-    })
-  .catch(function(err) {
-      console.log(err);
-  })
+    fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=6753c87c`)
+        .then((response) => {
+            return response.json()
+        })
+        .then((responseData) => {
+            movieTitle = responseData.Title;
+            movieYear = responseData.Year;
+            movieDesc = responseData.Plot;
+            moviePic = responseData.Poster;
+
+            writeMovie(movieImdbId, movieTitle, movieYear, movieDesc, moviePic, groupID)
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
 }
 
-$(searchResultsDiv).on("click", ".nominateBtn", function(e) {
+$(searchResultsDiv).on("click", ".nominateBtn", function (e) {
     e.preventDefault();
     console.log(e.target.id);
     let movieId = e.target.id;
 
     accessMovie(movieId);
 
-    setTimeout(function() {
+    setTimeout(function () {
         window.location.href = `/group-centre.html?${groupID}`
     }, 1000)
-    
+
 
 })
 
@@ -171,7 +171,7 @@ $(searchResultsDiv).on("click", ".nominateBtn", function(e) {
 //         } else if (e.keyCode == 13) {
 //             /*If the ENTER key is pressed, precent default function*/
 //             e.preventDefault();
-            
+
 //             if (currentFocus > -1) {
 //                 /*and simulate a click on the "active" item:*/
 //                 if (x) x[currentFocus].click();
@@ -257,4 +257,3 @@ saveSearchFromUser();
 
 // }
 // displaySearch();
-
