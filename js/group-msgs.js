@@ -1,12 +1,13 @@
 import { displayMsgs, sendMsg } from "./firebase-queries.js";
 
-let string = decodeURIComponent(window.location.search);        // from "10b Lecture Javascript Relevant Bits-1"
-let query = string.split("?");                                  // Projects 1800 lecture slides
+let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?"); // Projects 1800 lecture slides
 let groupID = query[1];
 
 displayMsgs(groupID);
 
 const msgToSend = document.getElementById("sendMsg");
+const returnBtn = document.getElementById('returnBtn');
 
 sendBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -17,7 +18,12 @@ sendBtn.addEventListener("click", function (event) {
     let msgWindow = document.getElementById("messages");
     msgWindow.scrollTop = msgWindow.scrollHeight;
 
-    setTimeout(function() {
+    setTimeout(function () {
         $("#sendMsg").val('');
     }, 500);
 });
+
+returnBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location = `group-centre.html?${groupID}`;
+})

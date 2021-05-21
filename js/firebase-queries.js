@@ -83,11 +83,16 @@ export function createGroup(name, desc) {
         })
         .then((doc) => {
             // writes group information to users collection, adds to arrays in order so that group information corresponds
-            usersRef.doc(user.uid).set({                     
-                groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              // from Firebase website, adds to array
+            usersRef.doc(user.uid).set({          
+
+                /* Used Firebase doc https://firebase.google.com/docs/firestore/manage-data/add-data for reference */    
+                groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
             }, { merge: true });
+
+            // adds user to groupMembers.
+            addFirstUser(doc.id);
         })
         .catch((error) => {
             console.log(error);
@@ -104,8 +109,25 @@ export function getGroup(groupID, inviteMsg) {
       let desc = doc.data().groupDescription;
   
       addUser(groupID, name, desc, inviteMsg);
-  
-    //   console.log("get group:", id + name + desc + inviteMsg)
+    })
+}
+
+/** Adds user to groupMembers subcollection when first creating group on create-group.html */
+function addFirstUser(groupID) {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            groupRef.doc(groupID).collection("groupMembers").get()                      
+          .then(member => {
+            
+            // if not yet a member, creates a new user document under groupMember collection
+              if (!member.exists) {
+                groupRef.doc(groupID).collection("groupMembers").doc(user.uid).set({
+                  userId: user.uid,
+                  name: user.displayName
+                })
+              }
+          });
+        }
     })
 }
 
@@ -116,18 +138,14 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
 
       // user must be logged in
         if (user) {
-          console.log(user.uid);
-          console.log(user.displayName);
-          let userFName = user.displayName.split(' ')[0];
-          let userLName = user.displayName.split(' ')[1];
 
-          inviteSection.innerHTML = `<h3>Welcome!</h3>
-          <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-primary">
-          Click to enter your Group's Page!
+          inviteSection.innerHTML = `<h3>Welcome to ${groupName}!</h3>
+          <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-danger">
+          Enter Group
           </button>`;
 
           // adds user info to groupMember subcollection
-          groupRef.doc(groupID).collection("groupMembers").get()                       // to change "group1" to groupID
+          groupRef.doc(groupID).collection("groupMembers").get()                      
           .then(member => {
             
             // if not yet a member, creates a new user document under groupMember collection
@@ -135,7 +153,6 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
                 groupRef.doc(groupID).collection("groupMembers").doc(user.uid).set({
                   userId: user.uid,
                   name: user.displayName
-                //   userLastName: userLName
                 })
               }
           });
@@ -147,14 +164,18 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
             groupDescription: firebase.firestore.FieldValue.arrayUnion(groupDesc)
           });
 
+          // if not logged in, displays message to login
         } else {
-          inviteSection.innerHTML = "<h3>Please Log in first!</h3>"
+          inviteSection.innerHTML = `<h3>Please Log in first!</h3>
+          <a href="login.html" <button type="button" class="btn btn-danger">
+          Login
+          </button>`;
         }
       });
 }
 
 /* Gets group's nominated movie collection and displays on vote.html */
-export function displayMoviesForVote(id, movieSection) {
+export function displayMoviesForVote(id, movieSection, submit) {
     groupRef.doc(id).collection("nominatedMovies").get()
     .then((doc) => { 
         let movieId = [];
@@ -165,8 +186,8 @@ export function displayMoviesForVote(id, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movieSection.innerHTML = "Nominate some movies to vote on!"
-
+            movieSection.innerHTML = `<h5 class="text-center nominate">Nominate some movies to vote on!</h4>`;
+            submit.style.display = "none";
         } else {
             doc.forEach((movie) => {
                 // console.log("movie: " + movie.data().movieTitle);
@@ -184,24 +205,27 @@ export function displayMoviesForVote(id, movieSection) {
     })
 }
 
-// Display nominated movies to vote on.
+/** Displays nominated movies on */
 function renderMoviesForVote(title, desc, year, id, pic, movies) {
-    let movieCard = `<div class="card-group">`;
+    let movieCard = `<div class="row justify-content-center">`;
 
     for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
+        movieCard += `<div class="card movie_card">
         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
         <div class="card-body">
           <h5 class="card-title">${title[i]}</h5>
+          <p class="movie_info">${year[i]}</p>
           <p class="card-text">${desc[i]}</p>
-          <p class="card-text"><small class="text-muted">${year[i]}</small></p>
-          <input type="checkbox" class="btn-check" id="${id[i]}" autocomplete="off">
-            <label class="btn btn-outline-danger" for="${id[i]}">Vote</label><br>
         </div>
+        <div class="card-footer d-flex justify-content-center">       
+        <input type="checkbox" class="btn-check" id="${id[i]}" autocomplete="off">
+        <label class="btn btn-outline-danger" for="${id[i]}"><i class="fas fa-check"></i></label><br>
+    </div>
       </div>`;
     }
     movieCard += "</div>";
     movies.innerHTML = movieCard;
+    
 }
 
 /* Gets group Info from URL and queries Firestore, displays group-related info on group-centre.html */
@@ -239,7 +263,7 @@ export function displayNominatedMovies(groupId, movieSection) {
 
         // if no nominated movies
         if (doc.size == 0) {
-            movieSection.innerHTML = "Nominate some movies to vote on!"
+            movieSection.innerHTML = `<h5 class="movieCenterTitle">Nominate some movies to vote on!</h5>`;
 
         } else {
             doc.forEach((movie) => {
@@ -262,19 +286,21 @@ export function displayNominatedMovies(groupId, movieSection) {
     })
 }
 
-/* displays nominated movies from group's collection */
+/* displays nominated movies from group's collection on group-centre.html*/
+/** Adapted from https://blog.avada.io/examples/bootstrap-movie-cards-sukhmeet.html **/
 function renderMovies(title, desc, year, id, pic, movieSection) {
-    let movieCard = `<div class="card-group">`;
+    let movieCard = `<div class="row justify-content-center">`;
 
     for (let i = 0; i < id.length; i++) {
-        movieCard += `<div class="card">
+        movieCard += `<div class="card movie_card">
         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
         <div class="card-body">
           <h5 class="card-title">${title[i]}</h5>
           <p class="card-text">${desc[i]}</p>
+          
         </div>
         <div class="card-footer">
-      <small class="text-muted">${year[i]}</small>
+        <span class="movie_info">${year[i]}</span><span class="movie_info float-end">&#9733 9 / 10</span>
     </div>
       </div>`;
     }
@@ -283,7 +309,7 @@ function renderMovies(title, desc, year, id, pic, movieSection) {
 }
 
 /* Gets movie with most votes in nominatedMovies collection, renders winning movie on group-centre.html */
-export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
+export function getWinningMovie(groupID, movieSection, movieCenterTitle, resetBtn) {
     groupRef.doc(groupID).collection("nominatedMovies")
     .orderBy("numOfVotes", "desc").limit(1)
     .get()
@@ -295,7 +321,7 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
             let id = movie.data().imdbID;
             let pic = movie.data().moviePoster;
 
-            renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle)
+            renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTitle, resetBtn, groupID)
         })
     })
     .catch((error) => {
@@ -303,35 +329,63 @@ export function getWinningMovie(groupID, movieSection, movieCenterTitle) {
     });
 }
 
-/* changes "nominated movies" section to "movie of the week", generates the winning movie */
-function renderWinningMovie(title, desc, year, id, pic, movieSection, movieCenterTitle) {
-    let movieCard = "";
+/* Changes "nominated movies" section to "movie of the week", generates the winning movie on group-centre.html */
+function renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTitle, resetBtn, groupID) {
+    let movieCard = `<div class="row justify-content-center">`;
 
-    movieCard += `<div class="card winningMovie">
+    movieCard += `<div class="card movie_card">
         <img src="${pic}" class="card-img-top" alt="${title}">
         <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">${desc}</p>
+          <h5 class="card-title">${title}</h5>
+          <p class="card-text">${desc}</p>
+          
         </div>
         <div class="card-footer">
-            <small class="text-muted">${year}</small>
-        </div>
-        </div>`;
+        <span class="movie_info">${year}</span><span class="movie_info float-end">&#9733 / 10</span>
+    </div>
+      </div>`;
+
+    resetBtn.style.display = "block";
+    resetVotes(groupID, resetBtn);
 
     movieSection.innerHTML = movieCard;
     movieCenterTitle.innerText = "Movie of the Week";
+
+}
+
+/** Resets Nominated Movies Section by deleting all movies in nominatedMovies subcollection for group-centre.html.
+ * Resets group's totalVotes to 0. **/
+/* Adapted from https://stackoverflow.com/questions/47860812/deleting-all-documents-in-firestore-collection */
+function resetVotes(groupID, resetBtn) {
+    resetBtn.addEventListener("click", function() {
+        let movieDocs = groupRef.doc(groupID).collection("nominatedMovies");
+        
+        movieDocs.onSnapshot((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                movieDocs.doc(doc.id).delete()
+            })
+            
+        });
+        groupRef.doc(groupID).update({
+            totalVotes: 0
+        });
+        setTimeout(() => {
+            window.location.href = `group-centre.html?${groupID}`
+        }, 500)
+        
+    });
 }
 
 /* Checks to see if everyone in group has voted, if yes, shows "Movie of the Week" on group-centre.html */
-function checkVotes(members, groupID, movieSection, movieCenterTitle) {
+function checkVotes(members, groupID, movieSection, movieCenterTitle, resetBtn) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
-        if (doc.data().totalVotes == members) {
+        if (doc.data().totalVotes >= members) {
             console.log("equal votes");
             console.log(doc.data().totalVotes);
             console.log("IF num of members: " + members);
 
-            getWinningMovie(groupID, movieSection, movieCenterTitle);
+            getWinningMovie(groupID, movieSection, movieCenterTitle, resetBtn);
         } else {
             console.log("not equal votes");
         }
@@ -339,12 +393,12 @@ function checkVotes(members, groupID, movieSection, movieCenterTitle) {
 }
 
 /* Queries groupMembers subcollection to get number of members in group for group-centre.html*/
-export function getNumOfMembers(groupID, movieSection, movieCenterTitle) {
+export function getNumOfMembers(groupID, movieSection, movieCenterTitle, resetBtn) {
     groupRef.doc(groupID).collection("groupMembers").get()
     .then(function(doc) {
         let numOfMembers = doc.size;
         console.log("num of members: " + numOfMembers);
-        checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle);
+        checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle, resetBtn);
     });
 
 }
@@ -369,7 +423,6 @@ export function displayGroups(groupSection) {
                 }
                 renderGroups(groupId, groupName, groupDesc, groupSection)
             }
-            console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
         })
     })
 }
@@ -382,15 +435,12 @@ export function renderGroups(id, name, desc, groupSection) {
         // Bootstrap card template, "Enter Group" button redirects to Group Center page
         groupCard += `<div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4">
-                                <!-- <img src="..." alt="..."> -->
-                            </div>
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">${name[i]}</h5>
                                     <p class="card-text">${desc[i]}</p>
                                     <a href="./group-centre.html?${id[i]}">
-                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group</button>
+                                        <button id="${id[i]}" type="button" class="btn btn-danger btn-lg enter">Enter Group</button>
                                     </a>
                                 </div>
                             </div>
@@ -555,4 +605,43 @@ function renderGroupMsgs(id, name, groupMsgs) {
                     </div>`;
     }
     groupMsgs.innerHTML = groupMsgCard;
+}
+
+/** Ends voting round and displays winning movie on group-centre.html. */
+export function endVoting(groupID, endVoteBtn) {
+    endVoteBtn.addEventListener("click", function () {
+        groupRef.doc(groupID).update({ 
+            totalVotes: 100
+        });
+        setTimeout(function () {
+            window.location = `group-centre.html?${groupID}`;
+        }, 500);    
+    })  
+}
+
+/** Removes the user from the group and the group from the user's groups. */
+export function leaveGroup(groupID, leaveBtn) {
+    leaveBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        firebase.auth().onAuthStateChanged(function(user) {
+            groupRef.doc(groupID).get()
+            .then((doc) => {
+                let groupTitle = doc.data().groupName;
+                let groupDesc = doc.data().groupDescription;
+
+                usersRef.doc(user.uid).update({
+                    groupId: firebase.firestore.FieldValue.arrayRemove(groupID),
+                    groupName: firebase.firestore.FieldValue.arrayRemove(groupTitle),
+                    groupDescription: firebase.firestore.FieldValue.arrayRemove(groupDesc)
+                });
+
+                groupRef.doc(groupID).collection("groupMembers").doc(user.uid).delete();
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
+        // setTimeout(function () {
+        //     window.location = `group-main.html`;
+        // }, 3000);
+    });
 }

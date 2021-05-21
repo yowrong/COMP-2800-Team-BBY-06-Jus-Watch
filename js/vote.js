@@ -11,7 +11,7 @@ const returnBtn = document.getElementById("returnBtn");
 
 getVotes(groupID, submit);
 
-displayMoviesForVote(groupID, movieList);
+displayMoviesForVote(groupID, movieList, submit);
 
 returnBtn.addEventListener("click", function(e) {
     e.preventDefault();
