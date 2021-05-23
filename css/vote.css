@@ -23,12 +23,12 @@ h2 {
 }
 
 .buttons {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .buttons .btn {
   min-width: 200px;
-  margin: 0 auto;
+  margin-left: -6%;
 }
 
 * {

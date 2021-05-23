@@ -91,7 +91,7 @@ export function createGroup(name, desc) {
                 groupDescription: firebase.firestore.FieldValue.arrayUnion(desc.value)
             }, { merge: true });
 
-            // adds user to groupMembers.
+            // adds initial user to groupMembers.
             addFirstUser(doc.id);
         })
         .catch((error) => {
