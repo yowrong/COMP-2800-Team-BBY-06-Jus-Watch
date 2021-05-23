@@ -597,7 +597,7 @@ function renderGroupMsgs(id, name, groupMsgs) {
                                 <div class="card-body">
                                     <h5 class="card-title">${name[i]}</h5>
                                     <a href="./group-msgs.html?${id[i]}">
-                                        <button id="${id[i]}" type="button" class="btn btn-primary btn-lg enter">Enter Group Chat</button>
+                                        <button id="${id[i]}" type="button" class="btn btn-danger btn-lg enter">Enter Group Chat</button>
                                     </a>
                                 </div>
                             </div>
@@ -666,10 +666,10 @@ export function getUser() {
 }
 
 
-export function addFavourite(e) {
+export function addFavourite() {
 
     var addFavBtn = $("#Addfavourite").text();
-    e.preventDefault();
+    // e.preventDefault();
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         let movieId = sessionStorage.getItem('movieId');
@@ -694,31 +694,31 @@ export function addFavourite(e) {
     });
   
     //window.location = "\profile_favorite.html"
-      var db = firebase.firestore();
-      var addFavBtn = $("#Addfavourite").text();
-      e.preventDefault();
-      firebase.auth().onAuthStateChanged(function (user) {
-          if (user) {
-              let movieId = sessionStorage.getItem('movieId');
-              axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
-                  .then((response) => {
-                      let movie = response.data;
-                      if (addFavBtn.localeCompare('Remove Favourite') != 0) {
-                          db.collection("users").doc(user.uid).update({
-                              "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
-                          });
-                          $('#Addfavourite').text('Remove Favourite');
-                          addFavBtn = $("#Addfavourite").text();
-                      } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
-                          db.collection("users").doc(user.uid).update({
-                              "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
-                          });
-                          $('#Addfavourite').text('Add Favourite');
-                          addFavBtn = $("#Addfavourite").text();
-                      }
-                  });
-          };
-      });
+    //   var db = firebase.firestore();
+    //   var addFavBtn = $("#Addfavourite").text();
+    //   e.preventDefault();
+    //   firebase.auth().onAuthStateChanged(function (user) {
+    //       if (user) {
+    //           let movieId = sessionStorage.getItem('movieId');
+    //           axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
+    //               .then((response) => {
+    //                   let movie = response.data;
+    //                   if (addFavBtn.localeCompare('Remove Favourite') != 0) {
+    //                       db.collection("users").doc(user.uid).update({
+    //                           "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
+    //                       });
+    //                       $('#Addfavourite').text('Remove Favourite');
+    //                       addFavBtn = $("#Addfavourite").text();
+    //                   } else if (addFavBtn.localeCompare("Remove Favourite") == 0) {
+    //                       db.collection("users").doc(user.uid).update({
+    //                           "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
+    //                       });
+    //                       $('#Addfavourite').text('Add Favourite');
+    //                       addFavBtn = $("#Addfavourite").text();
+    //                   }
+    //               });
+    //       };
+    //   });
   
       //window.location = "\profile_favorite.html"
   }

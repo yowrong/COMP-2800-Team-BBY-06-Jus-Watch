@@ -10,6 +10,7 @@ document.body.appendChild(new_element);
 
 
 getUser();
+// addFavourite();
 
 if (document.URL.includes("movieresult.html")) {
   let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
@@ -45,7 +46,7 @@ $(document).ready(() => {
 });
 
 function getMovies(myInput) {
-    axios.get('http://www.omdbapi.com?s=' + myInput + '&apikey=5623718')
+    axios.get('https://www.omdbapi.com?s=' + myInput + '&apikey=5623718')
         .then((response) => {
             console.log(response);
             let movies = response.data.Search;
@@ -82,7 +83,7 @@ function getMovies(myInput) {
 
 function getMovie(movieID) {
  
-    axios.get('http://www.omdbapi.com?i=' + movieID + '&apikey=5623718')
+    axios.get('https://www.omdbapi.com?i=' + movieID + '&apikey=5623718')
         .then((response) => {
             console.log(1 + 1);
             console.log(response);
