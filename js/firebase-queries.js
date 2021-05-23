@@ -673,7 +673,7 @@ export function addFavourite() {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         let movieId = sessionStorage.getItem('movieId');
-        axios.get('http://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
+        axios.get('https://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
           .then((response) => {
             let movie = response.data;
             if (addFavBtn.localeCompare('Remove Favourite') != 0) {

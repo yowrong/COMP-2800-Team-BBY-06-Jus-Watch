@@ -20,6 +20,15 @@ body {
   color: #ebe8e8ce;
 }
 
+#grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 8.5fr 1.5fr;
+  grid-template-areas:
+  "container"
+  "footer";
+}
+
 #group-list {
   color: black;
   text-align: left;
@@ -27,6 +36,7 @@ body {
 
 .container {
   text-align: center;
+  grid-area: container;
   /* position: absolute; */
   margin-top: 25px;
   /* left: 50%; */
@@ -46,4 +56,8 @@ hr {
 
 .login-btn {
   display: none;
+}
+
+footer {
+  grid-area: footer;
 }
