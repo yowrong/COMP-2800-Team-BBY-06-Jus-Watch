@@ -7,11 +7,21 @@ const groupDesc = document.getElementById("groupDescription");
 const createBtn = document.getElementById("create");
 const modalBtn = document.getElementById("modalBtn");
 const modalName = document.getElementById("modal-groupName");
+const modalBody = document.getElementById('modal-body');
 
+/* Creates group on click of create button, only created if name field is not empty*/
 createBtn.addEventListener("click", function(e) {
-    createGroup(groupName, groupDesc)
+    if (groupName.value.trim() != '') {
+        createGroup(groupName, groupDesc)
+        modalName.innerText = groupName.value
+    } else {
+        modalBody.innerHTML = "<p>Your group needs a name!</p>"
+        setTimeout(function() {
+            window.location.href = "create-group.html";
+        }, 800);      
+    }
 
-    modalName.innerText = groupName.value
+    
 })
 
 modalBtn.addEventListener("click", function(e) {
