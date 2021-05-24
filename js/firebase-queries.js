@@ -469,18 +469,21 @@ export function getVotes(id, submit) {
         votes.forEach(function(vote) {
             voteList.push(vote.id)
         });
-  
-        // Firestore query based on movieId, increments number of votes by one
-        voteList.forEach(function(vote) {
-            let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);
-  
-            movie.update({
-                numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
+
+        if (voteList.length > 0) {
+            // Firestore query based on movieId, increments number of votes by one
+            voteList.forEach(function(vote) {
+                let movie = groupRef.doc(id).collection("nominatedMovies").doc(vote);
+    
+                movie.update({
+                    numOfVotes: firebase.firestore.FieldValue.increment(1)      // from Firestore "Increment a numeric value"
+                });
             });
-        });
-        groupRef.doc(id).update({
-            totalVotes: firebase.firestore.FieldValue.increment(1) 
-        });
+            groupRef.doc(id).update({
+                totalVotes: firebase.firestore.FieldValue.increment(1) 
+            });
+        }
+        
     });
 }
   
