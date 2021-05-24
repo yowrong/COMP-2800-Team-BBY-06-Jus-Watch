@@ -21,6 +21,7 @@ const groupInfo = document.getElementById('groupInfo');
 const resetBtn = document.getElementById('resetBtn');
 const endVoteBtn = document.getElementById('endVoteBtn');
 const leaveBtn = document.getElementById('leaveBtn');
+const copyBtn = document.getElementById('copyBtn');
 
 //https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
 function wait(ms) {
@@ -63,6 +64,15 @@ function shareLink(groupID) {
 }
 
 shareLink(groupID);
+
+/* Copies group invite link to clipboard */
+/* Adapted from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp */
+copyBtn.addEventListener('click', function() {
+    share.select();
+    share.setSelectionRange(0, 9999);
+    document.execCommand('copy');
+    alert("Link copied!");
+});
 
 // gets group Info from URL and queries Firestore
 // function getGroupforGroupCentre(groupID, movieSection) {
