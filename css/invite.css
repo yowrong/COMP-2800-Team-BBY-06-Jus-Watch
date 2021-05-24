@@ -30,6 +30,11 @@ hr {
   margin-bottom: 25px;
 }
 
+.inviteTitle {
+  padding-bottom: 15%;
+}
+
 .login-btn {
   display: none;
 }
+

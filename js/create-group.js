@@ -21,7 +21,6 @@ createBtn.addEventListener("click", function(e) {
         }, 800);      
     }
 
-    
 })
 
 modalBtn.addEventListener("click", function(e) {

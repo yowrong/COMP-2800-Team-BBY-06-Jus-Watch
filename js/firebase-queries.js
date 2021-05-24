@@ -139,7 +139,7 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
       // user must be logged in
         if (user) {
 
-          inviteSection.innerHTML = `<h3>Welcome to ${groupName}!</h3>
+          inviteSection.innerHTML = `<h3 class="inviteTitle">Welcome to ${groupName}!</h3>
           <a href="./group-centre.html?${groupID}" <button type="button" class="btn btn-danger">
           Enter Group
           </button>`;
@@ -166,7 +166,7 @@ export function addUser(groupID, groupName, groupDesc, inviteSection) {
 
           // if not logged in, displays message to login
         } else {
-          inviteSection.innerHTML = `<h3>Please Log in first!</h3>
+          inviteSection.innerHTML = `<h3 class="inviteTitle">Please Log in first!</h3>
           <a href="login.html" <button type="button" class="btn btn-danger">
           Login
           </button>`;
