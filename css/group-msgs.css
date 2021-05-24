@@ -9,7 +9,7 @@ body {
 #container {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 75vh 15vh;
+  grid-template-rows: 75vh 20vh;
 }
 
 

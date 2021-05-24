@@ -96,7 +96,6 @@ function accessMovie(movieId) {
 
 $(searchResultsDiv).on("click", ".nominateBtn", function (e) {
     e.preventDefault();
-    console.log(e.target.id);
     let movieId = e.target.id;
 
     accessMovie(movieId);

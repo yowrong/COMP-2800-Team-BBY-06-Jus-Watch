@@ -8,6 +8,7 @@ let groupID = query[1];
 const movieList = document.getElementById("movieList");
 const submit = document.getElementById("submit");
 const returnBtn = document.getElementById("returnBtn");
+const closeBtn = document.getElementById("closeBtn");
 
 getVotes(groupID, submit);
 
@@ -17,6 +18,13 @@ returnBtn.addEventListener("click", function(e) {
     e.preventDefault();
     window.location.href = `/group-centre.html?${groupID}`;
 })
+
+closeBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    window.location.href = `/group-centre.html?${groupID}`;
+})
+
+
 
 
 /* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count on vote.html */

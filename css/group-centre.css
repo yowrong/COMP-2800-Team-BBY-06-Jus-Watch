@@ -97,19 +97,7 @@ hr {
 
 /****** MOVIE CARDS ******/
 /** Adapted from https://blog.avada.io/examples/bootstrap-movie-cards-sukhmeet.html **/
-/* *{
-    font-family: 'Poppins', sans-serif;
-     -webkit-user-select: none;
-      -moz-user-select: -moz-none;
-      -o-user-select: none;
-      user-select: none;
-  }
-  img {
-      -webkit-user-drag: none;
-      -moz-user-drag: none;
-      -o-user-drag: none;
-      user-drag: none;
-  } */
+
 img {
   pointer-events: none;
 }

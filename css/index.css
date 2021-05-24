@@ -118,6 +118,9 @@ img {
   margin: 0;
 }
 
+.trending_title {
+  text-align: center;
+}
 
 h2 {
   color: #ffffff;

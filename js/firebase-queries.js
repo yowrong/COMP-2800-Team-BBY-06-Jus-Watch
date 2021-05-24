@@ -190,7 +190,7 @@ export function displayMoviesForVote(id, movieSection, submit) {
             submit.style.display = "none";
         } else {
             doc.forEach((movie) => {
-                // console.log("movie: " + movie.data().movieTitle);
+
                 movieId.push(movie.data().imdbID)
                 movieName.push(movie.data().movieTitle)
                 movieDesc.push(movie.data().movieDescription)
@@ -205,7 +205,7 @@ export function displayMoviesForVote(id, movieSection, submit) {
     })
 }
 
-/** Displays nominated movies on */
+/** Displays nominated movies on vote.html */
 function renderMoviesForVote(title, desc, year, id, pic, movies) {
     let movieCard = `<div class="row justify-content-center">`;
 
@@ -214,7 +214,7 @@ function renderMoviesForVote(title, desc, year, id, pic, movies) {
         <img src="${pic[i]}" class="card-img-top" alt="${title[i]}">
         <div class="card-body">
           <h5 class="card-title">${title[i]}</h5>
-          <p class="movie_info">${year[i]}</p>
+          <p class="movie_info year">${year[i]}</p>
           <p class="card-text">${desc[i]}</p>
         </div>
         <div class="card-footer d-flex justify-content-center">       
@@ -232,11 +232,9 @@ function renderMoviesForVote(title, desc, year, id, pic, movies) {
 export function getGroupforGroupCentre(groupID, movieSection, groupName, groupDesc) {
     groupRef.doc(groupID).get()
     .then(function(doc) {
-    //   let id = doc.data().groupId;
+
       let name = doc.data().groupName;
       let desc = doc.data().groupDescription;
-
-    //   console.log("getgroup:", id);
 
       displayGroupOnGroupCentre(groupID, name, desc, groupName, groupDesc);
       displayNominatedMovies(groupID, movieSection);
@@ -267,7 +265,6 @@ export function displayNominatedMovies(groupId, movieSection) {
 
         } else {
             doc.forEach((movie) => {
-                // console.log("movie: " + movie.data().movieTitle);
 
                 // each movie gets added to the arrays
                 movieId.push(movie.data().imdbID)
@@ -381,14 +378,9 @@ function checkVotes(members, groupID, movieSection, movieCenterTitle, resetBtn) 
     groupRef.doc(groupID).get()
     .then(function(doc) {
         if (doc.data().totalVotes >= members) {
-            console.log("equal votes");
-            console.log(doc.data().totalVotes);
-            console.log("IF num of members: " + members);
 
             getWinningMovie(groupID, movieSection, movieCenterTitle, resetBtn);
-        } else {
-            console.log("not equal votes");
-        }
+        } 
     })
 }
 
@@ -397,7 +389,6 @@ export function getNumOfMembers(groupID, movieSection, movieCenterTitle, resetBt
     groupRef.doc(groupID).collection("groupMembers").get()
     .then(function(doc) {
         let numOfMembers = doc.size;
-        console.log("num of members: " + numOfMembers);
         checkVotes(numOfMembers, groupID, movieSection, movieCenterTitle, resetBtn);
     });
 

@@ -25,7 +25,14 @@ h2 {
 
 .buttons .btn {
   min-width: 200px;
-  margin-left: -6%;
+}
+
+#submit, #returnBtn {
+  margin: 0 auto;
+}
+
+.year {
+  padding-top: 5%;
 }
 
 * {
