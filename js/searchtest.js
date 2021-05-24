@@ -143,7 +143,7 @@ function getMovie(movieID) {
               .then((response) => {
                 var checka = db.collection('users');
                 let movie = response.data;
-                checka.where('favouriteLists',  'array-contains', "tt3766394").get().then((querySnapshot) => {
+                checka.where('favouriteLists',  'array-contains', movieId).get().then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
                     console.log(movieId + user.uid);
                       if (doc.exists) {
@@ -200,7 +200,7 @@ function getMovie(movieID) {
 }
 
 
-
+var getmovie;
 /* Uses the OMDB API to randomly generate a movie suggestion */
 function getRandomMovie() {
   let movieID = "tt";
@@ -210,8 +210,8 @@ function getRandomMovie() {
     let num = 0 /*Math.floor(Math.random() * 5)*/;
     imdbID = num + imdbID;
   }
-
-  console.log(movieID + imdbID);
+  getmovie = movieID + imdbID;
+  console.log(movieID+ imdbID );
 
   // Continuously fetch until a satisfactory movie is generated
   // Source: https://stackoverflow.com/questions/45008330/how-can-i-use-fetch-in-while-loop
@@ -262,7 +262,7 @@ function getRandomMovie() {
                           <span></span>
                           <span></span>
                           Leave a Comment</a>
-                        <a href="" onclick="addFavourite()"; id = "Addfavourite" class="anotest">
+                        <a onclick="a()"; id = "Addfavourite" class="anotest">
                           <span></span>
                           <span></span>
                           <span></span>
@@ -278,21 +278,18 @@ function getRandomMovie() {
                     </div>
                   </div>
                   <script>
-                      
+                  
       function check() {
-        let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
-        let query = string.split("?"); // Projects 1800 lecture slides
-        let movieId = query[1];
         const db = firebase.firestore();
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
-             axios.get('https://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
+             axios.get('https://www.omdbapi.com?i=' + "`+ String(getmovie) +`" + '&apikey=5623718')
               .then((response) => {
                 var checka = db.collection('users');
                 let movie = response.data;
-                checka.where('favouriteLists',  'array-contains', "tt3766394").get().then((querySnapshot) => {
+                checka.where('favouriteLists',  'array-contains',  "`+getmovie+`").get().then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
-                    console.log(movieId + user.uid);
+                    
                       if (doc.exists) {
                         $('#Addfavourite').text('Remove Favourite');
                     } else {
@@ -308,29 +305,25 @@ function getRandomMovie() {
         });
         
       }
-      check();
-      
-      function a() {
-        let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
-        let query = string.split("?"); // Projects 1800 lecture slides
-        let movieId = query[1];
+      check(); 
+      function a() {  
         const db = firebase.firestore();
         var addFavBtn = $("#Addfavourite").text();
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
-             axios.get('https://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
+             axios.get('https://www.omdbapi.com?i=' + "`+getmovie+`" + '&apikey=5623718')
               .then((response) => {
                 let movie = response.data;
                 console.log(addFavBtn.trim() );
                 if (addFavBtn.trim().localeCompare("Remove Favourite") != 0) {
                   db.collection("users").doc(user.uid).update({
-                    "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
+                    "favouriteLists": firebase.firestore.FieldValue.arrayUnion("`+getmovie+`"),
                   });
                   $('#Addfavourite').text('Remove Favourite');
                   addFavBtn = $("#Addfavourite").text();
                 } else if (addFavBtn.trim().localeCompare("Remove Favourite") == 0) {
                   db.collection("users").doc(user.uid).update({
-                    "favouriteLists": firebase.firestore.FieldValue.arrayRemove(movieId),
+                    "favouriteLists": firebase.firestore.FieldValue.arrayRemove("`+getmovie+`"),
                   });
                   $('#Addfavourite').text('Add Favourite');
                   addFavBtn = $("#Addfavourite").text();
