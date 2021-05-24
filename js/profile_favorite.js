@@ -1,5 +1,3 @@
-
-
 const db = firebase.firestore();
 //read the favourite list in firestore and append in the table
 firebase.auth().onAuthStateChanged(function (user) {
@@ -37,7 +35,6 @@ $(document).ready(() => {
     if (el) {
         el.addEventListener("click", function (event) {
             var movieId = $(el).val();
-            console.log(event.target.value);
             if(event.target.value!==undefined) {
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
@@ -47,7 +44,7 @@ $(document).ready(() => {
                     }
                 });
                 //if user click the name
-            } else if(event.target.id!==undefined) {
+            } else if(event.target.id!==undefined && event.target.id.trim() != "") {
                 movieSelected(event.target.id);
             }       
         });
@@ -57,8 +54,6 @@ $(document).ready(() => {
 //redirect to the detail page
 function movieSelected(id) {
     sessionStorage.setItem('movieId', id);
-    window.location = "movieresult.html";
+    window.location = "movieresult.html?" + id;
     return false;
 }
-
-
