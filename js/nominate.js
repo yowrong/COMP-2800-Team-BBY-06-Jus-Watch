@@ -38,7 +38,7 @@ function searchOMDB(search) {
         })
 }
 
-// renders Cards of movies in search results in modal for nomination
+/* Renders Cards of movies in search results in modal for nomination */
 function renderSearchResults(title, year, poster, movieId, groupId, searchResultsDiv) {
     let card = "";
 
@@ -66,7 +66,7 @@ function renderSearchResults(title, year, poster, movieId, groupId, searchResult
     searchResultsDiv.innerHTML = card;
 }
 
-/* accesses nominated movie's info from OMDB and writes to group's nominatedMovie collection */
+/* Accesses nominated movie's info from OMDB and writes to group's nominatedMovie collection */
 function accessMovie(movieId) {
     let movieTitle = "";
     let movieDesc = "";

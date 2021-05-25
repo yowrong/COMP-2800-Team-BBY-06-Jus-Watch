@@ -107,7 +107,6 @@ export function createGroup(name, desc) {
 export function getGroup(groupID, inviteMsg) {
     groupRef.doc(groupID).get()
         .then(function (doc) {
-            //   let id = doc.data().groupId;
             let name = doc.data().groupName;
             let desc = doc.data().groupDescription;
 
@@ -223,7 +222,7 @@ function renderMoviesForVote(title, desc, year, id, pic, movies) {
         <div class="card-footer d-flex justify-content-center">       
         <input type="checkbox" class="btn-check" id="${id[i]}" autocomplete="off">
         <label class="btn btn-outline-danger" for="${id[i]}"><i class="fas fa-check"></i></label><br>
-    </div>
+        </div>
       </div>`;
     }
     movieCard += "</div>";
@@ -277,7 +276,6 @@ export function displayNominatedMovies(groupId, movieSection) {
                     moviePic.push(movie.data().moviePoster)
 
                 })
-
                 renderMovies(movieName, movieDesc, movieYear, movieId, moviePic, movieSection);
             }
         })
@@ -286,7 +284,7 @@ export function displayNominatedMovies(groupId, movieSection) {
         })
 }
 
-/* displays nominated movies from group's collection on group-centre.html*/
+/* Displays nominated movies from group's collection on group-centre.html*/
 /** Adapted from https://blog.avada.io/examples/bootstrap-movie-cards-sukhmeet.html **/
 function renderMovies(title, desc, year, id, pic, movieSection) {
     let movieCard = `<div class="row justify-content-center">`;
@@ -301,7 +299,7 @@ function renderMovies(title, desc, year, id, pic, movieSection) {
         </div>
         <div class="card-footer">
         <span class="movie_info">${year[i]}</span><span class="movie_info float-end">&#9733 9 / 10</span>
-    </div>
+        </div>
       </div>`;
     }
     movieCard += "</div>";
@@ -342,7 +340,7 @@ function renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTit
         </div>
         <div class="card-footer">
         <span class="movie_info">${year}</span><span class="movie_info float-end">&#9733 / 10</span>
-    </div>
+        </div>
       </div>`;
 
     resetBtn.style.display = "block";
@@ -360,12 +358,14 @@ function resetVotes(groupID, resetBtn) {
     resetBtn.addEventListener("click", function () {
         let movieDocs = groupRef.doc(groupID).collection("nominatedMovies");
 
+        // deletes all movies in nominatedMovies collection
         movieDocs.onSnapshot((snapshot) => {
             snapshot.docs.forEach((doc) => {
                 movieDocs.doc(doc.id).delete()
             })
 
         });
+        // reset group total votes to 0
         groupRef.doc(groupID).update({
             totalVotes: 0
         });
@@ -422,7 +422,7 @@ export function displayGroups(groupSection) {
 }
 
 /* Renders a "Group" card for each group the user is in, in group-main.html */
-export function renderGroups(id, name, desc, groupSection) {
+function renderGroups(id, name, desc, groupSection) {
     let groupCard = "";
     for (let i = 0; i < id.length; i++) {
 
@@ -473,6 +473,7 @@ export function getVotes(id, submit, modalBody) {
             voteList.push(vote.id)
         });
 
+        // if movies checked
         if (voteList.length > 0) {
             // Firestore query based on movieId, increments number of votes by one
             voteList.forEach(function (vote) {
@@ -485,6 +486,8 @@ export function getVotes(id, submit, modalBody) {
             groupRef.doc(id).update({
                 totalVotes: firebase.firestore.FieldValue.increment(1)
             });
+
+            // if no movies checked
         } else {
             modalBody.innerText = "You didn't vote on anything!"
         }
@@ -504,6 +507,7 @@ export function showGroupMembers(groupID, groupInfo) {
         });
 }
 
+/* Displays personalized welcome message and buttons when user logged-in on main.html */
 export function welcomeUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -531,7 +535,6 @@ export function displayGroupMsgs(groupMsgs) {
 
                 let groupId = [];
                 let groupName = [];
-                let groupDesc = [];
 
                 if (doc.data().groupId.length == 0) {
                     groupMsgs.innerHTML = "No Group Chats found.";
@@ -542,7 +545,6 @@ export function displayGroupMsgs(groupMsgs) {
                     }
                     renderGroupMsgs(groupId, groupName, groupMsgs)
                 }
-                console.log("groups: " + groupId + " " + groupName + " " + groupDesc);
             })
     })
 }
@@ -572,6 +574,8 @@ function renderGroupMsgs(id, name, groupMsgs) {
 /** Ends voting round and displays winning movie on group-centre.html. */
 export function endVoting(groupID, endVoteBtn) {
     endVoteBtn.addEventListener("click", function () {
+
+        // sets group's total votes to large integer
         groupRef.doc(groupID).update({
             totalVotes: 100
         });
@@ -627,15 +631,20 @@ export function getUser() {
     })
 }
 
-//add movie to user's favourite movies list
+/* adds movie to user's favourite movies list */
 export function addFavourite() {
     var addFavBtn = $("#Addfavourite").text();
     firebase.auth().onAuthStateChanged(function (user) {
+        // if user logged in
         if (user) {
             let movieId = sessionStorage.getItem('movieId');
+
+            // Access movie info from OMDB
             axios.get('https://www.omdbapi.com?i=' + movieId + '&apikey=5623718')
                 .then((response) => {
-                    let movie = response.data;
+
+                    // changes button text when clicked 
+                    // adds/removes movie to user's favourite movie list.
                     if (addFavBtn.localeCompare('Remove Favourite') != 0) {
                         db.collection("users").doc(user.uid).update({
                             "favouriteLists": firebase.firestore.FieldValue.arrayUnion(movieId),
@@ -659,7 +668,7 @@ export function logHeaderStatus() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             usersRef.doc(user.uid).get()
-                .then(function (doc) {
+                .then(function () {
                     $("#logInBtn").hide();
                     $("#logOutBtn").show();
                 }).catch(function (err) {
@@ -686,14 +695,12 @@ export function submitReview(movieID, submitBtn, message, errorMessage) {
                             date: new Date()
                         })
                         .then(usercommentsRef => {
-                            console.log("Document written with ID: ", usercommentsRef.id);
-                            // window.location.reload();
+                            console.log("Document written!");
                         })
                         .catch(function (error) {
                             console.error('Error adding document: ', error);
                         });
                     errorMessage.classList.remove("show");
-                    // nickname.value = "";
                     message.value = "";
                 } else {
                     errorMessage.classList.add("show");
@@ -709,6 +716,7 @@ export function displayReviews(movieID, dataArea) {
     let movies = db.collection("movies");
     let moviesQuery = movies.where("imdbID", "==", movieID);
 
+    // indexes movies collection and orders reviews by date
     moviesQuery.orderBy("date")
         .onSnapshot(querySnapshot => {
             let messages = [];
@@ -720,16 +728,13 @@ export function displayReviews(movieID, dataArea) {
             } else {
                 dataArea.innerHTML = "<p >No Review Yet</p>";
             }
-
             for (let i = 0; i < messages.length; i++) {
                 const createdOn = new Date(messages[i].date.seconds * 1000);
 
+                // displays reviews
                 dataArea.innerHTML += `
-       
-       <article style= "background-color:rgb(95, 15, 15);">
-                                 
+                                    <article style= "background-color:rgb(95, 15, 15);">
                                       <p style = "color: white">${messages[i].message}</p>
-                                      
                                   <div class="float-right">
                                       <span style = "color: white" class="">
                                           ${messages[i].userName}
@@ -737,10 +742,8 @@ export function displayReviews(movieID, dataArea) {
                                       <span style = "color: white" class="">
                                           ${formatDate(createdOn)}
                                       </span>
-                                  </div>
-                                
-                              </article>
-                          `;
+                                  </div>    
+                              </article>`;
             }
         });
 }
@@ -831,55 +834,60 @@ export function saveUserProfile() {
     });
 }
 
-//displays the user's favourite movie list
+/* Displays the user's favourite movie list */
 export function displayFavList() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             var favList;
+
+            // gets user's favourite movie list
             db.collection("users").doc(user.uid).get().then((s) => {
                 favList = s.data().favouriteLists;
                 favList.forEach(element => {
+
+                    // gets movie information for each item on list
                     axios.get('http://www.omdbapi.com?i=' + element + '&apikey=6753c87c')
                         .then((response) => {
                             let movie = response.data;
                             $("#favTable").append(`
-                                <tr id = "movie` + element+`" >
-                                    <th><a class="link-light" id="`+ element + `" style="cursor: pointer;">` + movie.Title + `<a></th>
+                                <tr id = "movie` + element + `" >
+                                    <th><a class="link-light" id="` + element + `" style="cursor: pointer;">` + movie.Title + `<a></th>
                                     <th>` + movie.Released + `</th> 
                                     <th>` + movie.Genre + `</th>
                                     <th><button class="removeFav btn btn-danger " 
                                     onClick="setTimeout(function () { 
                                         location.reload();
                                       }, 400);" 
-                                    value="`+ element + `">X</button></th>
+                                    value="` + element + `">X</button></th>
                                 
                                 </tr>
                             `);
                         });
-                    console.log(element);
                 });
             });
         };
     });
 }
 
-//user can delete the movie in favourite list and click the name to see the details
+/* User can delete the movie in favourite list and click the name to see the details on profile_favourite.html*/
 export function favListDetails() {
     $(document).ready(() => {
         var el = document.getElementById('favTable');
         if (el) {
             el.addEventListener("click", function (event) {
                 var movieId = $(el).val();
-                if(event.target.value!==undefined) {
+                if (event.target.value !== undefined) {
                     firebase.auth().onAuthStateChanged(function (user) {
                         if (user) {
+
+                            // deletes specific movie from user's list
                             db.collection("users").doc(user.uid).update({
                                 "favouriteLists": firebase.firestore.FieldValue.arrayRemove(event.target.value),
                             });
                         }
                     });
-                    //if user click the name
-                } else if(event.target.id!==undefined && event.target.id.trim() != "") {
+                    //if user click the name, redirected to details page
+                } else if (event.target.id !== undefined && event.target.id.trim() != "") {
                     movieSelected(event.target.id);
                 }
             });

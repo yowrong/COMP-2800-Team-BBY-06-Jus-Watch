@@ -7,7 +7,7 @@ const modalBtn = document.getElementById("modalBtn");
 const modalName = document.getElementById("modal-groupName");
 const modalBody = document.getElementById('modal-body');
 
-/* Creates group on click of create button, only created if name field is not empty*/
+/* Creates group on click of create button, only created if name field is not empty. */
 createBtn.addEventListener("click", function(e) {
     if (groupName.value.trim() != '') {
         createGroup(groupName, groupDesc)

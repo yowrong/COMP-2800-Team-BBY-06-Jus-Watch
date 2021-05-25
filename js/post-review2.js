@@ -9,7 +9,6 @@ const settings = {
   timestampsInSnapshots: true
 };
 
-const form = document.querySelector("form");
 const message = document.getElementById("message");
 const errorMessage = document.querySelector(".error-message");
 const closebtn = document.querySelector(".error-message .close");

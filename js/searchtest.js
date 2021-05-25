@@ -23,6 +23,8 @@ if (document.URL.includes("post-review.html")) {
     getMovie(movieID);
 }
 
+
+/* Handles search bar queries and buttons*/
 $(document).ready(() => {
 
     $('#searchBar').on('submit', (e) => {
