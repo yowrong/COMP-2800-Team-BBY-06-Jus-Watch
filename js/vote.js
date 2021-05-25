@@ -9,8 +9,9 @@ const movieList = document.getElementById("movieList");
 const submit = document.getElementById("submit");
 const returnBtn = document.getElementById("returnBtn");
 const closeBtn = document.getElementById("closeBtn");
+const modalBody = document.getElementById("modal-body");
 
-getVotes(groupID, submit);
+getVotes(groupID, submit, modalBody);
 
 displayMoviesForVote(groupID, movieList, submit);
 

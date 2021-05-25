@@ -460,7 +460,7 @@ export function writeMovie(id, title, year, desc, pic, groupID) {
 
 
 /* Submits votes to Firestore nominatedMovie collection for group, also increments group's total vote count on vote.html */
-export function getVotes(id, submit) {
+export function getVotes(id, submit, modalBody) {
     submit.addEventListener("click", function() {
         let voteList = [];
         let votes = document.querySelectorAll(".btn-check:checked");        // StackOverflow: https://stackoverflow.com/questions/11599666/get-the-value-of-checked-checkbox
@@ -482,6 +482,8 @@ export function getVotes(id, submit) {
             groupRef.doc(id).update({
                 totalVotes: firebase.firestore.FieldValue.increment(1) 
             });
+        } else {
+            modalBody.innerText = "You didn't vote on anything!"
         }
         
     });
