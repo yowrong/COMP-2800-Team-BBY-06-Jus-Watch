@@ -49,29 +49,31 @@ const dataArea = document.getElementById("load-data");
 
 form.addEventListener("submit", e => {
   e.preventDefault();
-
-  if (nickname.value !== "" && message.value !== "") {
-    const usercommandsRef = db.collection("users").doc("uid").collection('commands');
-    usercommandsRef
-      .add({
-        nickname: nickname.value,
-        message: message.value,
-        date: new Date()
-      })
-      .then(usercommandsRef => {
-        console.log("Document written with ID: ", usercommandsRef.id);
-        // window.location.reload();
-      })
-      .catch(function (error) {
-        console.error('Error adding document: ', error);
-      });
-    errorMessage.classList.remove("show");
-    nickname.value = "";
-    message.value = "";
-  } else {
-    errorMessage.classList.add("show");
-  }
-});
+  firebase.auth().onAuthStateChanged(function (user){
+    if (nickname.value !== "" && message.value !== "") {
+      const usercommandsRef = db.collection("users").doc(user.uid).collection('commands');
+      usercommandsRef
+        .add({
+          nickname: nickname.value,
+          message: message.value,
+          date: new Date()
+        })
+        .then(usercommandsRef => {
+          console.log("Document written with ID: ", usercommandsRef.id);
+          // window.location.reload();
+        })
+        .catch(function (error) {
+          console.error('Error adding document: ', error);
+        });
+      errorMessage.classList.remove("show");
+      nickname.value = "";
+      message.value = "";
+    } else {
+      errorMessage.classList.add("show");
+    }
+  });
+  })
+  
 
 closebtn.addEventListener("click", () => {
   errorMessage.classList.remove("show");
