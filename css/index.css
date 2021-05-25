@@ -224,7 +224,7 @@ li {
   color: rgba(255, 255, 255, 0.4);
   transition: color 0.3s;
   transition-delay: 0.15s;
-  margin: 0 10px;
+  margin: 0;
 }
 
 .icons {
