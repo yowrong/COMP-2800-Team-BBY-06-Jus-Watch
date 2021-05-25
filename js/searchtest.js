@@ -22,6 +22,18 @@ if (document.URL.includes("movieresult.html")) {
   getMovie(movieID);
 }
 
+
+if (document.URL.includes("post-review.html")) {
+  let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+  let query = string.split("?"); // Projects 1800 lecture slides
+  let movieID = query[1];
+  getMovie(movieID);
+}
+
+
+
+
+
 $(document).ready(() => {
 
   $('#searchBar').on('submit', (e) => {
@@ -76,6 +88,12 @@ function getMovies(myInput) {
 }
 
 
+
+
+
+
+
+
 // function movieSelected(id) {
 //     sessionStorage.setItem('movieId', id);
 //     window.location = "movieresult.html";
@@ -87,8 +105,6 @@ function getMovie(movieID) {
 
   axios.get('https://www.omdbapi.com?i=' + movieID + '&apikey=5623718')
     .then((response) => {
-
-
       let movie = response.data;
       let output = `
       <div class="moviedscrpt">
@@ -110,7 +126,7 @@ function getMovie(movieID) {
             <p style = "color: white">${movie.Plot}</p>
             <hr>
             <div class="centerbox">
-            <a href="post-review.html" target="_blank" class="anotest">
+            <a href="post-review.html?${movie.imdbID}";  id = "postreview"  class="anotest">
               <span></span>
               <span></span>
               <span></span>
