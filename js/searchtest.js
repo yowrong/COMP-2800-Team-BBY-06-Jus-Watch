@@ -33,7 +33,7 @@ if (document.URL.includes("post-review.html")) {
 
 
 
-
+// get the search valuse or get easter page 
 $(document).ready(() => {
 
   $('#searchBar').on('submit', (e) => {
@@ -61,6 +61,8 @@ $(document).ready(() => {
   })
 });
 
+
+//use OMDB API to return some movie infromation and display in card in search page
 function getMovies(myInput) {
   axios.get('https://www.omdbapi.com?s=' + myInput + '&apikey=5623718')
     .then((response) => {
@@ -100,7 +102,7 @@ function getMovies(myInput) {
 
 //     return false;
 // }
-
+//use OMDB API and get the movieresult to show more movie infromation and display in movieresultpage 
 function getMovie(movieID) {
 
   axios.get('https://www.omdbapi.com?i=' + movieID + '&apikey=5623718')
