@@ -51,9 +51,7 @@ form.addEventListener("submit", e => {
   e.preventDefault();
 
   if (nickname.value !== "" && message.value !== "") {
-
-    
-    const usercommandsRef = userid.collection('commands');
+    const usercommandsRef = db.collection("users").doc("uid").collection('commands');
     usercommandsRef
       .add({
         nickname: nickname.value,
@@ -120,7 +118,6 @@ usercommandsRef.orderBy("date")
     querySnapshot.forEach(chat => {
       messages.push(chat.data());
     });
-
     if (messages.length !== 0) {
       dataArea.innerHTML = "";
     } else {
@@ -129,12 +126,13 @@ usercommandsRef.orderBy("date")
 
     for (let i = 0; i < messages.length; i++) {
       const createdOn = new Date(messages[i].date.seconds * 1000);
+
       dataArea.innerHTML += `
-   
-                            <article style= "background-color:rgb(95, 15, 15);">
+     
+     <article style= "background-color:rgb(95, 15, 15);">
                                
                                     <p style = "color: white">${messages[i].message}</p>
-                              
+                                    
                                 <div class="float-right">
                                     <span style = "color: white" class="">
                                         ${messages[i].nickname}
