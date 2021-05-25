@@ -52,15 +52,16 @@ form.addEventListener("submit", e => {
 
   if (nickname.value !== "" && message.value !== "") {
 
-    const usercommandsRef = db.collection("users").doc("uid").collection('commands');
+    
+    const usercommandsRef = userid.collection('commands');
     usercommandsRef
       .add({
         nickname: nickname.value,
         message: message.value,
         date: new Date()
       })
-      .then(docRef => {
-        console.log("Document written with ID: ", docRef.id);
+      .then(usercommandsRef => {
+        console.log("Document written with ID: ", usercommandsRef.id);
         // window.location.reload();
       })
       .catch(function (error) {
@@ -101,17 +102,16 @@ formatDate = d => {
   const day = d.getDate();
   // get the year
   let year = d.getFullYear();
-  // pull the last two digits of the year
-  year = year.toString().substr(-2);
   // get the hours
   const hours = d.getHours();
   // get the minutes
   const minutes = ("0" + d.getMinutes()).slice(-2);
   //return the string "DD Month YY - HH:mm"
   return (
-    day + " " + months[month] + " '" + year + " - " + hours + ":" + minutes
+    day + " " + months[month] + " " + year + " - " + hours + ":" + minutes
   );
 };
+
 
 const usercommandsRef = db.collection("users").doc("uid").collection('commands');
 usercommandsRef.orderBy("date")
