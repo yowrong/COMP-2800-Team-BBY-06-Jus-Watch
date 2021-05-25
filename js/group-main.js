@@ -3,8 +3,24 @@ import { displayGroups } from "./firebase-queries.js";
 // const db = firebase.firestore();
 // const usersRef = db.collection("users");
 // const groupRef = db.collection("groups");
+// var user = firebase.auth().currentUser;
 
 const groupList = document.getElementById("group-list");
+const createGroupBtn = document.getElementById("createGroupBtn");
+
+/* Redirects to login if user not signed in */
+createGroupBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    firebase.auth().onAuthStateChanged(function(user) {
+
+    
+        if (user) {
+            window.location = "/create-group.html";
+        } else {
+            window.location = "/login.html";
+        }
+    });
+})
 
 displayGroups(groupList);
 
