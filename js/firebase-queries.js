@@ -25,26 +25,32 @@ export function createUser() {
 export function displayMsgs(groupID) {
     firebase.auth().onAuthStateChanged(function (user) {
         groupRef.doc(groupID).collection("groupMessages")
-            .orderBy("sentAt")
-            //Tech-Tip 016 from Comp 1800
-            //Author: Carly Orr
-            //Source: https://www.notion.so/Tech-Tip-016-How-do-I-listen-to-new-documents-added-to-a-collection-16469db1a9d7451f8d0c2012bfd084ee
-            .onSnapshot((snapshot) => {
-                snapshot.docChanges().forEach(function (change) {
-                    if (change.type === "added") {
-                        let msg = "";
-                        snapshot.forEach(function (doc) {
-                            if (doc.data().uid === user.uid) {
-                                msg += `<div class="sent"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${doc.data().sentAt}</aside></div>`;
-                            } else {
-                                msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${doc.data().sentAt}</aside></div>`;
-                            }
-                        });
-                        $("#messages").html(msg);
-                        window.scrollTo($("#messages"));
+        .orderBy("sentAt")
+        //Tech-Tip 016 from Comp 1800
+        //Author: Carly Orr
+        //Source: https://www.notion.so/Tech-Tip-016-How-do-I-listen-to-new-documents-added-to-a-collection-16469db1a9d7451f8d0c2012bfd084ee
+        .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach(function (change) {
+                let msg = "";
+                snapshot.forEach(function (doc) {
+                    //Convert firestore timestamp to date Object
+                    //Source: https://stackoverflow.com/questions/52247445/how-do-i-convert-a-firestore-date-timestamp-to-a-js-date
+                    let date = doc.data().sentAt.toDate();
+                    //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+                    let formatTime = new Intl.DateTimeFormat("en", {
+                        dateStyle: "short",
+                        timeStyle: "medium"
+                    }).format(date);
+                    if (doc.data().uid === user.uid) {
+                        msg += `<div class="sent"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
+                    } else {
+                        msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
                     }
                 });
+                $("#messages").html(msg);
+                window.scrollTo($("#messages"));
             });
+        });
     });
 }
 
@@ -52,21 +58,15 @@ export function displayMsgs(groupID) {
 export function sendMsg(msgToSend, groupID) {
     firebase.auth().onAuthStateChanged(function (user) {
         usersRef.doc(user.uid).get()
-            .then(function (doc) {
-                const userName = doc.data().name;
-                const date = new Date(Date.now());
-                //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-                const formattedDate = new Intl.DateTimeFormat("en", {
-                    dateStyle: "short",
-                    timeStyle: "medium"
-                }).format(date);
-                groupRef.doc(groupID).collection("groupMessages").add({
-                    sentBy: userName,
-                    sentAt: formattedDate,
-                    message: msgToSend.value,
-                    uid: user.uid
-                });
-            })
+        .then(function (doc) {
+            const userName = doc.data().name;
+            groupRef.doc(groupID).collection("groupMessages").add({
+                sentBy: userName,
+                message: msgToSend.value,
+                uid: user.uid,
+                sentAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
     });
 }
 
@@ -694,11 +694,121 @@ export function addFavourite() {
             usersRef.doc(user.uid).get()
             .then(function(doc) {
                 $("#logInBtn").hide();
+                $("#logOutBtn").show();
             }).catch(function(err) {
                 console.log(err);
             });
-        } else {
-            $("#logOutBtn").hide();
         }
     });
 }
+
+
+/** Submits a review to movies collection on post-review.html */
+export function submitReview(movieID, submitBtn, message, errorMessage) {
+    submitBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          if (message.value !== "") {
+            db.collection("movies")
+              .add({
+                userID: user.uid,
+                imdbID: movieID,
+                userName: user.displayName,
+                message: message.value,
+                date: new Date()
+              })
+              .then(usercommentsRef => {
+                console.log("Document written with ID: ", usercommentsRef.id);
+                // window.location.reload();
+              })
+              .catch(function (error) {
+                console.error('Error adding document: ', error);
+              });
+            errorMessage.classList.remove("show");
+            // nickname.value = "";
+            message.value = "";
+          } else {
+            errorMessage.classList.add("show");
+          }
+        }
+      });
+    })
+  }
+
+
+/** Displays reviews for specific movie on post-review.html */
+export function displayReviews(movieID, dataArea) {
+    let movies = db.collection("movies");
+    let moviesQuery = movies.where("imdbID", "==", movieID);
+  
+    moviesQuery.orderBy("date")
+    .onSnapshot(querySnapshot => {
+      let messages = [];
+      querySnapshot.forEach(chat => {
+        messages.push(chat.data());
+      });
+      if (messages.length !== 0) {
+        dataArea.innerHTML = "";
+      } else {
+        dataArea.innerHTML = "<p >No Review Yet</p>";
+      }
+  
+      for (let i = 0; i < messages.length; i++) {
+        const createdOn = new Date(messages[i].date.seconds * 1000);
+  
+        dataArea.innerHTML += `
+       
+       <article style= "background-color:rgb(95, 15, 15);">
+                                 
+                                      <p style = "color: white">${messages[i].message}</p>
+                                      
+                                  <div class="float-right">
+                                      <span style = "color: white" class="">
+                                          ${messages[i].userName}
+                                      </span>
+                                      <span style = "color: white" class="">
+                                          ${formatDate(createdOn)}
+                                      </span>
+                                  </div>
+                                
+                              </article>
+                          `;
+      }
+    });
+    
+  }
+  
+
+// A function for formatting a date to DD Month YY - HH:mm
+const formatDate = d => {
+    // Months array to get the month in string format
+    const months = new Array(
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    );
+    // get the month
+    const month = d.getMonth();
+    // get the day
+    const day = d.getDate();
+    // get the year
+    let year = d.getFullYear();
+    // get the hours
+    const hours = d.getHours();
+    // get the minutes
+    const minutes = ("0" + d.getMinutes()).slice(-2);
+    //return the string "DD Month YY - HH:mm"
+    return (
+      day + " " + months[month] + " " + year + " - " + hours + ":" + minutes
+    );
+  };
