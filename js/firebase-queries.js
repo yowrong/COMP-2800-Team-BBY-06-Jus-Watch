@@ -25,26 +25,32 @@ export function createUser() {
 export function displayMsgs(groupID) {
     firebase.auth().onAuthStateChanged(function (user) {
         groupRef.doc(groupID).collection("groupMessages")
-            .orderBy("sentAt")
-            //Tech-Tip 016 from Comp 1800
-            //Author: Carly Orr
-            //Source: https://www.notion.so/Tech-Tip-016-How-do-I-listen-to-new-documents-added-to-a-collection-16469db1a9d7451f8d0c2012bfd084ee
-            .onSnapshot((snapshot) => {
-                snapshot.docChanges().forEach(function (change) {
-                    if (change.type === "added") {
-                        let msg = "";
-                        snapshot.forEach(function (doc) {
-                            if (doc.data().uid === user.uid) {
-                                msg += `<div class="sent"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${doc.data().sentAt}</aside></div>`;
-                            } else {
-                                msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${doc.data().sentAt}</aside></div>`;
-                            }
-                        });
-                        $("#messages").html(msg);
-                        window.scrollTo($("#messages"));
+        .orderBy("sentAt")
+        //Tech-Tip 016 from Comp 1800
+        //Author: Carly Orr
+        //Source: https://www.notion.so/Tech-Tip-016-How-do-I-listen-to-new-documents-added-to-a-collection-16469db1a9d7451f8d0c2012bfd084ee
+        .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach(function (change) {
+                let msg = "";
+                snapshot.forEach(function (doc) {
+                    //Convert firestore timestamp to date Object
+                    //Source: https://stackoverflow.com/questions/52247445/how-do-i-convert-a-firestore-date-timestamp-to-a-js-date
+                    let date = doc.data().sentAt.toDate();
+                    //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+                    let formatTime = new Intl.DateTimeFormat("en", {
+                        dateStyle: "short",
+                        timeStyle: "medium"
+                    }).format(date);
+                    if (doc.data().uid === user.uid) {
+                        msg += `<div class="sent"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
+                    } else {
+                        msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
                     }
                 });
+                $("#messages").html(msg);
+                window.scrollTo($("#messages"));
             });
+        });
     });
 }
 
@@ -52,21 +58,15 @@ export function displayMsgs(groupID) {
 export function sendMsg(msgToSend, groupID) {
     firebase.auth().onAuthStateChanged(function (user) {
         usersRef.doc(user.uid).get()
-            .then(function (doc) {
-                const userName = doc.data().name;
-                const date = new Date(Date.now());
-                //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-                const formattedDate = new Intl.DateTimeFormat("en", {
-                    dateStyle: "short",
-                    timeStyle: "medium"
-                }).format(date);
-                groupRef.doc(groupID).collection("groupMessages").add({
-                    sentBy: userName,
-                    sentAt: formattedDate,
-                    message: msgToSend.value,
-                    uid: user.uid
-                });
-            })
+        .then(function (doc) {
+            const userName = doc.data().name;
+            groupRef.doc(groupID).collection("groupMessages").add({
+                sentBy: userName,
+                message: msgToSend.value,
+                uid: user.uid,
+                sentAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
     });
 }
 
@@ -694,11 +694,10 @@ export function addFavourite() {
             usersRef.doc(user.uid).get()
             .then(function(doc) {
                 $("#logInBtn").hide();
+                $("#logOutBtn").show();
             }).catch(function(err) {
                 console.log(err);
             });
-        } else {
-            $("#logOutBtn").hide();
         }
     });
 }
