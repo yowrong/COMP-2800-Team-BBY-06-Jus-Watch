@@ -50,6 +50,8 @@ $(document).ready(() => {
     })
 });
 
+
+//use OMDB API to return some movie infromation and display in card in search page
 function getMovies(myInput) {
     axios.get('https://www.omdbapi.com?s=' + myInput + '&apikey=5623718')
         .then((response) => {
