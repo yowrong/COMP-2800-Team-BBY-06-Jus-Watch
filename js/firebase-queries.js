@@ -352,7 +352,7 @@ function renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTit
 }
 
 /** Resets Nominated Movies Section by deleting all movies in nominatedMovies subcollection for group-centre.html.
- * Resets group's totalVotes to 0. **/
+/ * Resets group's totalVotes to 0. **/
 /* Adapted from https://stackoverflow.com/questions/47860812/deleting-all-documents-in-firestore-collection */
 function resetVotes(groupID, resetBtn) {
     resetBtn.addEventListener("click", function () {
@@ -490,7 +490,7 @@ export function getVotes(id, submit, modalBody) {
     });
 }
 
-//Show group member list
+/* Show group member list on group-centre.html*/
 export function showGroupMembers(groupID, groupInfo) {
     groupRef.doc(groupID).collection("groupMembers").get()
         .then((snap) => {

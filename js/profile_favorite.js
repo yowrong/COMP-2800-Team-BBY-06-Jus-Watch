@@ -4,10 +4,11 @@ displayFavList();
 
 favListDetails();
 
-//back button function
-function back() {
+const backBtn = document.getElementById('backBtn');
+
+backBtn.addEventListener('click', function(e) {
     window.history.back();
-}
+})
 
 //redirect to the detail page
 function movieSelected(id) {

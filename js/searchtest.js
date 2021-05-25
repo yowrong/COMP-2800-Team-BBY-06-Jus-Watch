@@ -138,7 +138,6 @@ function getMovie(movieID) {
                 let movie = response.data;
                 checka.where('favouriteLists',  'array-contains', movieId).get().then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
-                    console.log(movieId + user.uid);
                       if (doc.exists) {
                         $('#Addfavourite').text('Remove Favourite');
                     } else {
