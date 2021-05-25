@@ -1,7 +1,7 @@
 // Firebase configuration from https://console.firebase.google.com/u/3/project/jus-watch/overview
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyBKFYVvWiU38IHUNQxgZHam8M68cC7Q8OQ",
     authDomain: "jus-watch.firebaseapp.com",
     projectId: "jus-watch",
@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 
 
-function firebaseAuthUI() {
+export function firebaseAuthUI() {
     // Firebase authentication configuration and pre-built sign-in widget from https://firebase.google.com/docs/auth/web/firebaseui
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
@@ -53,11 +53,3 @@ function firebaseAuthUI() {
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
 }
-
-var db = firebase.firestore(); 
-
-export {
-    firebaseConfig,
-    firebaseAuthUI
-};
-// module.exports = firebaseAuthUI;

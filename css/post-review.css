@@ -130,6 +130,11 @@ button { font-weight: 50; }
 h1{
     color:white;
 }
+
+.reviewTitle { 
+  text-align: center;
+}
+
 .error-message {
   /* hide error message at load */
   display: none;

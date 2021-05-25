@@ -1,24 +1,16 @@
-//document.getElementById("starter").focus();
 document.body.addEventListener('onload', focus());
-// document.addEventListener('keydown', detectSpaceKey);
 const entireDiv = document.getElementById('curtain');
-// const openDiv = document.getElementsByClassName('open');
 
 showTime();
 
-
+/* Clicking on screen to stop animation */
 $("body").click(function () {
     window.location = "search.html";
     console.log('clicled');
 })
 
-// function detectSpaceKey(event)
-// {
-// 	if(event.keyCode == 13) {
-// 		showTime();
-// 	}
-// }
-
+/* Trigger movie curtain animation */
+// Adapted from https://codepen.io/alexisr/pen/dJmpdR
 function showTime() {
     var curtain = document.getElementById("curtain");
     curtain.className = "open";

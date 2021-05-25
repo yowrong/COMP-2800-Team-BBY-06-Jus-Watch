@@ -36,22 +36,22 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link text-white" href="login.html">Login/Signup</a>
+            <a class="nav-link text-white desktop" href="group-main.html">Groups</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="group-main.html">Groups</a>
+            <a class="nav-link text-white desktop" href="msgs-main.html">Messages</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="msgs-main.html">Messages</a>
+            <a class="nav-link text-white desktop" href="search.html">Search</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="profile.html">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="search.html">Search</a>
+            <a class="nav-link text-white desktop" href="profile.html">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="about-us.html">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a id="logInBtn" class="nav-link text-white" href="login.html">Login</a>
           </li>
           <li class="nav-item">
             <a id="logOutBtn" type="button" class="nav-link text-white" href="">Log Out</a>
@@ -64,23 +64,20 @@
 
   <div class="container">
     <div class="message-board">
-      <h1>Review Board</h1>
+      <h1 class="reviewTitle">Review Board</h1>
       <div id="load-data">
         <p>Loading...</p>
       </div>
     </div>
 
-    <div id = "command" class="type-message box-shadow">
+    <div id="command" class="type-message box-shadow">
       <h1>Post Your Review</h1>
       <form>
-        <div id = "name" class="p-1 ">
-          <input type="text" placeholder="Nickname" id="nickname" required />
-        </div>
-        <div id = "input" class="p-1 ">
+        <div id="input" class="p-1 ">
           <textarea placeholder="Type message here..." id="message" required></textarea>
         </div>
-        <div id = "myBtn" >
-          <button type="submit">SEND</button>
+        <div id="myBtn">
+          <button type="submit" id="submitBtn">SEND</button>
         </div>
       </form>
       <div class="error-message">
@@ -88,7 +85,7 @@
         <span class="close position-right">&times;</span>
       </div>
     </div>
-</div>
+  </div>
 
   <!-- Icon Footer -->
   <footer>
@@ -104,12 +101,17 @@
         </a>
       </li>
       <li>
+        <a class="nav-link text-white" href="msgs-main.html">
+          <i class="fa fa-comments footerbtn" style="font-size: 180%;"></i>
+        </a>
+      </li>
+      <li>
         <a class="nav-link text-white" href="search.html">
           <i class="fa fa-search footerbtn" style="font-size: 180%;"></i>
         </a>
       </li>
       <li>
-        <a class="nav-link active text-white" aria-current="page" href="profile.html">
+        <a class="nav-link text-white" aria-current="page" href="profile.html">
           <i class="fa fa-user-circle footerbtn" style="font-size: 180%;"></i>
         </a>
       </li>
@@ -117,6 +119,7 @@
   </footer>
 
   <!-- JS: Boostrap, Firebase, API related    -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
   </script>
@@ -128,7 +131,9 @@
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
 
   <!-- Our scripts -->
-  <script src="/js/post-review2.js"> </script>
+  <script type="module" src="./js/firebase-api.js"></script>
+  <script type="module" src="/js/post-review2.js"> </script>
+  <script type="module" src="./js/logout.js"></script>
 
 
 

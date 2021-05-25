@@ -13,7 +13,7 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/footer.css">
   <link rel="stylesheet" href="./css/vote.css" />
   <script src="https://kit.fontawesome.com/6d23be533d.js" crossorigin="anonymous"></script>
 
@@ -39,22 +39,22 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link text-white" href="login.html">Login/Signup</a>
+            <a class="nav-link text-white desktop" href="group-main.html">Groups</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="group-main.html">Groups</a>
+            <a class="nav-link text-white desktop" href="msgs-main.html">Messages</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="msgs-main.html">Messages</a>
+            <a class="nav-link text-white desktop" href="search.html">Search</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="profile.html">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="search.html">Search</a>
+            <a class="nav-link text-white desktop" href="profile.html">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="about-us.html">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a id="logInBtn" class="nav-link text-white" href="login.html">Login</a>
           </li>
           <li class="nav-item">
             <a id="logOutBtn" type="button" class="nav-link text-white" href="index.html">Log Out</a>
@@ -65,10 +65,10 @@
   </nav>
 
   <div class="container">
-    <h2 class="voteTitle">Vote on what you want to watch this week!</h2>
+    <h2 class="voteTitle fw-bold">Vote on what you want to watch this week!</h2>
     <div id="movieList">
     </div>
-    <div class="d-grid gap-2 col-6 mx-auto buttons">
+    <div class="buttons d-grid gap-2 col-6 mx-auto">
       <div id="submit">
         <button type="button" class="btn btn-danger shadow p-3 mb-5" data-bs-toggle="modal"
           data-bs-target="#exampleModal">
@@ -90,11 +90,11 @@
           <h5 class="modal-title" id="exampleModalLabel">Vote</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="modal-body">
           <p>Thanks for Voting!</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeBtn">Return</button>
         </div>
       </div>
     </div>
@@ -114,12 +114,17 @@
         </a>
       </li>
       <li>
+        <a class="nav-link text-white" href="msgs-main.html">
+          <i class="fa fa-comments footerbtn" style="font-size: 180%;"></i>
+        </a>
+      </li>
+      <li>
         <a class="nav-link text-white" href="search.html">
           <i class="fa fa-search footerbtn" style="font-size: 180%;"></i>
         </a>
       </li>
       <li>
-        <a class="nav-link active text-white" aria-current="page" href="profile.html">
+        <a class="nav-link text-white" aria-current="page" href="profile.html">
           <i class="fa fa-user-circle footerbtn" style="font-size: 180%;"></i>
         </a>
       </li>
@@ -137,6 +142,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- Our scripts -->
   <script type="module" src="./js/firebase-api.js"></script>

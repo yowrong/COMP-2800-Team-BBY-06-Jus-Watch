@@ -22,13 +22,17 @@ h2 {
   background: #ffffff;
 }
 
-.buttons {
-  text-align: center;
-}
 
 .buttons .btn {
   min-width: 200px;
+}
+
+#submit, #returnBtn {
   margin: 0 auto;
+}
+
+.year {
+  padding-top: 5%;
 }
 
 * {

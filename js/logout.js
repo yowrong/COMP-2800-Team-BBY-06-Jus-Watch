@@ -1,3 +1,5 @@
+import { logHeaderStatus } from "./firebase-queries.js";
+
 const logOutBtn = document.getElementById("logOutBtn");
 
 logOutBtn.addEventListener("click", () => {
@@ -7,3 +9,5 @@ logOutBtn.addEventListener("click", () => {
         console.log(err);
     });
 });
+
+logHeaderStatus();
