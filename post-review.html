@@ -68,7 +68,7 @@
           <textarea placeholder="Type message here..." id="message" required></textarea>
         </div>
         <div id = "myBtn" >
-          <button type="submit">SEND</button>
+          <button type="submit" id="submitBtn">SEND</button>
         </div>
       </form>
       <div class="error-message">
@@ -122,7 +122,9 @@
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
 
   <!-- Our scripts -->
-  <script src="/js/post-review2.js"> </script>
+  <script type="module" src="./js/firebase-api.js"></script>
+  <script type="module" src="/js/post-review2.js"> </script>
+  <script type="module" src="./js/logout.js"></script>
 
 
 
