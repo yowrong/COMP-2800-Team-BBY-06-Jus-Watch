@@ -688,3 +688,19 @@ export function addFavourite() {
       };
     });
   }
+
+/* Hide log-in and show log-out buttons if user is logged in. */
+  export function logHeaderStatus() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if(user) {
+            usersRef.doc(user.uid).get()
+            .then(function(doc) {
+                $("#logInBtn").hide();
+            }).catch(function(err) {
+                console.log(err);
+            });
+        } else {
+            $("#logOutBtn").hide();
+        }
+    });
+}
