@@ -70,6 +70,10 @@ export function sendMsg(msgToSend, groupID) {
     });
 }
 
+
+
+
+
 /* Takes values inputted on create-group.html page and writes to Firestore */
 export function createGroup(name, desc) {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -84,7 +88,6 @@ export function createGroup(name, desc) {
         .then((doc) => {
             // writes group information to users collection, adds to arrays in order so that group information corresponds
             usersRef.doc(user.uid).set({          
-
                 /* Used Firebase doc https://firebase.google.com/docs/firestore/manage-data/add-data for reference */    
                 groupId: firebase.firestore.FieldValue.arrayUnion(doc.id),              
                 groupName: firebase.firestore.FieldValue.arrayUnion(name.value),
