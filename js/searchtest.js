@@ -24,7 +24,6 @@ if (document.URL.includes("post-review.html")) {
 }
 
 $(document).ready(() => {
-
     $('#searchBar').on('submit', (e) => {
         let myInput = $('#myInput').val();
         if (myInput === 'juswatch') {
@@ -51,7 +50,8 @@ $(document).ready(() => {
 });
 
 
-//use OMDB API to return some movie infromation and display in card in search page
+//return the input from search box as movieid for get the information 
+//from omdb api some movie infromation and display in card in search page
 function getMovies(myInput) {
     axios.get('https://www.omdbapi.com?s=' + myInput + '&apikey=5623718')
         .then((response) => {
@@ -78,6 +78,7 @@ function getMovies(myInput) {
         });
 }
 
+//return the movie result description page with url contain "movieid" and styling the movie description page 
 function getMovie(movieID) {
 
     axios.get('https://www.omdbapi.com?i=' + movieID + '&apikey=5623718')
