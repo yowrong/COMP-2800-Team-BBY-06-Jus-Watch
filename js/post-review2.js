@@ -12,6 +12,13 @@ const config = {
 
 firebase.initializeApp(config);
 
+/* Get movie ID for reviews */
+let string = decodeURIComponent(window.location.search); // from "10b Lecture Javascript Relevant Bits-1"
+let query = string.split("?"); // Projects 1800 lecture slides
+const movieID = query[1];
+
+
+
 // Initialize Cloud Firestore through Firebase
 const db = firebase.firestore();
 const settings = {
@@ -39,40 +46,49 @@ function getUser() {
 }
 
 const form = document.querySelector("form");
-const nickname = document.getElementById("nickname");
+// const nickname = document.getElementById("nickname");
 const message = document.getElementById("message");
 const errorMessage = document.querySelector(".error-message");
 const closebtn = document.querySelector(".error-message .close");
 const dataArea = document.getElementById("load-data");
 
 
+/** Submits a review to movies collection on post-review.html */
+function submitReview(movieID) {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        if (message.value !== "") {
+          db.collection("movies")
+            .add({
+              userID: user.uid,
+              imdbID: movieID,
+              userName: user.displayName,
+              message: message.value,
+              date: new Date()
+            })
+            .then(usercommentsRef => {
+              console.log("Document written with ID: ", usercommentsRef.id);
+              // window.location.reload();
+            })
+            .catch(function (error) {
+              console.error('Error adding document: ', error);
+            });
+          errorMessage.classList.remove("show");
+          // nickname.value = "";
+          message.value = "";
+        } else {
+          errorMessage.classList.add("show");
+        }
+      }
+    });
+  })
+}
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
+submitReview(movieID);
 
-  if (nickname.value !== "" && message.value !== "") {
 
-    const usercommandsRef = db.collection("users").doc("uid").collection('commands');
-    usercommandsRef
-      .add({
-        nickname: nickname.value,
-        message: message.value,
-        date: new Date()
-      })
-      .then(docRef => {
-        console.log("Document written with ID: ", docRef.id);
-        // window.location.reload();
-      })
-      .catch(function (error) {
-        console.error('Error adding document: ', error);
-      });
-    errorMessage.classList.remove("show");
-    nickname.value = "";
-    message.value = "";
-  } else {
-    errorMessage.classList.add("show");
-  }
-});
 
 closebtn.addEventListener("click", () => {
   errorMessage.classList.remove("show");
@@ -101,26 +117,27 @@ formatDate = d => {
   const day = d.getDate();
   // get the year
   let year = d.getFullYear();
-  // pull the last two digits of the year
-  year = year.toString().substr(-2);
   // get the hours
   const hours = d.getHours();
   // get the minutes
   const minutes = ("0" + d.getMinutes()).slice(-2);
   //return the string "DD Month YY - HH:mm"
   return (
-    day + " " + months[month] + " '" + year + " - " + hours + ":" + minutes
+    day + " " + months[month] + " " + year + " - " + hours + ":" + minutes
   );
 };
 
-const usercommandsRef = db.collection("users").doc("uid").collection('commands');
-usercommandsRef.orderBy("date")
+/** Displays reviews for specific movie on post-review.html */
+function displayReviews(movieID) {
+  let movies = db.collection("movies");
+  moviesQuery = movies.where("imdbID", "==", movieID);
+
+  moviesQuery.orderBy("date")
   .onSnapshot(querySnapshot => {
     let messages = [];
     querySnapshot.forEach(chat => {
       messages.push(chat.data());
     });
-
     if (messages.length !== 0) {
       dataArea.innerHTML = "";
     } else {
@@ -129,15 +146,16 @@ usercommandsRef.orderBy("date")
 
     for (let i = 0; i < messages.length; i++) {
       const createdOn = new Date(messages[i].date.seconds * 1000);
+
       dataArea.innerHTML += `
-   
-                            <article style= "background-color:rgb(95, 15, 15);">
+     
+     <article style= "background-color:rgb(95, 15, 15);">
                                
                                     <p style = "color: white">${messages[i].message}</p>
-                              
+                                    
                                 <div class="float-right">
                                     <span style = "color: white" class="">
-                                        ${messages[i].nickname}
+                                        ${messages[i].userName}
                                     </span>
                                     <span style = "color: white" class="">
                                         ${formatDate(createdOn)}
@@ -148,3 +166,44 @@ usercommandsRef.orderBy("date")
                         `;
     }
   });
+  
+}
+
+displayReviews(movieID);
+
+
+// const usercommandsRef = db.collection("users").doc("uid").collection('commands');
+// usercommandsRef.orderBy("date")
+//   .onSnapshot(querySnapshot => {
+//     let messages = [];
+//     querySnapshot.forEach(chat => {
+//       messages.push(chat.data());
+//     });
+//     if (messages.length !== 0) {
+//       dataArea.innerHTML = "";
+//     } else {
+//       dataArea.innerHTML = "<p >No Review Yet</p>";
+//     }
+
+//     for (let i = 0; i < messages.length; i++) {
+//       const createdOn = new Date(messages[i].date.seconds * 1000);
+
+//       dataArea.innerHTML += `
+     
+//      <article style= "background-color:rgb(95, 15, 15);">
+                               
+//                                     <p style = "color: white">${messages[i].message}</p>
+                                    
+//                                 <div class="float-right">
+//                                     <span style = "color: white" class="">
+//                                         ${messages[i].nickname}
+//                                     </span>
+//                                     <span style = "color: white" class="">
+//                                         ${formatDate(createdOn)}
+//                                     </span>
+//                                 </div>
+                              
+//                             </article>
+//                         `;
+//     }
+//   });
