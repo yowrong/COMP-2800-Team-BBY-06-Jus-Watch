@@ -4,6 +4,11 @@ displayFavList();
 
 favListDetails();
 
+//back button function
+function back() {
+    window.history.back();
+}
+
 //redirect to the detail page
 function movieSelected(id) {
     sessionStorage.setItem('movieId', id);
