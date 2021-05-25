@@ -1,9 +1,7 @@
 import { createGroup } from "./firebase-queries.js";
-const db = firebase.firestore();
 
 const groupName = document.getElementById("groupName");
 const groupDesc = document.getElementById("groupDescription");
-
 const createBtn = document.getElementById("create");
 const modalBtn = document.getElementById("modalBtn");
 const modalName = document.getElementById("modal-groupName");
@@ -18,9 +16,8 @@ createBtn.addEventListener("click", function(e) {
         modalBody.innerHTML = "<p>Your group needs a name!</p>"
         setTimeout(function() {
             window.location.href = "create-group.html";
-        }, 800);      
+        }, 800);
     }
-
 })
 
 modalBtn.addEventListener("click", function(e) {

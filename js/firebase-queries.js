@@ -25,32 +25,32 @@ export function createUser() {
 export function displayMsgs(groupID) {
     firebase.auth().onAuthStateChanged(function (user) {
         groupRef.doc(groupID).collection("groupMessages")
-        .orderBy("sentAt")
-        //Tech-Tip 016 from Comp 1800
-        //Author: Carly Orr
-        //Source: https://www.notion.so/Tech-Tip-016-How-do-I-listen-to-new-documents-added-to-a-collection-16469db1a9d7451f8d0c2012bfd084ee
-        .onSnapshot((snapshot) => {
-            snapshot.docChanges().forEach(function (change) {
-                let msg = "";
-                snapshot.forEach(function (doc) {
-                    //Convert firestore timestamp to date Object
-                    //Source: https://stackoverflow.com/questions/52247445/how-do-i-convert-a-firestore-date-timestamp-to-a-js-date
-                    let date = doc.data().sentAt.toDate();
-                    //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-                    let formatTime = new Intl.DateTimeFormat("en", {
-                        dateStyle: "short",
-                        timeStyle: "medium"
-                    }).format(date);
-                    if (doc.data().uid === user.uid) {
-                        msg += `<div class="sent"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
-                    } else {
-                        msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
-                    }
+            .orderBy("sentAt")
+            //Tech-Tip 016 from Comp 1800
+            //Author: Carly Orr
+            //Source: https://www.notion.so/Tech-Tip-016-How-do-I-listen-to-new-documents-added-to-a-collection-16469db1a9d7451f8d0c2012bfd084ee
+            .onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach(function (change) {
+                    let msg = "";
+                    snapshot.forEach(function (doc) {
+                        //Convert firestore timestamp to date Object
+                        //Source: https://stackoverflow.com/questions/52247445/how-do-i-convert-a-firestore-date-timestamp-to-a-js-date
+                        let date = doc.data().sentAt.toDate();
+                        //Intl.DateTimeFormat() constructor from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+                        let formatTime = new Intl.DateTimeFormat("en", {
+                            dateStyle: "short",
+                            timeStyle: "medium"
+                        }).format(date);
+                        if (doc.data().uid === user.uid) {
+                            msg += `<div class="sent"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
+                        } else {
+                            msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
+                        }
+                    });
+                    $("#messages").html(msg);
+                    window.scrollTo($("#messages"));
                 });
-                $("#messages").html(msg);
-                window.scrollTo($("#messages"));
             });
-        });
     });
 }
 
@@ -58,15 +58,15 @@ export function displayMsgs(groupID) {
 export function sendMsg(msgToSend, groupID) {
     firebase.auth().onAuthStateChanged(function (user) {
         usersRef.doc(user.uid).get()
-        .then(function (doc) {
-            const userName = doc.data().name;
-            groupRef.doc(groupID).collection("groupMessages").add({
-                sentBy: userName,
-                message: msgToSend.value,
-                uid: user.uid,
-                sentAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        })
+            .then(function (doc) {
+                const userName = doc.data().name;
+                groupRef.doc(groupID).collection("groupMessages").add({
+                    sentBy: userName,
+                    message: msgToSend.value,
+                    uid: user.uid,
+                    sentAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            })
     });
 }
 
@@ -606,11 +606,10 @@ export function leaveGroup(groupID, leaveBtn) {
     });
 }
 
-
+//get username info from firebase
 export function getUser() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            console.log("user is signed in");
             db.collection("users")
                 .doc(user.uid)
                 .get()
@@ -648,19 +647,19 @@ export function addFavourite() {
                 });
         };
     });
-  }
+}
 
 /* Hide log-in and show log-out buttons if user is logged in. */
-  export function logHeaderStatus() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if(user) {
+export function logHeaderStatus() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
             usersRef.doc(user.uid).get()
-            .then(function(doc) {
-                $("#logInBtn").hide();
-                $("#logOutBtn").show();
-            }).catch(function(err) {
-                console.log(err);
-            });
+                .then(function (doc) {
+                    $("#logInBtn").hide();
+                    $("#logOutBtn").show();
+                }).catch(function (err) {
+                    console.log(err);
+                });
         }
     });
 }
@@ -669,58 +668,58 @@ export function addFavourite() {
 /** Submits a review to movies collection on post-review.html */
 export function submitReview(movieID, submitBtn, message, errorMessage) {
     submitBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          if (message.value !== "") {
-            db.collection("movies")
-              .add({
-                userID: user.uid,
-                imdbID: movieID,
-                userName: user.displayName,
-                message: message.value,
-                date: new Date()
-              })
-              .then(usercommentsRef => {
-                console.log("Document written with ID: ", usercommentsRef.id);
-                // window.location.reload();
-              })
-              .catch(function (error) {
-                console.error('Error adding document: ', error);
-              });
-            errorMessage.classList.remove("show");
-            // nickname.value = "";
-            message.value = "";
-          } else {
-            errorMessage.classList.add("show");
-          }
-        }
-      });
+        e.preventDefault();
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                if (message.value !== "") {
+                    db.collection("movies")
+                        .add({
+                            userID: user.uid,
+                            imdbID: movieID,
+                            userName: user.displayName,
+                            message: message.value,
+                            date: new Date()
+                        })
+                        .then(usercommentsRef => {
+                            console.log("Document written with ID: ", usercommentsRef.id);
+                            // window.location.reload();
+                        })
+                        .catch(function (error) {
+                            console.error('Error adding document: ', error);
+                        });
+                    errorMessage.classList.remove("show");
+                    // nickname.value = "";
+                    message.value = "";
+                } else {
+                    errorMessage.classList.add("show");
+                }
+            }
+        });
     })
-  }
+}
 
 
 /** Displays reviews for specific movie on post-review.html */
 export function displayReviews(movieID, dataArea) {
     let movies = db.collection("movies");
     let moviesQuery = movies.where("imdbID", "==", movieID);
-  
+
     moviesQuery.orderBy("date")
-    .onSnapshot(querySnapshot => {
-      let messages = [];
-      querySnapshot.forEach(chat => {
-        messages.push(chat.data());
-      });
-      if (messages.length !== 0) {
-        dataArea.innerHTML = "";
-      } else {
-        dataArea.innerHTML = "<p >No Review Yet</p>";
-      }
-  
-      for (let i = 0; i < messages.length; i++) {
-        const createdOn = new Date(messages[i].date.seconds * 1000);
-  
-        dataArea.innerHTML += `
+        .onSnapshot(querySnapshot => {
+            let messages = [];
+            querySnapshot.forEach(chat => {
+                messages.push(chat.data());
+            });
+            if (messages.length !== 0) {
+                dataArea.innerHTML = "";
+            } else {
+                dataArea.innerHTML = "<p >No Review Yet</p>";
+            }
+
+            for (let i = 0; i < messages.length; i++) {
+                const createdOn = new Date(messages[i].date.seconds * 1000);
+
+                dataArea.innerHTML += `
        
        <article style= "background-color:rgb(95, 15, 15);">
                                  
@@ -737,26 +736,26 @@ export function displayReviews(movieID, dataArea) {
                                 
                               </article>
                           `;
-      }
-    });
-  }
+            }
+        });
+}
 
 // A function for formatting a date to DD Month YY - HH:mm
 const formatDate = d => {
     // Months array to get the month in string format
     const months = new Array(
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
     );
     // get the month
     const month = d.getMonth();
@@ -770,6 +769,115 @@ const formatDate = d => {
     const minutes = ("0" + d.getMinutes()).slice(-2);
     //return the string "DD Month YY - HH:mm"
     return (
-      day + " " + months[month] + " " + year + " - " + hours + ":" + minutes
+        day + " " + months[month] + " " + year + " - " + hours + ":" + minutes
     );
-  };
+};
+
+//get current user for reading user email.
+export function getUserEmail() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            db.collection("users").doc(user.uid).get().then((s) => {
+                $("#fullName").append(s.data().name);
+                $("#email").append(user.email);
+            });
+        }
+    });
+}
+
+//displays user profile when user is logged in
+export function displayUserProfile() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            var originalPhone;
+            var originalAge;
+            var originalName;
+            db.collection("users").doc(user.uid).get().then((s) => {
+                originalName = s.data().name;
+                originalAge = s.data().age;
+                originalPhone = s.data().phone;
+                $('#name').attr("placeholder", originalName);
+                $('#name').attr("value", originalName);
+                $('#age').attr("placeholder", originalAge);
+                $('#age').attr("value", originalAge);
+                $('#phone').attr("placeholder", originalPhone);
+                $('#phone').attr("value", originalPhone);
+            });
+        };
+    });
+}
+
+//updates user profile information
+export function saveUserProfile() {
+    $("#saveBtn").click(function (event) {
+        var n = document.getElementById('name');
+        var age = document.getElementById('age');
+        var phone = document.getElementById('phone');
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                db.collection("users").doc(user.uid).update({
+                    "name": n.value,
+                    "age": age.value,
+                    "phone": phone.value,
+                });
+            }
+        });
+        alert("Changes Saved!");
+    });
+}
+
+//displays the user's favourite movie list
+export function displayFavList() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            var favList;
+            db.collection("users").doc(user.uid).get().then((s) => {
+                favList = s.data().favouriteLists;
+                favList.forEach(element => {
+                    axios.get('http://www.omdbapi.com?i=' + element + '&apikey=6753c87c')
+                        .then((response) => {
+                            let movie = response.data;
+                            $("#favTable").append(`
+                                <tr id = "movie` + element+`" >
+                                    <th><a class="link-light" id="`+ element + `" style="cursor: pointer;">` + movie.Title + `<a></th>
+                                    <th>` + movie.Released + `</th> 
+                                    <th>` + movie.Genre + `</th>
+                                    <th><button class="removeFav btn btn-danger " 
+                                    onClick="setTimeout(function () { 
+                                        location.reload();
+                                      }, 400);" 
+                                    value="`+ element + `">X</button></th>
+                                
+                                </tr>
+                            `);
+                        });
+                    console.log(element);
+                });
+            });
+        };
+    });
+}
+
+//user can delete the movie in favourite list and click the name to see the details
+export function favListDetails() {
+    $(document).ready(() => {
+        var el = document.getElementById('favTable');
+        if (el) {
+            el.addEventListener("click", function (event) {
+                var movieId = $(el).val();
+                if(event.target.value!==undefined) {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            db.collection("users").doc(user.uid).update({
+                                "favouriteLists": firebase.firestore.FieldValue.arrayRemove(event.target.value),
+                            });
+                        }
+                    });
+                    //if user click the name
+                } else if(event.target.id!==undefined && event.target.id.trim() != "") {
+                    movieSelected(event.target.id);
+                }
+            });
+        }
+    });
+}

@@ -222,10 +222,7 @@ function getRandomMovie() {
     function getOMDBInfo(randomMovie) {
         axios.get('https://www.omdbapi.com?t=' + randomMovie + '&apikey=6753c87c')
             .then((response) => {
-
                 let movie = response.data;
-
-
                 let output = `
                               <div class="moviedscrpt">
                               <div class="centerbox">
