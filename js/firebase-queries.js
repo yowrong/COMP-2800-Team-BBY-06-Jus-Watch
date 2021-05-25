@@ -8,6 +8,7 @@ export function createUser() {
         usersRef.doc(user.uid).get()
             .then((docSnapshot) => {
                 if (!docSnapshot.exists) {
+                    // Initialize user document with name, email, uid, groupDescription, groupId, and groupName fields
                     usersRef.doc(user.uid).set({
                         name: user.displayName,
                         email: user.email,
@@ -47,8 +48,8 @@ export function displayMsgs(groupID) {
                             msg += `<div class="incoming"><p class="name">${doc.data().sentBy}</p><p class="message">${doc.data().message}</p><aside class="time">${formatTime}</aside></div>`;
                         }
                     });
+                    //Append all messages from groupMessages subcollection
                     $("#messages").html(msg);
-                    window.scrollTo($("#messages"));
                 });
             });
     });
@@ -64,6 +65,7 @@ export function sendMsg(msgToSend, groupID) {
                     sentBy: userName,
                     message: msgToSend.value,
                     uid: user.uid,
+                    // Timestamp for when the message was sent
                     sentAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
             })
@@ -352,7 +354,7 @@ function renderWinningMovie(title, desc, year, pic, movieSection, movieCenterTit
 }
 
 /** Resets Nominated Movies Section by deleting all movies in nominatedMovies subcollection for group-centre.html.
- * Resets group's totalVotes to 0. **/
+/ * Resets group's totalVotes to 0. **/
 /* Adapted from https://stackoverflow.com/questions/47860812/deleting-all-documents-in-firestore-collection */
 function resetVotes(groupID, resetBtn) {
     resetBtn.addEventListener("click", function () {
@@ -490,7 +492,7 @@ export function getVotes(id, submit, modalBody) {
     });
 }
 
-//Show group member list
+/* Show group member list on group-centre.html*/
 export function showGroupMembers(groupID, groupInfo) {
     groupRef.doc(groupID).collection("groupMembers").get()
         .then((snap) => {
@@ -579,7 +581,7 @@ export function endVoting(groupID, endVoteBtn) {
     })
 }
 
-/** Removes the user from the group and the group from the user's groups. */
+/* Removes the user from the group and the group from the user's groups. */
 export function leaveGroup(groupID, leaveBtn) {
     leaveBtn.addEventListener("click", function (event) {
         event.preventDefault();
@@ -589,20 +591,22 @@ export function leaveGroup(groupID, leaveBtn) {
                     let groupTitle = doc.data().groupName;
                     let groupDesc = doc.data().groupDescription;
 
+                    /* Used Firebase doc https://firebase.google.com/docs/firestore/manage-data/add-data for reference */
                     usersRef.doc(user.uid).update({
                         groupId: firebase.firestore.FieldValue.arrayRemove(groupID),
                         groupName: firebase.firestore.FieldValue.arrayRemove(groupTitle),
                         groupDescription: firebase.firestore.FieldValue.arrayRemove(groupDesc)
                     });
 
+                    // Remove user from groupMembers subcollection
                     groupRef.doc(groupID).collection("groupMembers").doc(user.uid).delete();
                 }).catch((err) => {
                     console.log(err);
                 });
         });
-        // setTimeout(function () {
-        //     window.location = `group-main.html`;
-        // }, 3000);
+        setTimeout(function () {
+            window.location = `group-main.html`;
+        }, 3000);
     });
 }
 
@@ -623,6 +627,7 @@ export function getUser() {
     })
 }
 
+//add movie to user's favourite movies list
 export function addFavourite() {
     var addFavBtn = $("#Addfavourite").text();
     firebase.auth().onAuthStateChanged(function (user) {

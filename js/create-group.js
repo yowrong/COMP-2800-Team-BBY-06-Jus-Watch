@@ -20,6 +20,7 @@ createBtn.addEventListener("click", function(e) {
     }
 })
 
+//redirect to group-main after confirmation
 modalBtn.addEventListener("click", function(e) {
     e.preventDefault();
     window.location.href = "./group-main.html";

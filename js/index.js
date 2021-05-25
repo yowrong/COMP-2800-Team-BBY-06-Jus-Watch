@@ -1,3 +1,4 @@
+// It will make the slide automatically change every 2 seconds
 var slideIndex = 0;
 showSlides();
 
@@ -20,6 +21,7 @@ function showSlides() {
     setTimeout(showSlides, 4000); // Change image every 2 seconds
 }
 
+// when click the dot or arrow, the slide will change
 var slideIndex = 1;
 showDivs(slideIndex);
 

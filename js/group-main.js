@@ -7,8 +7,6 @@ const createGroupBtn = document.getElementById("createGroupBtn");
 createGroupBtn.addEventListener("click", function(e) {
     e.preventDefault();
     firebase.auth().onAuthStateChanged(function(user) {
-
-    
         if (user) {
             window.location = "/create-group.html";
         } else {
