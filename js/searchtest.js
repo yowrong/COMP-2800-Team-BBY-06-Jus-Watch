@@ -192,8 +192,8 @@ function getMovie(movieID) {
         });
 }
 
-
-/* https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 */
+// Parse through IMDB Top 1000 Movie csv file on found on https://raw.githubusercontent.com/peetck/IMDB-Top1000-Movies/master/IMDB-Movie-Data.csv
+// Source: https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626
 function getRandomMovie() {
     $.ajax({
         url: 'https://raw.githubusercontent.com/peetck/IMDB-Top1000-Movies/master/IMDB-Movie-Data.csv',
@@ -219,6 +219,7 @@ function getRandomMovie() {
 
     }
 
+    // Fetches movie info from OMDB and renders movie card with movie info
     function getOMDBInfo(randomMovie) {
         axios.get('https://www.omdbapi.com?t=' + randomMovie + '&apikey=6753c87c')
             .then((response) => {
