@@ -69,7 +69,7 @@ h1 {
   display: flex;
     justify-content: center;
     flex-direction: column;
-    margin:2% auto;
+    margin:2% auto 20% auto;
     padding: 1%;
     background: #00000080;
     box-sizing: border-box;
@@ -79,6 +79,9 @@ h1 {
 }
 .centerbox{
   text-align: center;
+}
+.thumbnail{
+  width: 30%;
 }
 .list-group {
   display: flex;
