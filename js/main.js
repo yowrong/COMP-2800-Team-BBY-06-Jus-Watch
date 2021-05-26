@@ -1,4 +1,7 @@
 import { createUser, welcomeUser } from "./firebase-queries.js";
 
 createUser();
-welcomeUser();
+
+setTimeout(function () {
+    welcomeUser();
+}, 1000);
