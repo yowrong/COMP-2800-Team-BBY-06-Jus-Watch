@@ -40,3 +40,7 @@ figcaption {
   box-shadow: 0px 0px 120px -55px rgb(255, 255, 255);
   border-radius: 10px;
 }
+
+.fab {
+  color: #ebe8e8ce;
+}
