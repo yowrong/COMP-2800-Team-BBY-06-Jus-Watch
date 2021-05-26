@@ -262,3 +262,7 @@ input{
 th {
   font-size:1.5em;
 }
+
+#username {
+  display: none;
+}
