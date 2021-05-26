@@ -846,7 +846,7 @@ export function displayFavList() {
                 favList.forEach(element => {
 
                     // gets movie information for each item on list
-                    axios.get('http://www.omdbapi.com?i=' + element + '&apikey=6753c87c')
+                    axios.get('https://www.omdbapi.com?i=' + element + '&apikey=6753c87c')
                         .then((response) => {
                             let movie = response.data;
                             $("#favTable").append(`
