@@ -726,7 +726,7 @@ export function displayReviews(movieID, dataArea) {
             if (messages.length !== 0) {
                 dataArea.innerHTML = "";
             } else {
-                dataArea.innerHTML = "<p >No Review Yet</p>";
+                dataArea.innerHTML = "<p class='msg'>No Reviews Yet</p>";
             }
             for (let i = 0; i < messages.length; i++) {
                 const createdOn = new Date(messages[i].date.seconds * 1000);
@@ -734,7 +734,7 @@ export function displayReviews(movieID, dataArea) {
                 // displays reviews
                 dataArea.innerHTML += `
                                     <article style= "background-color:rgb(95, 15, 15);">
-                                      <p style = "color: white">${messages[i].message}</p>
+                                      <p class="review" style = "color: white">${messages[i].message}</p>
                                   <div class="float-right">
                                       <span style = "color: white" class="">
                                           ${messages[i].userName}

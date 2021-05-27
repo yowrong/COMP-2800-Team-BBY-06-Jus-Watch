@@ -70,9 +70,9 @@ body {
   border-radius: 10px;
   text-align: center;
   position: absolute;
-  margin-top: 20em;
+  margin-top: 16em;
   left: 50%;
-  width: 80%;
+  width: 90%;
   padding: 2%;
   transform: translate(-50%, -50%);
   background: rgba(0,0,0,.5);
@@ -215,7 +215,7 @@ input{
 
 #favTable {
   color: rgb(100, 93, 93);
-  font-size: xx-small;
+  font-size: 0.75em;
   font-family: 'Courier New', Courier, monospace;
 }
 
