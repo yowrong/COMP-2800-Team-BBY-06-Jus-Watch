@@ -1,4 +1,5 @@
-/* Following code has been adopted from https://codepen.io/JAGATHISH1123/embed/OJPyGve?default-tab=&theme-id= */
+/* Following code has been adopted from @JAGATHISH1123 on codepen.io */
+ /* https://codepen.io/JAGATHISH1123/ */
 
 var text = encodeURIComponent("This cool new app lets you search for movies, nominate and vote on them with your friends, and post reviews! Don't believe me? Jus'Watch!");
 var url = "https://jus-watch.web.app";
