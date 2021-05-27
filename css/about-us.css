@@ -1,12 +1,12 @@
-body,
 html {
-  height: 100%;
+  min-height: 120%;
+  height: auto;
 }
 
 body {
   background-image: linear-gradient(#3d0b0b, #3b3a3a);
   font-family: Verdana, sans-serif;
-  height: 100%;
+  height: 130%;
   background-repeat: no-repeat;
   color: #ebe8e8ce;
 }
@@ -28,4 +28,19 @@ figcaption {
 .title {
   text-align: center;
   padding: 1em;
+}
+
+.share {
+  text-align: center;
+  margin: 0 auto 12% auto;
+  width: 80%;
+  padding: 2%;
+  background: #00000080;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 120px -55px rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.fab {
+  color: #ebe8e8ce;
 }

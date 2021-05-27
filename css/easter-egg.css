@@ -3,15 +3,8 @@
   position: absolute;
 }
 
-/* Adapted from https://codepen.io/alexisr/pen/dJmpdR */
-
+/* The following CSS styling adapted from https://codepen.io/alexisr/pen/dJmpdR */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:800|Roboto+Condensed:700i");
-
-/* .vid-container {
-        position: relative;
-        overflow: hidden;
-        padding-top: 56.25%;
-} */
 
 body {
   width: 100%;
@@ -95,12 +88,10 @@ body {
 iframe {
   position: absolute;
   left: 21%;
-  /* top: 10%; */
   display: block;
   width: 80vw;
   height: 47vw;
   margin-top: 2.5%;
-	/* margin-left: -250px; */
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-size: 10em;

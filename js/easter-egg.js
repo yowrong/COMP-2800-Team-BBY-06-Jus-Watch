@@ -10,7 +10,7 @@ $("body").click(function () {
 })
 
 /* Trigger movie curtain animation */
-// Adapted from https://codepen.io/alexisr/pen/dJmpdR
+/* Following code has been adapted from https://codepen.io/alexisr/pen/dJmpdR */
 function showTime() {
     var curtain = document.getElementById("curtain");
     curtain.className = "open";
