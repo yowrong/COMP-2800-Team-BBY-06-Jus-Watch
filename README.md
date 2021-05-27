@@ -25,6 +25,7 @@ Just Watch is a web/mobile application platform that connects friends and groups
 * HTML
 * CSS
 * JavaScript
+* jQuery
 * Bootstrap 
 * Firebase
 * OMDb API
@@ -152,7 +153,7 @@ Avatars generated on [AvatarMaker](avatarmaker.com/)
 
 [Bootstrap v5.0.0-beta3](getbootstrap.com/)
 
-[Jus'Watch Testing Plan](https://docs.google.com/spreadsheets/d/1JcSVw80WtJHWNZSYtHL2W1-8CvyXyQuuxiFKnIfO71U/edit?usp=sharing)
+[Jus'Watch Testing Plan Copy](https://docs.google.com/spreadsheets/d/1JcSVw80WtJHWNZSYtHL2W1-8CvyXyQuuxiFKnIfO71U/edit?usp=sharing)
 
 [IMDB Top 1000 Movies Dataset](https://raw.githubusercontent.com/peetck/IMDB-Top1000-Movies/master/IMDB-Movie-Data.csv)
 
@@ -175,4 +176,8 @@ Copyright Disclaimer under section 107 of the Copyright Act of 1976, allowance i
 ## Quick Start
 
 1. Clone the repository into a folder
-2. 
+2. Open directory in terminal
+3. Enter 'npm install' in terminal to install dependencies in package.json
+4. Create new Firebase project to use Cloud Firestore
+5. Replace ```firebaseConfig``` information in firebase-api.js with new Firebase project found in "SDK setup and configuration" under project settings.  
+6. (Optional) Generate new API key from OMDb and replace instances found in firebase-queries.js and searchtest.js. Note: API keys in this repo are limited to 1000 requests/day but can be upgraded.
