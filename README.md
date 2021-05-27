@@ -167,7 +167,6 @@ Avatars generated on [AvatarMaker](avatarmaker.com/)
 
 [Social Media Sharelinks](https://codepen.io/JAGATHISH1123/)
 
-[Profile page button](https://codepen.io/soufiane-khalfaoui-hassani/pen/LYpPWda)
 
 Various code snippets were referenced and are attributed on their respective .js files.  
 
