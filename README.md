@@ -167,6 +167,8 @@ Avatars generated on [AvatarMaker](avatarmaker.com/)
 
 [Social Media Sharelinks](https://codepen.io/JAGATHISH1123/)
 
+[Profile page button](https://codepen.io/soufiane-khalfaoui-hassani/pen/LYpPWda)
+
 Various code snippets were referenced and are attributed on their respective .js files.  
 
 “All the images and graphics used in this repo belong to their respective owners and we do not claim any right over them.
